@@ -1,0 +1,841 @@
+/* =========================================
+   TOKYO DEBUNKER DATABASE
+   MAIN WEBSITE STYLES
+   ========================================= */
+
+
+/* =========================================
+   BASIC SETUP
+   ========================================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+
+    min-height: 100vh;
+
+    overflow-x: hidden;
+
+    color: #eee9f5;
+
+    font-family:
+        Georgia,
+        "Times New Roman",
+        serif;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 35%,
+            #241b38 0%,
+            #120d1d 38%,
+            #08070d 75%,
+            #050509 100%
+        );
+}
+
+
+/* =========================================
+   ATMOSPHERIC BACKGROUND
+   ========================================= */
+
+body::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    z-index: -1;
+
+    background:
+
+        radial-gradient(
+            ellipse at 10% 20%,
+            rgba(113, 77, 160, 0.18),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at 90% 30%,
+            rgba(102, 65, 155, 0.16),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            ellipse at 50% 100%,
+            rgba(91, 58, 145, 0.14),
+            transparent 40%
+        );
+}
+
+
+/* =========================================
+   NAVIGATION BAR
+   ========================================= */
+
+.navbar {
+    width: 100%;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 7%;
+
+    border-bottom:
+        1px solid
+        rgba(190, 157, 232, 0.55);
+
+    position: relative;
+}
+
+
+/* Decorative diamond in navigation */
+
+.navbar::after {
+    content: "✦";
+
+    position: absolute;
+
+    left: 50%;
+
+    bottom: -10px;
+
+    transform: translateX(-50%);
+
+    color: #d6b9ff;
+
+    background: #0c0912;
+
+    padding: 0 12px;
+
+    font-size: 18px;
+}
+
+
+/* =========================================
+   HOMEPAGE NAVIGATION LOGO
+   ========================================= */
+
+.logo {
+    display: flex;
+
+    align-items: center;
+
+    min-width: 0;
+}
+
+.logo img {
+    width: 260px;
+
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* =========================================
+   DATABASE PAGE NAVIGATION LOGO
+   ========================================= */
+
+.nav-logo {
+    display: flex;
+
+    align-items: center;
+
+    min-width: 0;
+
+    flex-shrink: 1;
+}
+
+.nav-logo a {
+    display: block;
+
+    max-width: 100%;
+}
+
+.nav-logo img {
+    width: min(260px, 30vw);
+
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+}
+
+
+/* =========================================
+   NAVIGATION LINKS
+   ========================================= */
+
+nav {
+    display: flex;
+
+    gap: 42px;
+}
+
+nav a {
+    color: #d7ccdf;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    padding: 24px 0 20px;
+
+    position: relative;
+
+    transition:
+        color 0.25s ease,
+        text-shadow 0.25s ease;
+}
+
+nav a:hover {
+    color: #ffffff;
+
+    text-shadow:
+        0 0 10px
+        rgba(188, 139, 255, 0.8);
+}
+
+nav a.active {
+    color: #ffffff;
+}
+
+nav a.active::after {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    right: 0;
+
+    bottom: 13px;
+
+    height: 2px;
+
+    background: #b88cff;
+
+    box-shadow:
+        0 0 8px
+        rgba(184, 140, 255, 0.8);
+}
+
+
+/* =========================================
+   MAIN CONTENT
+   ========================================= */
+
+main {
+    width: min(1100px, 90%);
+
+    margin: 0 auto;
+
+    padding-bottom: 50px;
+}
+
+
+/* =========================================
+   HERO SECTION
+   ========================================= */
+
+.hero {
+    text-align: center;
+
+    padding-top: 150px;
+
+    padding-bottom: 70px;
+}
+
+
+/* =========================================
+   MAIN HOMEPAGE LOGO
+   ========================================= */
+
+.main-logo {
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    width: 100%;
+
+    max-width: 100%;
+
+    overflow: hidden;
+}
+
+.main-logo img {
+    width: min(650px, calc(100vw - 40px));
+
+    max-width: 100%;
+
+    height: auto;
+
+    display: block;
+
+    margin: 0 auto;
+
+    filter:
+        drop-shadow(
+            0 0 15px
+            rgba(184, 140, 255, 0.12)
+        );
+}
+
+
+/* =========================================
+   DATABASE TITLE
+   ========================================= */
+
+.database-title {
+    margin-top: 24px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    color: #e6d8f3;
+
+    font-size: 24px;
+
+    letter-spacing: 10px;
+}
+
+.database-title span {
+    width: 80px;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            #c6a4ed
+        );
+}
+
+.database-title span:last-child {
+    background:
+        linear-gradient(
+            to left,
+            transparent,
+            #c6a4ed
+        );
+}
+
+
+/* =========================================
+   SEARCH BAR
+   ========================================= */
+
+.search-container {
+    width: min(650px, 90%);
+
+    height: 58px;
+
+    margin:
+        0 auto
+        55px;
+
+    display: flex;
+
+    align-items: center;
+
+    border:
+        1px solid
+        #9f78c8;
+
+    border-radius: 30px;
+
+    background:
+        rgba(9, 7, 15, 0.75);
+
+    box-shadow:
+        0 0 20px
+        rgba(103, 60, 151, 0.12);
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.search-container:focus-within {
+    border-color: #c69bfa;
+
+    box-shadow:
+        0 0 20px
+        rgba(160, 105, 225, 0.25);
+}
+
+.search-icon {
+    margin-left: 22px;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 28px;
+
+    color: #dfccf4;
+}
+
+.search-container input {
+    flex: 1;
+
+    height: 100%;
+
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #ffffff;
+
+    font-family: Georgia, serif;
+
+    font-size: 17px;
+
+    padding: 0 18px;
+}
+
+.search-container input::placeholder {
+    color: #8d8299;
+}
+
+
+/* =========================================
+   DATABASE GRID
+   ========================================= */
+
+.database-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 20px;
+}
+
+
+/* =========================================
+   DATABASE CARDS
+   ========================================= */
+
+.database-card {
+    min-height: 205px;
+
+    position: relative;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 28px 35px;
+
+    text-decoration: none;
+
+    color: #f4edf9;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(38, 28, 53, 0.68),
+            rgba(9, 7, 14, 0.9)
+        );
+
+    border:
+        1px solid
+        rgba(207, 183, 235, 0.8);
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+/* Decorative corners */
+
+.database-card::before,
+.database-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 13px;
+
+    height: 13px;
+
+    border-color: #d8bdf1;
+
+    pointer-events: none;
+}
+
+.database-card::before {
+    top: 5px;
+
+    left: 5px;
+
+    border-top: 1px solid;
+
+    border-left: 1px solid;
+}
+
+.database-card::after {
+    bottom: 5px;
+
+    right: 5px;
+
+    border-bottom: 1px solid;
+
+    border-right: 1px solid;
+}
+
+
+/* =========================================
+   CARD HOVER
+   ========================================= */
+
+.database-card:hover {
+    transform:
+        translateY(-5px);
+
+    border-color:
+        #d7b3ff;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(57, 40, 77, 0.8),
+            rgba(14, 9, 22, 0.95)
+        );
+
+    box-shadow:
+        0 10px 30px
+        rgba(104, 61, 148, 0.2),
+
+        0 0 15px
+        rgba(177, 119, 240, 0.12);
+}
+
+
+/* =========================================
+   CARD ICONS
+   ========================================= */
+
+.card-icon {
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    font-family: Arial, sans-serif;
+
+    font-size: 44px;
+
+    color: #e0c6ff;
+
+    text-shadow:
+        0 0 12px
+        rgba(192, 142, 255, 0.45);
+
+    margin-bottom: 12px;
+}
+
+
+/* =========================================
+   CARD TITLES
+   ========================================= */
+
+.database-card h2 {
+    margin:
+        0 0 8px;
+
+    font-size: 25px;
+
+    font-weight: normal;
+}
+
+
+/* =========================================
+   CARD DESCRIPTIONS
+   ========================================= */
+
+.database-card p {
+    margin: 0;
+
+    color: #c3b8cc;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================
+   CARD ARROW
+   ========================================= */
+
+.arrow {
+    position: absolute;
+
+    right: 17px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-family: Arial, sans-serif;
+
+    font-size: 32px;
+
+    color: #e3d4ed;
+
+    transition:
+        transform 0.25s ease,
+        color 0.25s ease;
+}
+
+.database-card:hover .arrow {
+    transform:
+        translateY(-50%)
+        translateX(4px);
+
+    color: #c998ff;
+}
+
+
+/* =========================================
+   BOTTOM DECORATION
+   ========================================= */
+
+.bottom-decoration {
+    width: min(500px, 70%);
+
+    margin:
+        35px auto
+        70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    color: #c99bff;
+}
+
+.bottom-decoration span {
+    flex: 1;
+
+    height: 1px;
+
+    background:
+        linear-gradient(
+            to right,
+            transparent,
+            rgba(190, 151, 226, 0.7)
+        );
+}
+
+.bottom-decoration span:last-child {
+    background:
+        linear-gradient(
+            to left,
+            transparent,
+            rgba(190, 151, 226, 0.7)
+        );
+}
+
+.bottom-decoration b {
+    font-size: 19px;
+
+    font-weight: normal;
+}
+
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 850px) {
+
+    .navbar {
+        padding: 0 4%;
+    }
+
+    .logo img {
+        width: 210px;
+    }
+
+    .nav-logo img {
+        width: min(210px, 32vw);
+    }
+
+    nav {
+        gap: 18px;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    .database-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .hero {
+        padding-top: 110px;
+    }
+
+}
+
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 600px) {
+
+    .navbar {
+        height: auto;
+
+        padding-top: 18px;
+
+        padding-bottom: 18px;
+
+        flex-direction: column;
+
+        gap: 18px;
+    }
+
+    .navbar::after {
+        display: none;
+    }
+
+    .logo img {
+        width: 220px;
+    }
+
+    .nav-logo {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .nav-logo img {
+        width: min(220px, 75vw);
+
+        max-width: 100%;
+    }
+
+    nav {
+        gap: 20px;
+
+        flex-wrap: wrap;
+
+        justify-content: center;
+    }
+
+    nav a {
+        padding: 0;
+    }
+
+    nav a.active::after {
+        bottom: -6px;
+    }
+
+    .hero {
+        padding-top: 80px;
+
+        padding-bottom: 50px;
+    }
+
+    .main-logo {
+        width: 100%;
+
+        padding: 0 10px;
+    }
+
+    .main-logo img {
+        width: min(650px, calc(100vw - 40px));
+
+        max-width: 100%;
+    }
+
+    .database-title {
+        font-size: 18px;
+
+        letter-spacing: 6px;
+
+        gap: 10px;
+    }
+
+    .database-title span {
+        width: 35px;
+    }
+
+    .database-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .database-card {
+        min-height: 185px;
+    }
+
+}
+
+
+/* =========================================
+   VERY SMALL PHONES
+   ========================================= */
+
+@media (max-width: 380px) {
+
+    .nav-logo img {
+        width: min(200px, 72vw);
+    }
+
+    nav {
+        gap: 14px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+}

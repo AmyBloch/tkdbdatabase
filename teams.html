@@ -1,0 +1,1848 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teams — Tokyo Debunker Database</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================================================
+           TEAMS PAGE
+        ========================================================= */
+
+        .teams-page {
+            width: min(1400px, 92%);
+            margin: 0 auto;
+            padding: 20px 0 80px;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .teams-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .teams-header h1 {
+            margin: 0;
+        }
+
+        .teams-header p {
+            margin-top: 10px;
+            opacity: 0.75;
+        }
+
+
+        /* =========================================================
+           CARD SELECTOR
+        ========================================================= */
+
+        .team-selector {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto 35px;
+        }
+
+        .team-selector-label {
+            display: block;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        /*
+         * IMPORTANT:
+         * This is deliberately a completely normal native select.
+         * No custom dropdown JavaScript.
+         * No absolute positioning.
+         * No pointer-event tricks.
+         */
+
+        #cardSelect {
+            display: block;
+            width: 100%;
+            height: 52px;
+
+            padding: 0 45px 0 16px;
+
+            border: 1px solid rgba(180, 120, 255, 0.45);
+            border-radius: 8px;
+
+            background: #171021;
+            color: #ffffff;
+
+            font-family: inherit;
+            font-size: 1rem;
+
+            cursor: pointer;
+
+            appearance: auto;
+            -webkit-appearance: auto;
+
+            pointer-events: auto;
+
+            position: relative;
+            z-index: 50;
+        }
+
+        #cardSelect:hover {
+            border-color: rgba(200, 145, 255, 0.8);
+        }
+
+        #cardSelect:focus {
+            outline: none;
+            border-color: rgba(210, 160, 255, 0.95);
+            box-shadow: 0 0 0 2px rgba(170, 100, 255, 0.15);
+        }
+
+        #cardSelect option {
+            background: #171021;
+            color: #ffffff;
+        }
+
+
+        /* =========================================================
+           SELECTED CARD
+        ========================================================= */
+
+        .selected-card {
+            max-width: 700px;
+            margin: 0 auto 45px;
+
+            padding: 22px;
+
+            border: 1px solid rgba(180, 120, 255, 0.3);
+            border-radius: 10px;
+
+            background: rgba(25, 16, 38, 0.75);
+
+            text-align: center;
+        }
+
+        .selected-card-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .selected-card-element {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        .selected-card-element img {
+            width: 25px;
+            height: 25px;
+            object-fit: contain;
+        }
+
+
+        /* =========================================================
+           RECOMMENDATION GRID
+        ========================================================= */
+
+        .recommendation-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(5, minmax(0, 1fr));
+
+            gap: 16px;
+        }
+
+
+        /* =========================================================
+           RECOMMENDATION BOX
+        ========================================================= */
+
+        .recommendation-box {
+            min-width: 0;
+
+            border: 1px solid rgba(180, 120, 255, 0.28);
+            border-radius: 10px;
+
+            background: rgba(22, 14, 34, 0.8);
+
+            overflow: hidden;
+        }
+
+        .recommendation-title {
+            padding: 15px 12px;
+
+            text-align: center;
+
+            font-size: 0.9rem;
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+
+            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
+
+            background: rgba(120, 70, 180, 0.1);
+        }
+
+        .recommendation-list {
+            padding: 10px;
+        }
+
+
+        /* =========================================================
+           RECOMMENDATION CARD
+        ========================================================= */
+
+        .recommendation-card {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 9px 7px;
+
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+
+            font-size: 0.82rem;
+
+            line-height: 1.25;
+        }
+
+        .recommendation-card:last-child {
+            border-bottom: none;
+        }
+
+        .recommendation-element {
+            width: 22px;
+            height: 22px;
+
+            flex: 0 0 22px;
+
+            object-fit: contain;
+        }
+
+        .recommendation-name {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+
+        /* =========================================================
+           EMPTY / SPECIAL MESSAGE
+        ========================================================= */
+
+        .recommendation-empty {
+            padding: 18px 8px;
+
+            text-align: center;
+
+            font-size: 0.8rem;
+
+            line-height: 1.4;
+
+            opacity: 0.65;
+        }
+
+
+        /* =========================================================
+           STATUS
+        ========================================================= */
+
+        .team-status {
+            text-align: center;
+            margin: 20px 0;
+            opacity: 0.65;
+            font-size: 0.85rem;
+        }
+
+        .team-status.error {
+            color: #ff8f8f;
+            opacity: 1;
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
+        @media (max-width: 1100px) {
+
+            .recommendation-grid {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .teams-page {
+                width: 94%;
+                padding-bottom: 60px;
+            }
+
+            .recommendation-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #cardSelect {
+                height: 50px;
+                font-size: 0.92rem;
+            }
+
+            .selected-card {
+                padding: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================================
+         HEADER
+    ========================================================= -->
+
+    <nav class="navbar">
+
+        <div class="nav-logo">
+
+            <a href="index.html">
+
+                <img
+                    src="logo.png"
+                    alt="Tokyo Debunker"
+                >
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =========================================================
+         MAIN
+    ========================================================= -->
+
+    <main class="teams-page">
+
+
+        <header class="teams-header">
+
+            <h1>TEAMS</h1>
+
+            <p>
+                Build a team based on your selected card's tags.
+            </p>
+
+        </header>
+
+
+        <!-- =====================================================
+             SELECTOR
+        ====================================================== -->
+
+        <section class="team-selector">
+
+            <label
+                class="team-selector-label"
+                for="cardSelect"
+            >
+                SELECT CARD
+            </label>
+
+
+            <select id="cardSelect">
+
+                <option value="">
+                    Loading cards...
+                </option>
+
+            </select>
+
+        </section>
+
+
+        <!-- =====================================================
+             STATUS
+        ====================================================== -->
+
+        <div
+            id="teamStatus"
+            class="team-status"
+        >
+            Loading card database...
+        </div>
+
+
+        <!-- =====================================================
+             SELECTED CARD
+        ====================================================== -->
+
+        <section
+            id="selectedCard"
+            class="selected-card"
+        >
+
+            <div
+                id="selectedCardName"
+                class="selected-card-name"
+            >
+                Select a card
+            </div>
+
+
+            <div
+                id="selectedCardElement"
+                class="selected-card-element"
+            >
+                <span>—</span>
+            </div>
+
+        </section>
+
+
+        <!-- =====================================================
+             RECOMMENDATIONS
+        ====================================================== -->
+
+        <section
+            id="recommendationGrid"
+            class="recommendation-grid"
+        >
+
+
+            <article class="recommendation-box">
+
+                <div class="recommendation-title">
+                    SUB MAIN 1
+                </div>
+
+                <div
+                    id="subMain1"
+                    class="recommendation-list"
+                >
+                    <div class="recommendation-empty">
+                        Select a card above.
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="recommendation-box">
+
+                <div class="recommendation-title">
+                    SUB MAIN 2
+                </div>
+
+                <div
+                    id="subMain2"
+                    class="recommendation-list"
+                >
+                    <div class="recommendation-empty">
+                        Select a card above.
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="recommendation-box">
+
+                <div class="recommendation-title">
+                    GUARD
+                </div>
+
+                <div
+                    id="guard"
+                    class="recommendation-list"
+                >
+                    <div class="recommendation-empty">
+                        Select a card above.
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="recommendation-box">
+
+                <div class="recommendation-title">
+                    SWEEPERS
+                </div>
+
+                <div
+                    id="sweepers"
+                    class="recommendation-list"
+                >
+                    <div class="recommendation-empty">
+                        Select a card above.
+                    </div>
+                </div>
+
+            </article>
+
+
+            <article class="recommendation-box">
+
+                <div class="recommendation-title">
+                    SUPPORTS
+                </div>
+
+                <div
+                    id="supports"
+                    class="recommendation-list"
+                >
+                    <div class="recommendation-empty">
+                        Select a card above.
+                    </div>
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+    </main>
+
+
+    <!-- =========================================================
+         DATABASE LOADER
+    ========================================================= -->
+
+    <script src="database-loader.js"></script>
+
+
+    <script>
+
+        let database = null;
+        let cardList = [];
+
+
+        /* =========================================================
+           ELEMENT IMAGE
+        ========================================================= */
+
+        function getElementImage(card) {
+
+            const elementNumber =
+                Number(card.elementNumber);
+
+            if (elementNumber === 1) {
+                return "elements/leaf.png";
+            }
+
+            if (elementNumber === 2) {
+                return "elements/water.png";
+            }
+
+            if (elementNumber === 3) {
+                return "elements/fire.png";
+            }
+
+            return "";
+
+        }
+
+
+        /* =========================================================
+           ESCAPE HTML
+        ========================================================= */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value == null
+                    ? ""
+                    : String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =========================================================
+           GET ALL CARDS
+        ========================================================= */
+
+        function getAllCards() {
+
+            if (!database || !database.cards) {
+                return [];
+            }
+
+            return Object.values(
+                database.cards
+            )
+            .filter(card => card && card.name)
+            .sort((a, b) =>
+                String(a.name)
+                    .localeCompare(
+                        String(b.name),
+                        undefined,
+                        {
+                            numeric: true,
+                            sensitivity: "base"
+                        }
+                    )
+            );
+
+        }
+
+
+        /* =========================================================
+           TAG CHECK
+        ========================================================= */
+
+        function hasTag(card, tag) {
+
+            const tags =
+                String(card.tags || "")
+                    .split(",")
+                    .map(tag =>
+                        tag.trim()
+                    )
+                    .filter(Boolean);
+
+            return tags.includes(tag);
+
+        }
+
+
+        /* =========================================================
+           TAG REGEX CHECK
+        ========================================================= */
+
+        function tagMatches(card, pattern) {
+
+            const tags =
+                String(card.tags || "");
+
+            return new RegExp(
+                "(^|, )(" +
+                pattern +
+                ")(,|$)"
+            ).test(tags);
+
+        }
+
+
+        /* =========================================================
+           SELECTED CARD TAGS
+        ========================================================= */
+
+        function getTags(card) {
+
+            return String(
+                card.tags || ""
+            );
+
+        }
+
+
+        /* =========================================================
+           TIER
+        ========================================================= */
+
+        function getTier(card) {
+
+            return Number(
+                card.elementNumber
+            );
+
+        }
+
+
+        /* =========================================================
+           SUB MAIN 1
+        ========================================================= */
+
+        function getSubMain1(selected) {
+
+            const tags =
+                getTags(selected);
+
+            const tier =
+                getTier(selected);
+
+            let tierWanted = "";
+
+            if (tier === 1) {
+                tierWanted = 2;
+            }
+            else if (tier === 2) {
+                tierWanted = 3;
+            }
+            else if (tier === 3) {
+                tierWanted = 1;
+            }
+
+
+            const atk =
+                String(
+                    selected.atkType || ""
+                ).toUpperCase();
+
+
+            const primaryAtkWanted =
+                atk === "P"
+                    ? "SATK"
+                    : atk === "S"
+                        ? "PATK"
+                        : "";
+
+
+            const fallbackAtkWanted =
+                atk === "P"
+                    ? "PATK"
+                    : atk === "S"
+                        ? "SATK"
+                        : "";
+
+
+            const wanted = [];
+
+
+            if (tags.includes("Fury")) {
+                wanted.push(
+                    "STRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (
+                tags.includes("Curse1") ||
+                tags.includes("Curse2")
+            ) {
+                wanted.push(
+                    "CRev",
+                    "Curse2"
+                );
+            }
+
+
+            if (tags.includes("TS")) {
+                wanted.push(
+                    "STRev",
+                    "SHEnt",
+                    "TS",
+                    "SWRev"
+                );
+            }
+
+
+            if (tags.includes("Charge")) {
+                wanted.push(
+                    "STRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (tags.includes("DH")) {
+                wanted.push(
+                    "SLRev",
+                    "SLHEnt",
+                    "DH"
+                );
+            }
+
+
+            const fallback = [];
+
+
+            if (tags.includes("SLRev")) {
+                fallback.push("DH");
+            }
+
+
+            if (tags.includes("CRev")) {
+                fallback.push("Curse2");
+            }
+
+
+            if (tags.includes("SWRev")) {
+                fallback.push("TS");
+            }
+
+
+            if (
+                tags.includes("STRev") ||
+                tags.includes("SREnt") ||
+                tags.includes("SHEnt")
+            ) {
+                fallback.push("TS");
+            }
+
+
+            if (
+                tags.includes("SLHEnt") ||
+                tags.includes("SLREnt")
+            ) {
+                fallback.push("DH");
+            }
+
+
+            if (tags.includes("Sweep2")) {
+                fallback.push("Veng");
+            }
+
+
+            const specialTags = [
+                "Fury",
+                "Curse1",
+                "Curse2",
+                "TS",
+                "Charge",
+                "DH",
+                "Guard",
+                "SLRev",
+                "CRev",
+                "SWRev",
+                "STRev",
+                "SREnt",
+                "SHEnt",
+                "SLHEnt",
+                "SLREnt",
+                "Sweep2"
+            ];
+
+
+            const hasSpecial =
+                specialTags.some(
+                    tag => tags.includes(tag)
+                );
+
+
+            if (!hasSpecial) {
+
+                fallback.push(
+                    "Veng",
+                    "STRev",
+                    "SWRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+
+            }
+
+
+            const wantedTags = [
+                ...wanted,
+                ...fallback
+            ];
+
+
+            if (hasTag(selected, "Guard")) {
+
+                return {
+                    message:
+                        "DONT MAIN THIS PLEASE"
+                };
+
+            }
+
+
+            const candidates =
+                cardList.filter(card => {
+
+                    if (
+                        hasTag(card, "Guard")
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        Number(card.mr) === -2
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        getTier(card) !==
+                        tierWanted
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        !wantedTags.some(
+                            tag =>
+                                hasTag(card, tag)
+                        )
+                    ) {
+                        return false;
+                    }
+
+                    if (
+                        hasTag(
+                            selected,
+                            "SLRev"
+                        )
+                    ) {
+                        return true;
+                    }
+
+                    return true;
+
+                });
+
+
+            if (
+                hasTag(
+                    selected,
+                    "SLRev"
+                )
+            ) {
+                return candidates;
+            }
+
+
+            const primary =
+                candidates.filter(
+                    card =>
+                        primaryAtkWanted &&
+                        hasTag(
+                            card,
+                            primaryAtkWanted
+                        )
+                );
+
+
+            if (primary.length) {
+                return primary;
+            }
+
+
+            return candidates.filter(
+                card =>
+                    fallbackAtkWanted &&
+                    hasTag(
+                        card,
+                        fallbackAtkWanted
+                    )
+            );
+
+        }
+
+
+        /* =========================================================
+           SUB MAIN 2
+        ========================================================= */
+
+        function getSubMain2(selected) {
+
+            const tags =
+                getTags(selected);
+
+            const tier =
+                getTier(selected);
+
+
+            const onlyPureAtk =
+                /^PATK(, Sweep1)?$/.test(tags) ||
+                /^SATK(, Sweep1)?$/.test(tags) ||
+                /^PATK, PRev$/.test(tags) ||
+                /^SATK, PRev$/.test(tags);
+
+
+            const baseWanted = [];
+
+
+            if (onlyPureAtk) {
+                baseWanted.push(
+                    "STRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (tags.includes("Fury")) {
+                baseWanted.push(
+                    "STRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (
+                tags.includes("Curse1") ||
+                tags.includes("Curse2")
+            ) {
+                baseWanted.push(
+                    "CRev",
+                    "Curse2"
+                );
+            }
+
+
+            if (tags.includes("TS")) {
+                baseWanted.push(
+                    "STRev",
+                    "SHEnt",
+                    "SLEnt",
+                    "SREnt",
+                    "TS",
+                    "SWRev"
+                );
+            }
+
+
+            if (tags.includes("Charge")) {
+                baseWanted.push(
+                    "STRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (tags.includes("DH")) {
+                baseWanted.push(
+                    "SLRev",
+                    "SLHEnt"
+                );
+            }
+
+
+            if (tags.includes("SLRev")) {
+                baseWanted.push("DH");
+            }
+
+
+            if (tags.includes("CRev")) {
+                baseWanted.push("Curse2");
+            }
+
+
+            if (tags.includes("SWRev")) {
+                baseWanted.push("TS");
+            }
+
+
+            if (tags.includes("SWEnt")) {
+                baseWanted.push("TS");
+            }
+
+
+            if (
+                tags.includes("STRev") ||
+                tags.includes("SREnt") ||
+                tags.includes("SHEnt")
+            ) {
+                baseWanted.push("TS");
+            }
+
+
+            if (
+                tags.includes("SLHEnt") ||
+                tags.includes("SLREnt") ||
+                tags.includes("SLLEnt")
+            ) {
+                baseWanted.push("DH");
+            }
+
+
+            if (tags.includes("Sweep2")) {
+                baseWanted.push("Veng");
+            }
+
+
+            if (tags.includes("Veng")) {
+                baseWanted.push("Veng");
+            }
+
+
+            const uniqueBase =
+                [...new Set(baseWanted)];
+
+
+            let wanted;
+
+
+            if (
+                tags.includes("TS") ||
+                tags.includes("Curse1") ||
+                tags.includes("Curse2") ||
+                tags.includes("DH")
+            ) {
+
+                wanted =
+                    uniqueBase;
+
+            }
+            else if (
+                uniqueBase.length
+            ) {
+
+                wanted = [
+                    ...uniqueBase,
+                    "Veng",
+                    "STRev",
+                    "SWRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                ];
+
+            }
+            else {
+
+                wanted = [
+                    "Veng",
+                    "STRev",
+                    "SWRev",
+                    "SLRev",
+                    "SHEnt",
+                    "SLHEnt"
+                ];
+
+            }
+
+
+            const neededTier =
+                tier === 1
+                    ? 3
+                    : tier === 2
+                        ? 1
+                        : tier === 3
+                            ? 2
+                            : null;
+
+
+            if (
+                hasTag(selected, "Guard")
+            ) {
+
+                return {
+                    message:
+                        "DONT MAIN THIS PLEASE"
+                };
+
+            }
+
+
+            if (!wanted.length) {
+                return [];
+            }
+
+
+            return cardList.filter(card => {
+
+                if (
+                    hasTag(card, "Guard")
+                ) {
+                    return false;
+                }
+
+                const mr =
+                    Number(card.mr);
+
+                if (
+                    mr === -1 ||
+                    mr === -2
+                ) {
+                    return false;
+                }
+
+                if (
+                    getTier(card) !==
+                    neededTier
+                ) {
+                    return false;
+                }
+
+                return wanted.some(
+                    tag =>
+                        hasTag(card, tag)
+                );
+
+            });
+
+        }
+
+
+        /* =========================================================
+           GUARD
+        ========================================================= */
+
+        function getGuard(selected) {
+
+            const tags =
+                getTags(selected);
+
+
+            if (
+                hasTag(selected, "Guard")
+            ) {
+
+                return {
+                    message:
+                        "DONT MAIN THIS PLEASE"
+                };
+
+            }
+
+
+            let wantedTags = [];
+
+
+            if (tags.includes("TS")) {
+
+                wantedTags = [
+                    "STRev",
+                    "SWRev"
+                ];
+
+            }
+            else if (
+                tags.includes("DH")
+            ) {
+
+                wantedTags = [
+                    "SLRev"
+                ];
+
+            }
+            else if (
+                tags.includes("Curse1") ||
+                tags.includes("Curse2")
+            ) {
+
+                wantedTags = [
+                    "CRev"
+                ];
+
+            }
+            else {
+
+                return cardList.filter(
+                    card =>
+                        hasTag(
+                            card,
+                            "Guard"
+                        )
+                );
+
+            }
+
+
+            return cardList.filter(card => {
+
+                if (
+                    !hasTag(card, "Guard")
+                ) {
+                    return false;
+                }
+
+                return wantedTags.some(
+                    tag =>
+                        hasTag(card, tag)
+                );
+
+            });
+
+        }
+
+
+        /* =========================================================
+           SWEEPERS
+        ========================================================= */
+
+        function getSweepers(selected) {
+
+            if (
+                hasTag(selected, "Guard")
+            ) {
+
+                return {
+                    message:
+                        "DONT MAIN THIS PLEASE"
+                };
+
+            }
+
+
+            /*
+             * This intentionally follows the
+             * Google Sheets formula:
+             *
+             * PATK -> SATK
+             * everything else -> PATK
+             */
+
+            const atkTag =
+                hasTag(
+                    selected,
+                    "PATK"
+                )
+                    ? "SATK"
+                    : "PATK";
+
+
+            return cardList.filter(card => {
+
+                if (
+                    hasTag(card, "Guard")
+                ) {
+                    return false;
+                }
+
+                return (
+                    hasTag(
+                        card,
+                        atkTag
+                    ) &&
+                    hasTag(
+                        card,
+                        "Sweep2"
+                    )
+                );
+
+            });
+
+        }
+
+
+        /* =========================================================
+           SUPPORTS
+        ========================================================= */
+
+        function getSupports(selected) {
+
+            const tags =
+                getTags(selected);
+
+
+            if (
+                hasTag(selected, "Guard")
+            ) {
+
+                return {
+                    message:
+                        "DONT MAIN THIS PLEASE"
+                };
+
+            }
+
+
+            let wanted;
+
+
+            if (
+                tags.includes("TS")
+            ) {
+
+                wanted = [
+                    "STRev",
+                    "SWRev"
+                ];
+
+            }
+            else if (
+                tags.includes("Curse1") ||
+                tags.includes("Curse2")
+            ) {
+
+                wanted = [
+                    "CRev"
+                ];
+
+            }
+            else if (
+                tags.includes("DH")
+            ) {
+
+                wanted = [
+                    "SLRev"
+                ];
+
+            }
+            else {
+
+                wanted = [
+                    "STRev",
+                    "SLRev",
+                    "SWRev"
+                ];
+
+            }
+
+
+            return cardList.filter(card => {
+
+                if (
+                    hasTag(card, "Guard")
+                ) {
+                    return false;
+                }
+
+                return wanted.some(
+                    tag =>
+                        hasTag(card, tag)
+                );
+
+            });
+
+        }
+
+
+        /* =========================================================
+           RENDER SELECTED CARD
+        ========================================================= */
+
+        function renderSelectedCardInfo(card) {
+
+            const name =
+                document.getElementById(
+                    "selectedCardName"
+                );
+
+            const element =
+                document.getElementById(
+                    "selectedCardElement"
+                );
+
+
+            name.textContent =
+                card.name;
+
+
+            const image =
+                getElementImage(card);
+
+
+            if (image) {
+
+                element.innerHTML = `
+                    <img
+                        src="${image}"
+                        alt=""
+                    >
+                    <span>
+                        ${escapeHTML(
+                            card.element || ""
+                        )}
+                    </span>
+                `;
+
+            }
+            else {
+
+                element.innerHTML =
+                    `<span>—</span>`;
+
+            }
+
+        }
+
+
+        /* =========================================================
+           RENDER RECOMMENDATION LIST
+        ========================================================= */
+
+        function renderRecommendationList(
+            elementId,
+            results
+        ) {
+
+            const container =
+                document.getElementById(
+                    elementId
+                );
+
+
+            if (
+                results &&
+                results.message
+            ) {
+
+                container.innerHTML = `
+                    <div class="recommendation-empty">
+                        ${escapeHTML(
+                            results.message
+                        )}
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            if (
+                !results ||
+                !results.length
+            ) {
+
+                container.innerHTML = `
+                    <div class="recommendation-empty">
+                        No good matches
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML =
+                results
+                    .map(card => {
+
+                        const image =
+                            getElementImage(
+                                card
+                            );
+
+
+                        return `
+                            <div
+                                class="recommendation-card"
+                            >
+
+                                ${
+                                    image
+                                        ? `
+                                        <img
+                                            class="recommendation-element"
+                                            src="${image}"
+                                            alt=""
+                                        >
+                                        `
+                                        : ""
+                                }
+
+                                <div
+                                    class="recommendation-name"
+                                >
+                                    ${escapeHTML(
+                                        card.name
+                                    )}
+                                </div>
+
+                            </div>
+                        `;
+
+                    })
+                    .join("");
+
+        }
+
+
+        /* =========================================================
+           RENDER ALL RECOMMENDATIONS
+        ========================================================= */
+
+        function renderAllRecommendations(
+            selected
+        ) {
+
+            renderRecommendationList(
+                "subMain1",
+                getSubMain1(selected)
+            );
+
+
+            renderRecommendationList(
+                "subMain2",
+                getSubMain2(selected)
+            );
+
+
+            renderRecommendationList(
+                "guard",
+                getGuard(selected)
+            );
+
+
+            renderRecommendationList(
+                "sweepers",
+                getSweepers(selected)
+            );
+
+
+            renderRecommendationList(
+                "supports",
+                getSupports(selected)
+            );
+
+        }
+
+
+        /* =========================================================
+           POPULATE CARD DROPDOWN
+        ========================================================= */
+
+        function populateCardSelect() {
+
+            const select =
+                document.getElementById(
+                    "cardSelect"
+                );
+
+
+            select.innerHTML = `
+                <option value="">
+                    Select a card...
+                </option>
+            `;
+
+
+            for (
+                const card
+                of cardList
+            ) {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    card.name;
+
+                option.textContent =
+                    card.name;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           APPLY DATABASE
+        ========================================================= */
+
+        function applyDatabase(data) {
+
+            database = data;
+
+            cardList =
+                getAllCards();
+
+
+            populateCardSelect();
+
+
+            const status =
+                document.getElementById(
+                    "teamStatus"
+                );
+
+
+            status.textContent =
+                `${cardList.length} cards loaded.`;
+
+
+            status.classList.remove(
+                "error"
+            );
+
+
+            const select =
+                document.getElementById(
+                    "cardSelect"
+                );
+
+
+            /*
+             * Automatically select the first card
+             * so the page is immediately populated.
+             */
+
+            if (cardList.length) {
+
+                select.value =
+                    cardList[0].name;
+
+
+                renderSelectedCardInfo(
+                    cardList[0]
+                );
+
+
+                renderAllRecommendations(
+                    cardList[0]
+                );
+
+            }
+
+        }
+
+
+        /* =========================================================
+           DROPDOWN CHANGE
+        ========================================================= */
+
+        document
+            .getElementById("cardSelect")
+            .addEventListener(
+                "change",
+                event => {
+
+                    const selectedName =
+                        event.target.value;
+
+
+                    const selected =
+                        cardList.find(
+                            card =>
+                                card.name ===
+                                selectedName
+                        );
+
+
+                    if (!selected) {
+                        return;
+                    }
+
+
+                    renderSelectedCardInfo(
+                        selected
+                    );
+
+
+                    renderAllRecommendations(
+                        selected
+                    );
+
+                }
+            );
+
+
+        /* =========================================================
+           LOAD DATABASE
+        ========================================================= */
+
+        async function initializeDatabase() {
+
+            const status =
+                document.getElementById(
+                    "teamStatus"
+                );
+
+
+            try {
+
+                const data =
+                    await window.loadDatabase({
+
+                        onUpdate:
+                            freshData => {
+
+                                try {
+
+                                    applyDatabase(
+                                        freshData
+                                    );
+
+                                    console.log(
+                                        "Tokyo Debunker Teams database refreshed."
+                                    );
+
+                                }
+                                catch (error) {
+
+                                    console.error(
+                                        "Error rendering refreshed database:",
+                                        error
+                                    );
+
+                                }
+
+                            },
+
+
+                        onError:
+                            error => {
+
+                                console.warn(
+                                    "Tokyo Debunker database background refresh failed:",
+                                    error
+                                );
+
+                            }
+
+                    });
+
+
+                applyDatabase(
+                    data
+                );
+
+
+                console.log(
+                    "Tokyo Debunker Teams database loaded."
+                );
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Teams database error:",
+                    error
+                );
+
+
+                status.textContent =
+                    "Unable to load the card database.";
+
+
+                status.classList.add(
+                    "error"
+                );
+
+            }
+
+        }
+
+
+        initializeDatabase();
+
+    </script>
+
+
+</body>
+
+</html>

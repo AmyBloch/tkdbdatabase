@@ -1,0 +1,2577 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Banner Database — Tokyo Debunker Database</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+<style>
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+body {
+
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(91, 48, 119, 0.16),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(53, 28, 74, 0.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #070509 0%,
+            #0d0712 45%,
+            #09050d 100%
+        );
+
+    color: #eee7f2;
+
+}
+
+
+.page-shell {
+
+    width:
+        min(
+            1500px,
+            calc(100% - 40px)
+        );
+
+    margin: 0 auto;
+
+    padding-bottom: 70px;
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+
+    padding:
+        22px 0 10px;
+
+}
+
+
+.header-inner {
+
+    width:
+        min(
+            1500px,
+            calc(100% - 40px)
+        );
+
+    margin: 0 auto;
+
+    display: flex;
+
+    align-items: center;
+
+}
+
+
+.site-logo {
+
+    display: block;
+
+    width: 240px;
+
+    height: auto;
+
+    max-height: 48px;
+
+    object-fit: contain;
+
+    transform:
+        translateY(-3px);
+
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-row {
+
+    margin-top: 18px;
+
+    margin-bottom: 30px;
+
+}
+
+
+.back-button {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        9px 16px;
+
+    border:
+        1px solid
+        rgba(
+            143,
+            93,
+            171,
+            0.48
+        );
+
+    border-radius: 8px;
+
+    background:
+        rgba(
+            34,
+            18,
+            44,
+            0.65
+        );
+
+    color: #d9c8df;
+
+    font-size: 13px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+
+}
+
+
+.back-button:hover {
+
+    background:
+        rgba(
+            62,
+            31,
+            78,
+            0.8
+        );
+
+    border-color:
+        rgba(
+            173,
+            115,
+            202,
+            0.7
+        );
+
+    transform:
+        translateX(-2px);
+
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.page-title {
+
+    margin:
+        10px 0 8px;
+
+    text-align: center;
+
+    font-size:
+        clamp(
+            28px,
+            4vw,
+            42px
+        );
+
+    font-weight: 600;
+
+    letter-spacing:
+        0.16em;
+
+    color: #eee4f2;
+
+    text-shadow:
+        0 0 18px
+        rgba(
+            159,
+            94,
+            190,
+            0.25
+        );
+
+}
+
+
+.page-subtitle {
+
+    max-width: 900px;
+
+    margin:
+        0 auto 28px;
+
+    text-align: center;
+
+    color: #a99bad;
+
+    font-size: 14px;
+
+    line-height: 1.65;
+
+}
+
+
+/* =========================================================
+   CONTROLS
+========================================================= */
+
+.database-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin:
+        0 auto 25px;
+
+}
+
+
+/* =========================================================
+   DATE FILTER
+========================================================= */
+
+.date-filter {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    padding:
+        10px 12px;
+
+    border:
+        1px solid
+        rgba(
+            116,
+            75,
+            141,
+            0.32
+        );
+
+    border-radius: 9px;
+
+    background:
+        rgba(
+            24,
+            13,
+            31,
+            0.7
+        );
+
+}
+
+
+.date-filter-label {
+
+    color: #9c8ca3;
+
+    font-size: 11px;
+
+    letter-spacing:
+        0.03em;
+
+}
+
+
+.date-filter input {
+
+    width: 145px;
+
+    min-height: 34px;
+
+    box-sizing: border-box;
+
+    padding:
+        6px 9px;
+
+    border:
+        1px solid
+        rgba(
+            133,
+            86,
+            161,
+            0.4
+        );
+
+    border-radius: 6px;
+
+    outline: none;
+
+    background:
+        rgba(
+            10,
+            7,
+            14,
+            0.85
+        );
+
+    color: #ddd1e3;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+}
+
+
+.date-filter input:focus {
+
+    border-color:
+        rgba(
+            173,
+            115,
+            202,
+            0.7
+        );
+
+}
+
+
+.filter-button {
+
+    min-height: 34px;
+
+    padding:
+        6px 12px;
+
+    border:
+        1px solid
+        rgba(
+            133,
+            86,
+            161,
+            0.4
+        );
+
+    border-radius: 6px;
+
+    background:
+        rgba(
+            50,
+            27,
+            63,
+            0.75
+        );
+
+    color: #cdb9d5;
+
+    font-family: inherit;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease;
+
+}
+
+
+.filter-button:hover {
+
+    background:
+        rgba(
+            73,
+            38,
+            91,
+            0.9
+        );
+
+    border-color:
+        rgba(
+            173,
+            115,
+            202,
+            0.65
+        );
+
+}
+
+
+.filter-button.clear {
+
+    background:
+        rgba(
+            30,
+            17,
+            39,
+            0.65
+        );
+
+    color: #938598;
+
+}
+
+
+.filter-summary {
+
+    margin:
+        -8px auto 22px;
+
+    color: #76697d;
+
+    font-size: 11px;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-message {
+
+    margin:
+        18px auto 25px;
+
+    text-align: center;
+
+    color: #9f92a5;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+
+.status-message.success {
+
+    color: #a9c9b2;
+
+}
+
+
+.status-message.error {
+
+    color: #d59da8;
+
+}
+
+
+/* =========================================================
+   BANNER HISTORY
+========================================================= */
+
+.banner-history {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 16px;
+
+}
+
+
+/* =========================================================
+   BANNER PANEL
+========================================================= */
+
+.banner-panel {
+
+    border:
+        1px solid
+        rgba(
+            116,
+            75,
+            141,
+            0.35
+        );
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(
+                30,
+                17,
+                39,
+                0.82
+            ),
+            rgba(
+                14,
+                9,
+                20,
+                0.88
+            )
+        );
+
+    box-shadow:
+        0 8px 28px
+        rgba(
+            0,
+            0,
+            0,
+            0.22
+        );
+
+    overflow: hidden;
+
+}
+
+
+/* =========================================================
+   BANNER HEADER
+========================================================= */
+
+.banner-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding:
+        15px 18px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            116,
+            75,
+            141,
+            0.3
+        );
+
+}
+
+
+.banner-date {
+
+    color: #dfd1e4;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    letter-spacing:
+        0.04em;
+
+}
+
+
+.banner-card-count {
+
+    flex: 0 0 auto;
+
+    padding:
+        4px 9px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(
+            107,
+            63,
+            130,
+            0.25
+        );
+
+    border:
+        1px solid
+        rgba(
+            133,
+            86,
+            161,
+            0.3
+        );
+
+    color: #cdb3d8;
+
+    font-size: 10px;
+
+}
+
+
+/* =========================================================
+   CARD LIST
+========================================================= */
+
+.banner-card-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* =========================================================
+   CARD ROW
+========================================================= */
+
+.banner-card {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        auto;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding:
+        13px 18px;
+
+    border-bottom:
+        1px solid
+        rgba(
+            109,
+            71,
+            130,
+            0.17
+        );
+
+    transition:
+        background 0.15s ease;
+
+}
+
+
+.banner-card:last-child {
+
+    border-bottom: none;
+
+}
+
+
+.banner-card:hover {
+
+    background:
+        rgba(
+            86,
+            47,
+            105,
+            0.13
+        );
+
+}
+
+
+/* =========================================================
+   CARD NAME
+========================================================= */
+
+.banner-card-name {
+
+    min-width: 0;
+
+    color: #ded1e3;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =========================================================
+   CHARACTER
+========================================================= */
+
+.banner-card-character {
+
+    color: #9c8ca3;
+
+    font-size: 11px;
+
+    text-align: right;
+
+    white-space: nowrap;
+
+}
+
+
+.banner-card-character::before {
+
+    content:
+        "Character: ";
+
+    color: #75667b;
+
+}
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.empty-message {
+
+    padding:
+        45px 20px;
+
+    color: #817486;
+
+    font-size: 13px;
+
+    text-align: center;
+
+    line-height: 1.6;
+
+}
+
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.banner-info {
+
+    margin-top: 18px;
+
+    color: #796d80;
+
+    font-size: 11px;
+
+    text-align: center;
+
+}
+
+
+/* =========================================================
+   BOTTOM DECORATION
+========================================================= */
+
+.bottom-decoration {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    width:
+        min(
+            600px,
+            80%
+        );
+
+    margin:
+        55px auto 0;
+
+}
+
+
+.bottom-decoration::before,
+.bottom-decoration::after {
+
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(
+                127,
+                79,
+                151,
+                0.45
+            )
+        );
+
+}
+
+
+.bottom-decoration::after {
+
+    background:
+        linear-gradient(
+            90deg,
+            rgba(
+                127,
+                79,
+                151,
+                0.45
+            ),
+            transparent
+        );
+
+}
+
+
+.bottom-diamond {
+
+    width: 6px;
+
+    height: 6px;
+
+    transform:
+        rotate(45deg);
+
+    border:
+        1px solid
+        rgba(
+            148,
+            98,
+            173,
+            0.6
+        );
+
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+    .page-shell {
+
+        width:
+            calc(
+                100% - 24px
+            );
+
+    }
+
+
+    .header-inner {
+
+        width:
+            calc(
+                100% - 24px
+            );
+
+    }
+
+
+    .site-logo {
+
+        width: 210px;
+
+    }
+
+
+    .page-title {
+
+        font-size: 27px;
+
+        letter-spacing:
+            0.1em;
+
+    }
+
+
+    .page-subtitle {
+
+        font-size: 13px;
+
+    }
+
+
+    .database-controls {
+
+        align-items:
+            stretch;
+
+        flex-direction:
+            column;
+
+    }
+
+
+    .date-filter {
+
+        flex-direction:
+            column;
+
+        align-items:
+            stretch;
+
+    }
+
+
+    .date-filter-label {
+
+        text-align: center;
+
+    }
+
+
+    .date-filter input {
+
+        width: 100%;
+
+    }
+
+
+    .filter-button {
+
+        width: 100%;
+
+    }
+
+
+    .banner-header {
+
+        padding:
+            14px 15px;
+
+    }
+
+
+    .banner-card {
+
+        grid-template-columns:
+            1fr;
+
+        gap: 4px;
+
+        padding:
+            13px 15px;
+
+    }
+
+
+    .banner-card-character {
+
+        text-align: left;
+
+    }
+
+}
+
+
+@media (max-width: 430px) {
+
+    .site-logo {
+
+        width: 190px;
+
+    }
+
+
+    .back-row {
+
+        margin-bottom:
+            24px;
+
+    }
+
+
+    .banner-date {
+
+        font-size: 14px;
+
+    }
+
+
+    .banner-card-name {
+
+        font-size: 12px;
+
+    }
+
+
+    .banner-card-character {
+
+        font-size: 10px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html">
+            <img
+                src="logo.png"
+                alt="Tokyo Debunker"
+                class="site-logo"
+            >
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="page-shell">
+
+
+    <div class="back-row">
+
+        <a
+            href="banners.html"
+            class="back-button"
+        >
+            ← Back to Banners
+        </a>
+
+    </div>
+
+
+    <h1 class="page-title">
+        BANNER DATABASE
+    </h1>
+
+
+    <p class="page-subtitle">
+
+        A complete history of banners reconstructed from
+        every recorded card rerun.
+
+    </p>
+
+
+    <!-- =====================================================
+         CONTROLS
+    ====================================================== -->
+
+    <div class="database-controls">
+
+
+        <div class="date-filter">
+
+
+            <span class="date-filter-label">
+                Date Range
+            </span>
+
+
+            <input
+                id="startDate"
+                type="date"
+                aria-label="Start date"
+            >
+
+
+            <span class="date-filter-label">
+                to
+            </span>
+
+
+            <input
+                id="endDate"
+                type="date"
+                aria-label="End date"
+            >
+
+
+            <button
+                id="applyFilterButton"
+                class="filter-button"
+                type="button"
+            >
+                Apply
+            </button>
+
+
+            <button
+                id="clearFilterButton"
+                class="filter-button clear"
+                type="button"
+            >
+                Clear
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div
+        id="filterSummary"
+        class="filter-summary"
+        style="display:none;"
+    ></div>
+
+
+    <div
+        id="statusMessage"
+        class="status-message"
+    >
+        Loading banner history...
+    </div>
+
+
+    <div
+        id="bannerHistory"
+        class="banner-history"
+    >
+
+        <div class="empty-message">
+            Loading...
+        </div>
+
+    </div>
+
+
+    <div
+        id="bannerInfo"
+        class="banner-info"
+    ></div>
+
+
+    <div class="bottom-decoration">
+
+        <div class="bottom-diamond"></div>
+
+    </div>
+
+
+</main>
+
+
+<script src="database-loader.js"></script>
+
+<script>
+
+/* =========================================================
+   CHARACTER DEFINITIONS
+========================================================= */
+
+const CHARACTER_DEFINITIONS = [
+
+    {
+        key: "Jo",
+        name: "Jo Kongoza"
+    },
+
+    {
+        key: "Mio",
+        name: "Mio Susuhara"
+    },
+
+    {
+        key: "Elias",
+        name: "Elias Pratt"
+    },
+
+    {
+        key: "Shion",
+        name: "Shion Genkai"
+    },
+
+    {
+        key: "Jin",
+        name: "Jin Kamurai"
+    },
+
+    {
+        key: "Tohma",
+        name: "Tohma Ishibashi"
+    },
+
+    {
+        key: "Luca",
+        name: "Lucas Errant"
+    },
+
+    {
+        key: "Kaito",
+        name: "Kaito Fuji"
+    },
+
+    {
+        key: "Taiga",
+        name: "Taiga Hoshibami"
+    },
+
+    {
+        key: "Ritsu",
+        name: "Ritsu Shinjo"
+    },
+
+    {
+        key: "Romeo",
+        name: "Romeo Lucci"
+    },
+
+    {
+        key: "Ed",
+        name: "Edward Hart"
+    },
+
+    {
+        key: "Lyca",
+        name: "Lyca Colt"
+    },
+
+    {
+        key: "Rui",
+        name: "Rui Mizuki"
+    },
+
+    {
+        key: "Haru",
+        name: "Haru Sagara"
+    },
+
+    {
+        key: "Towa",
+        name: "Towa Otonashi"
+    },
+
+    {
+        key: "Ren",
+        name: "Ren Shiranami"
+    },
+
+    {
+        key: "Yuri",
+        name: "Yuri Isami"
+    },
+
+    {
+        key: "Jiro",
+        name: "Jiro Kirisaki"
+    },
+
+    {
+        key: "Haku",
+        name: "Haku Kusanagi"
+    },
+
+    {
+        key: "Subaru",
+        name: "Subaru Kagami"
+    },
+
+    {
+        key: "Zenji",
+        name: "Zenji Kotodama"
+    },
+
+    {
+        key: "Alan",
+        name: "Alan Mido"
+    },
+
+    {
+        key: "Sho",
+        name: "Shohei Haizono"
+    },
+
+    {
+        key: "Leo",
+        name: "Leo Kurosagi"
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let databaseCards = {};
+
+let bannerHistory = [];
+
+let filteredBannerHistory = [];
+
+
+/* =========================================================
+   HTML ESCAPING
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   RESOLVE CHARACTER
+========================================================= */
+
+function resolveCharacter(value) {
+
+    if (!value) {
+        return null;
+    }
+
+
+    const raw =
+        String(value)
+            .trim()
+            .toLowerCase();
+
+
+    return (
+        CHARACTER_DEFINITIONS.find(
+            character =>
+
+                character.key
+                    .toLowerCase() === raw ||
+
+                character.name
+                    .toLowerCase() === raw
+        ) || null
+    );
+
+}
+
+
+/* =========================================================
+   GET CHARACTER FROM CARD NAME
+========================================================= */
+
+function getCharacterFromCardName(
+    cardName
+) {
+
+    if (!cardName) {
+        return null;
+    }
+
+
+    const matches =
+        String(cardName).match(
+            /\(([^()]*)\)/g
+        );
+
+
+    if (!matches) {
+        return null;
+    }
+
+
+    for (
+        const match of matches
+    ) {
+
+        const inside =
+            match
+                .replace(
+                    /^\(/,
+                    ""
+                )
+                .replace(
+                    /\)$/,
+                    ""
+                )
+                .trim();
+
+
+        const character =
+            resolveCharacter(
+                inside
+            );
+
+
+        if (character) {
+            return character;
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+/* =========================================================
+   PARSE DATE
+========================================================= */
+
+function parseRunDate(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return null;
+
+    }
+
+
+    const raw =
+        String(value).trim();
+
+
+    if (!raw) {
+        return null;
+    }
+
+
+    const match =
+        raw.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/
+        );
+
+
+    if (!match) {
+        return null;
+    }
+
+
+    let year =
+        Number(match[3]);
+
+
+    if (year < 100) {
+        year += 2000;
+    }
+
+
+    const month =
+        Number(match[1]) - 1;
+
+
+    const day =
+        Number(match[2]);
+
+
+    const date =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+
+    if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month ||
+        date.getDate() !== day
+    ) {
+
+        return null;
+
+    }
+
+
+    return date;
+
+}
+
+
+/* =========================================================
+   EXTRACT ALL DATES
+========================================================= */
+
+function extractRunDates(runs) {
+
+    if (
+        runs === null ||
+        runs === undefined
+    ) {
+
+        return [];
+
+    }
+
+
+    const text =
+        String(runs);
+
+
+    const matches =
+        text.match(
+            /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g
+        );
+
+
+    if (!matches) {
+        return [];
+    }
+
+
+    const uniqueDates =
+        new Map();
+
+
+    for (
+        const match of matches
+    ) {
+
+        const date =
+            parseRunDate(
+                match
+            );
+
+
+        if (!date) {
+            continue;
+        }
+
+
+        uniqueDates.set(
+            dateKey(date),
+            date
+        );
+
+    }
+
+
+    return Array.from(
+        uniqueDates.values()
+    ).sort(
+        (
+            a,
+            b
+        ) =>
+            a.getTime() -
+            b.getTime()
+    );
+
+}
+
+
+/* =========================================================
+   DATE KEY
+========================================================= */
+
+function dateKey(date) {
+
+    return (
+
+        date.getFullYear() +
+
+        "-" +
+
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(date) {
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NATURAL CARD SORT
+========================================================= */
+
+function naturalCardSort(
+    a,
+    b
+) {
+
+    const numberA =
+        String(a).match(
+            /^\s*(\d+)/
+        );
+
+
+    const numberB =
+        String(b).match(
+            /^\s*(\d+)/
+        );
+
+
+    if (
+        numberA &&
+        numberB
+    ) {
+
+        const valueA =
+            Number(
+                numberA[1]
+            );
+
+
+        const valueB =
+            Number(
+                numberB[1]
+            );
+
+
+        if (
+            valueA !== valueB
+        ) {
+
+            return (
+                valueA -
+                valueB
+            );
+
+        }
+
+    }
+
+
+    return String(a).localeCompare(
+        String(b)
+    );
+
+}
+
+
+/* =========================================================
+   RECONSTRUCT BANNER HISTORY
+========================================================= */
+
+function buildBannerHistory() {
+
+    const bannerMap =
+        new Map();
+
+
+    for (
+        const cardKey
+        of Object.keys(
+            databaseCards || {}
+        )
+    ) {
+
+        const card =
+            databaseCards[cardKey];
+
+
+        if (!card) {
+            continue;
+        }
+
+
+        const cardName =
+            card.name;
+
+
+        if (!cardName) {
+            continue;
+        }
+
+
+        const character =
+            getCharacterFromCardName(
+                cardName
+            );
+
+
+        if (!character) {
+            continue;
+        }
+
+
+        const dates =
+            extractRunDates(
+                card.runs
+            );
+
+
+        for (
+            const date
+            of dates
+        ) {
+
+            const key =
+                dateKey(
+                    date
+                );
+
+
+            if (
+                !bannerMap.has(key)
+            ) {
+
+                bannerMap.set(
+                    key,
+                    {
+                        key,
+                        date,
+                        cards: new Map()
+                    }
+                );
+
+            }
+
+
+            const banner =
+                bannerMap.get(
+                    key
+                );
+
+
+            banner.cards.set(
+                cardName,
+                {
+                    name:
+                        cardName,
+
+                    character
+                }
+            );
+
+        }
+
+    }
+
+
+    const banners =
+        Array.from(
+            bannerMap.values()
+        );
+
+
+    banners.sort(
+        (
+            a,
+            b
+        ) =>
+            b.date.getTime() -
+            a.date.getTime()
+    );
+
+
+    for (
+        const banner
+        of banners
+    ) {
+
+        banner.cards =
+            Array.from(
+                banner.cards.values()
+            );
+
+
+        banner.cards.sort(
+            (
+                a,
+                b
+            ) =>
+                naturalCardSort(
+                    a.name,
+                    b.name
+                )
+        );
+
+    }
+
+
+    return banners;
+
+}
+
+
+/* =========================================================
+   RENDER BANNERS
+========================================================= */
+
+function renderBannerHistory() {
+
+    const container =
+        document.getElementById(
+            "bannerHistory"
+        );
+
+
+    const banners =
+        filteredBannerHistory;
+
+
+    if (!banners.length) {
+
+        container.innerHTML = `
+
+            <div class="empty-message">
+
+                ${
+                    bannerHistory.length
+                        ? "No banners match the selected date range."
+                        : "No banners were found in the card rerun data."
+                }
+
+            </div>
+
+        `;
+
+        updateBannerInfo();
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+
+        banners
+            .map(
+                banner => {
+
+                    const cards =
+                        banner.cards || [];
+
+
+                    return `
+
+                        <article class="banner-panel">
+
+
+                            <div class="banner-header">
+
+
+                                <div class="banner-date">
+
+                                    ${escapeHTML(
+                                        formatDate(
+                                            banner.date
+                                        )
+                                    )}
+
+                                </div>
+
+
+                                <div class="banner-card-count">
+
+                                    ${cards.length}
+
+                                    ${
+                                        cards.length === 1
+                                            ? "card"
+                                            : "cards"
+                                    }
+
+                                </div>
+
+
+                            </div>
+
+
+                            <div class="banner-card-list">
+
+
+                                ${
+                                    cards.length
+
+                                        ? cards
+                                            .map(
+                                                card => `
+
+                                                    <div class="banner-card">
+
+
+                                                        <div class="banner-card-name">
+
+                                                            ${escapeHTML(
+                                                                card.name
+                                                            )}
+
+                                                        </div>
+
+
+                                                        <div class="banner-card-character">
+
+                                                            ${escapeHTML(
+                                                                card.character.name
+                                                            )}
+
+                                                        </div>
+
+
+                                                    </div>
+
+                                                `
+                                            )
+                                            .join("")
+
+                                        : `
+
+                                            <div class="empty-message">
+
+                                                No cards found.
+
+                                            </div>
+
+                                        `
+                                }
+
+
+                            </div>
+
+
+                        </article>
+
+                    `;
+
+                }
+            )
+            .join("");
+
+
+    updateBannerInfo();
+
+}
+
+
+/* =========================================================
+   BANNER INFO
+========================================================= */
+
+function updateBannerInfo() {
+
+    const info =
+        document.getElementById(
+            "bannerInfo"
+        );
+
+
+    const totalCards =
+        filteredBannerHistory.reduce(
+            (
+                total,
+                banner
+            ) =>
+                total +
+                banner.cards.length,
+            0
+        );
+
+
+    if (
+        bannerHistory.length &&
+        filteredBannerHistory.length !==
+            bannerHistory.length
+    ) {
+
+        info.textContent =
+            `${filteredBannerHistory.length} of ${bannerHistory.length} banners shown • ${totalCards} banner card appearances`;
+
+    } else {
+
+        info.textContent =
+            `${bannerHistory.length} banners reconstructed • ${totalCards} banner card appearances`;
+
+    }
+
+}
+
+
+/* =========================================================
+   APPLY DATE FILTER
+========================================================= */
+
+function applyDateFilter() {
+
+    const startInput =
+        document.getElementById(
+            "startDate"
+        );
+
+
+    const endInput =
+        document.getElementById(
+            "endDate"
+        );
+
+
+    const startValue =
+        startInput.value;
+
+
+    const endValue =
+        endInput.value;
+
+
+    let startDate =
+        startValue
+            ? new Date(
+                startValue +
+                "T00:00:00"
+            )
+            : null;
+
+
+    let endDate =
+        endValue
+            ? new Date(
+                endValue +
+                "T23:59:59.999"
+            )
+            : null;
+
+
+    if (
+        startDate &&
+        endDate &&
+        startDate.getTime() >
+            endDate.getTime()
+    ) {
+
+        alert(
+            "The start date cannot be after the end date."
+        );
+
+        return;
+
+    }
+
+
+    filteredBannerHistory =
+        bannerHistory.filter(
+            banner => {
+
+                const time =
+                    banner.date.getTime();
+
+
+                if (
+                    startDate &&
+                    time <
+                        startDate.getTime()
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    endDate &&
+                    time >
+                        endDate.getTime()
+                ) {
+
+                    return false;
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    updateFilterSummary(
+        startValue,
+        endValue
+    );
+
+
+    renderBannerHistory();
+
+}
+
+
+/* =========================================================
+   CLEAR DATE FILTER
+========================================================= */
+
+function clearDateFilter() {
+
+    document.getElementById(
+        "startDate"
+    ).value = "";
+
+
+    document.getElementById(
+        "endDate"
+    ).value = "";
+
+
+    filteredBannerHistory =
+        bannerHistory.slice();
+
+
+    const summary =
+        document.getElementById(
+            "filterSummary"
+        );
+
+
+    summary.textContent = "";
+
+    summary.style.display =
+        "none";
+
+
+    renderBannerHistory();
+
+}
+
+
+/* =========================================================
+   FILTER SUMMARY
+========================================================= */
+
+function updateFilterSummary(
+    startValue,
+    endValue
+) {
+
+    const summary =
+        document.getElementById(
+            "filterSummary"
+        );
+
+
+    if (
+        !startValue &&
+        !endValue
+    ) {
+
+        summary.textContent = "";
+
+        summary.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    let text =
+        "Showing banners";
+
+
+    if (startValue) {
+
+        text +=
+            " from " +
+            formatInputDate(
+                startValue
+            );
+
+    }
+
+
+    if (endValue) {
+
+        text +=
+            (
+                startValue
+                    ? " to "
+                    : " through "
+            ) +
+            formatInputDate(
+                endValue
+            );
+
+    }
+
+
+    summary.textContent =
+        text;
+
+
+    summary.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   FORMAT INPUT DATE
+========================================================= */
+
+function formatInputDate(
+    value
+) {
+
+    const date =
+        new Date(
+            value +
+            "T00:00:00"
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    return formatDate(
+        date
+    );
+
+}
+
+
+/* =========================================================
+   APPLY DATABASE
+========================================================= */
+
+function applyDatabase(
+    data
+) {
+
+    if (!data) {
+        return;
+    }
+
+
+    databaseCards =
+        data.cards || {};
+
+
+    bannerHistory =
+        buildBannerHistory();
+
+
+    filteredBannerHistory =
+        bannerHistory.slice();
+
+
+    /*
+     * Re-apply the current date filter
+     * after refreshing.
+     */
+
+    const startValue =
+        document.getElementById(
+            "startDate"
+        ).value;
+
+
+    const endValue =
+        document.getElementById(
+            "endDate"
+        ).value;
+
+
+    if (
+        startValue ||
+        endValue
+    ) {
+
+        applyDateFilter();
+
+    } else {
+
+        renderBannerHistory();
+
+    }
+
+}
+
+
+/* =========================================================
+   SHOW STATUS
+========================================================= */
+
+function showStatus(
+    message,
+    type
+) {
+
+    const status =
+        document.getElementById(
+            "statusMessage"
+        );
+
+
+    status.textContent =
+        message;
+
+
+    status.classList.remove(
+        "success",
+        "error"
+    );
+
+
+    if (type) {
+
+        status.classList.add(
+            type
+        );
+
+    }
+
+
+    status.style.display =
+        "block";
+
+}
+
+
+/* =========================================================
+   DATABASE LOADING
+========================================================= */
+
+async function initializeDatabase() {
+
+    const status =
+        document.getElementById(
+            "statusMessage"
+        );
+
+    try {
+
+        const data =
+            await window.loadDatabase({
+
+                onUpdate:
+                    freshData => {
+
+                        try {
+
+                            applyDatabase(
+                                freshData
+                            );
+
+                            console.log(
+                                "Tokyo Debunker database refreshed."
+                            );
+
+                        } catch (error) {
+
+                            console.error(
+                                "Error rendering refreshed database:",
+                                error
+                            );
+
+                        }
+
+                    },
+
+                onError:
+                    error => {
+
+                        console.warn(
+                            "Tokyo Debunker database background refresh failed:",
+                            error
+                        );
+
+                    }
+
+            });
+
+        applyDatabase(
+            data
+        );
+
+        status.style.display =
+            "none";
+
+        console.log(
+            "Tokyo Debunker database loaded."
+        );
+
+    } catch (error) {
+
+        console.error(
+            "Banner database error:",
+            error
+        );
+
+        const cached =
+            (() => {
+
+                try {
+
+                    const raw =
+                        localStorage.getItem(
+                            "tokyoDebunkerDatabase"
+                        );
+
+                    return raw
+                        ? JSON.parse(raw)
+                        : null;
+
+                } catch (
+                    cacheError
+                ) {
+
+                    return null;
+
+                }
+
+            })();
+
+        if (
+            cached
+        ) {
+
+            try {
+
+                applyDatabase(
+                    cached
+                );
+
+                status.style.display =
+                    "none";
+
+                return;
+
+            } catch (
+                cachedError
+            ) {
+
+                console.error(
+                    "Cached database could not be rendered:",
+                    cachedError
+                );
+
+            }
+
+        }
+
+        showStatus(
+            "Unable to load banner data.",
+            "error"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   BUTTON EVENTS
+========================================================= */
+
+
+document.getElementById(
+    "applyFilterButton"
+).addEventListener(
+    "click",
+    applyDateFilter
+);
+
+
+document.getElementById(
+    "clearFilterButton"
+).addEventListener(
+    "click",
+    clearDateFilter
+);
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initializeDatabase();
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,1882 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Themes | Tokyo Debunker Database</title>
+<link rel="stylesheet" href="style.css">
+
+<style>
+.themes-page{
+    width:100%;
+    max-width:1450px;
+    margin:0 auto;
+    padding:40px 20px 80px
+}
+
+.themes-header{
+    text-align:center;
+    margin-bottom:40px
+}
+
+.themes-header h1{
+    font-size:38px;
+    letter-spacing:5px;
+    margin-bottom:12px
+}
+
+.themes-header p{
+    color:#b9abc9;
+    font-size:15px
+}
+
+.section{
+    margin-bottom:55px
+}
+
+.section-title{
+    margin-bottom:10px;
+    font-size:24px;
+    letter-spacing:3px;
+    color:#e5d8ed
+}
+
+.section-description{
+    margin-bottom:25px;
+    color:#95869f;
+    font-size:13px;
+    line-height:1.5
+}
+
+
+/* =========================================================
+   THEME GRID
+========================================================= */
+
+.theme-list{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px
+}
+
+
+/* =========================================================
+   THEME BOX
+========================================================= */
+
+.theme-box{
+    display:flex;
+    flex-direction:column;
+    min-width:0;
+
+    border:
+        1px solid
+        rgba(170,110,220,.28);
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,18,50,.92),
+            rgba(12,8,18,.96)
+        );
+
+    overflow:hidden
+}
+
+.theme-main{
+    padding:22px;
+    min-width:0
+}
+
+.theme-heading{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px
+}
+
+.theme-name{
+    color:#e5d8ed;
+    font-size:19px;
+    font-weight:600;
+    letter-spacing:2px
+}
+
+.theme-code{
+    padding:4px 8px;
+
+    border:
+        1px solid
+        rgba(180,130,255,.35);
+
+    border-radius:5px;
+
+    background:
+        rgba(90,45,130,.25);
+
+    color:#b9a3ca;
+    font-size:11px;
+    letter-spacing:1px
+}
+
+
+/* =========================================================
+   THEME CARDS
+========================================================= */
+
+.theme-card-list{
+    display:flex;
+    flex-direction:column;
+    gap:7px
+}
+
+.theme-card{
+    display:flex;
+    align-items:center;
+    gap:10px;
+
+    padding:9px 11px;
+
+    border:
+        1px solid
+        rgba(170,110,220,.16);
+
+    border-left:
+        2px solid
+        rgba(170,110,220,.55);
+
+    border-radius:5px;
+
+    background:
+        rgba(35,20,48,.55);
+
+    color:#d7cfdf;
+    font-size:13px
+}
+
+.theme-card:hover{
+    border-color:
+        rgba(190,130,255,.45);
+
+    background:
+        rgba(50,28,68,.7)
+}
+
+.theme-card-name{
+    min-width:0;
+    overflow-wrap:anywhere
+}
+
+.element-icon{
+    width:22px;
+    height:22px;
+    object-fit:contain;
+    flex-shrink:0
+}
+
+
+/* =========================================================
+   MISSING CHARACTERS
+========================================================= */
+
+.theme-missing{
+    padding:18px 22px 22px;
+
+    border-left:none;
+
+    border-top:
+        1px solid
+        rgba(170,110,220,.2);
+
+    background:
+        rgba(8,5,14,.4)
+}
+
+.missing-title{
+    margin-bottom:14px;
+
+    color:#c9acd9;
+
+    font-size:13px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase
+}
+
+.missing-list{
+    display:flex;
+    flex-direction:column;
+    gap:6px
+}
+
+.missing-character{
+    padding:7px 9px;
+
+    border:
+        1px solid
+        rgba(150,100,190,.12);
+
+    border-radius:4px;
+
+    background:
+        rgba(30,18,42,.45);
+
+    color:#a99bae;
+    font-size:12px
+}
+
+.missing-none{
+    color:#a9c6a6;
+    font-size:13px
+}
+
+
+/* =========================================================
+   CHARACTER THEME GRID
+========================================================= */
+
+.character-theme-list{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px
+}
+
+.character-theme-box{
+    border:
+        1px solid
+        rgba(170,110,220,.28);
+
+    border-radius:10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(35,18,50,.92),
+            rgba(12,8,18,.96)
+        );
+
+    overflow:hidden
+}
+
+.character-theme-header{
+    padding:16px 18px;
+
+    border-bottom:
+        1px solid
+        rgba(170,110,220,.18);
+
+    background:
+        rgba(45,22,65,.45)
+}
+
+.character-theme-name{
+    color:#e5d8ed;
+    font-size:17px;
+    font-weight:600;
+    letter-spacing:1.5px
+}
+
+.character-theme-content{
+    padding:18px
+}
+
+.character-theme-row{
+    margin-bottom:18px
+}
+
+.character-theme-row:last-child{
+    margin-bottom:0
+}
+
+.character-theme-label{
+    margin-bottom:8px;
+
+    color:#c9acd9;
+
+    font-size:11px;
+    font-weight:600;
+    letter-spacing:1.5px;
+    text-transform:uppercase
+}
+
+.character-theme-card{
+    display:flex;
+    align-items:center;
+    gap:9px;
+
+    padding:8px 10px;
+    margin-bottom:5px;
+
+    border:
+        1px solid
+        rgba(150,100,190,.14);
+
+    border-left:
+        2px solid
+        rgba(170,110,220,.55);
+
+    border-radius:4px;
+
+    background:
+        rgba(35,20,48,.55);
+
+    color:#d7cfdf;
+    font-size:12px
+}
+
+.character-theme-missing{
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px
+}
+
+.missing-theme{
+    padding:5px 8px;
+
+    border:
+        1px solid
+        rgba(150,100,190,.18);
+
+    border-radius:4px;
+
+    background:
+        rgba(30,18,42,.5);
+
+    color:#95869f;
+    font-size:11px
+}
+
+.all-themes{
+    color:#a9c6a6;
+    font-size:12px
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-message{
+    display:block;
+    margin-bottom:25px;
+
+    padding:12px 15px;
+
+    border:
+        1px solid
+        rgba(170,110,220,.25);
+
+    border-radius:6px;
+
+    background:
+        rgba(35,18,50,.65);
+
+    color:#b9abc9;
+    font-size:13px;
+    text-align:center
+}
+
+.status-message.error{
+    border-color:
+        rgba(190,90,90,.5);
+
+    color:#d9aaaa
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media(max-width:1050px){
+
+    .theme-list,
+    .character-theme-list{
+        grid-template-columns:
+            repeat(2,minmax(0,1fr))
+    }
+
+}
+
+@media(max-width:700px){
+
+    .theme-list,
+    .character-theme-list{
+        grid-template-columns:1fr
+    }
+
+}
+
+@media(max-width:600px){
+
+    .themes-page{
+        padding:25px 12px 60px
+    }
+
+    .themes-header h1{
+        font-size:28px;
+        letter-spacing:3px
+    }
+
+    .themes-header p{
+        font-size:13px
+    }
+
+    .theme-main{
+        padding:16px
+    }
+
+    .theme-missing{
+        padding:16px
+    }
+
+    .theme-name{
+        font-size:16px
+    }
+
+    .character-theme-content{
+        padding:14px
+    }
+
+}
+</style>
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="nav-logo">
+
+        <a href="index.html">
+
+            <img
+                src="logo.png"
+                alt="Tokyo Debunker"
+            >
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+<main class="themes-page">
+
+
+    <div class="themes-header">
+
+        <h1>
+            THEMES
+        </h1>
+
+        <p>
+            Card themes and character theme coverage
+        </p>
+
+    </div>
+
+
+    <div
+        id="status"
+        class="status-message"
+    >
+        Loading theme data...
+    </div>
+
+
+    <section class="section">
+
+        <div class="section-title">
+            THEMES
+        </div>
+
+        <div class="section-description">
+
+            Every card belonging to each theme, with characters
+            who do not currently have a card for that theme.
+
+        </div>
+
+        <div
+            id="themeList"
+            class="theme-list"
+        ></div>
+
+    </section>
+
+
+    <section class="section">
+
+        <div class="section-title">
+            CHARACTER THEME COVERAGE
+        </div>
+
+        <div class="section-description">
+
+            Each character's cards by theme, followed by the
+            themes they are missing.
+
+        </div>
+
+        <div
+            id="characterThemeList"
+            class="character-theme-list"
+        ></div>
+
+    </section>
+
+
+</main>
+
+
+<script src="database-loader.js"></script>
+
+<script>
+
+const characters = [
+
+    {
+        key: "Jo",
+        name: "Jo Kongoza"
+    },
+
+    {
+        key: "Mio",
+        name: "Mio Susuhara"
+    },
+
+    {
+        key: "Elias",
+        name: "Elias Pratt"
+    },
+
+    {
+        key: "Shion",
+        name: "Shion Genkai"
+    },
+
+    {
+        key: "Jin",
+        name: "Jin Kamurai"
+    },
+
+    {
+        key: "Tohma",
+        name: "Tohma Ishibashi"
+    },
+
+    {
+        key: "Luca",
+        name: "Lucas Errant"
+    },
+
+    {
+        key: "Kaito",
+        name: "Kaito Fuji"
+    },
+
+    {
+        key: "Taiga",
+        name: "Taiga Hoshibami"
+    },
+
+    {
+        key: "Ritsu",
+        name: "Ritsu Shinjo"
+    },
+
+    {
+        key: "Romeo",
+        name: "Romeo Lucci"
+    },
+
+    {
+        key: "Ed",
+        name: "Edward Hart"
+    },
+
+    {
+        key: "Lyca",
+        name: "Lyca Colt"
+    },
+
+    {
+        key: "Rui",
+        name: "Rui Mizuki"
+    },
+
+    {
+        key: "Haru",
+        name: "Haru Sagara"
+    },
+
+    {
+        key: "Towa",
+        name: "Towa Otonashi"
+    },
+
+    {
+        key: "Ren",
+        name: "Ren Shiranami"
+    },
+
+    {
+        key: "Yuri",
+        name: "Yuri Isami"
+    },
+
+    {
+        key: "Jiro",
+        name: "Jiro Kirisaki"
+    },
+
+    {
+        key: "Haku",
+        name: "Haku Kusanagi"
+    },
+
+    {
+        key: "Subaru",
+        name: "Subaru Kagami"
+    },
+
+    {
+        key: "Zenji",
+        name: "Zenji Kotodama"
+    },
+
+    {
+        key: "Alan",
+        name: "Alan Mido"
+    },
+
+    {
+        key: "Sho",
+        name: "Shohei Haizono"
+    },
+
+    {
+        key: "Leo",
+        name: "Leo Kurosagi"
+    }
+
+];
+
+
+const themes = [
+
+    {
+        code: "C",
+        name: "City"
+    },
+
+    {
+        code: "W",
+        name: "Wedding"
+    },
+
+    {
+        code: "O",
+        name: "Onsen"
+    },
+
+    {
+        code: "HA",
+        name: "Halloween"
+    },
+
+    {
+        code: "B",
+        name: "Bedroom"
+    },
+
+    {
+        code: "T",
+        name: "Tarot"
+    },
+
+    {
+        code: "V",
+        name: "Valentines"
+    },
+
+    {
+        code: "S",
+        name: "Summer"
+    },
+
+    {
+        code: "OC",
+        name: "Occupation"
+    },
+
+    {
+        code: "G",
+        name: "Gem"
+    },
+
+    {
+        code: "F",
+        name: "Festival"
+    }
+
+];
+
+
+let databaseCards = {};
+
+let databaseCharacters = {};
+
+let characterThemeCards = {};
+
+let themeCards = {};
+
+
+function escapeHTML(
+    text
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+    div.textContent =
+        text == null
+            ? ""
+            : String(text);
+
+    return div.innerHTML;
+
+}
+
+
+function getElementImage(
+    element
+) {
+
+    const value =
+        String(
+            element || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    if (
+        value === "fire"
+    ) {
+
+        return "elements/fire.png";
+
+    }
+
+    if (
+        value === "water"
+    ) {
+
+        return "elements/water.png";
+
+    }
+
+    if (
+        value === "leaf"
+    ) {
+
+        return "elements/leaf.png";
+
+    }
+
+    return "";
+
+}
+
+
+function getCharacterFromCardName(
+    cardName
+) {
+
+    const match =
+        String(
+            cardName || ""
+        )
+        .match(
+            /\(([^()]*)\)/
+        );
+
+    if (
+        !match
+    ) {
+
+        return "";
+
+    }
+
+    return match[1].trim();
+
+}
+
+
+function getThemeCodeFromCardName(
+    cardName
+) {
+
+    const match =
+        String(
+            cardName || ""
+        )
+        .trim()
+        .match(
+            /-\s*(HA|OC|C|W|O|B|T|V|S|G|F)\s*$/i
+        );
+
+    if (
+        !match
+    ) {
+
+        return "";
+
+    }
+
+    return match[1].toUpperCase();
+
+}
+
+
+function findCharacter(
+    value
+) {
+
+    const normalized =
+        String(
+            value || ""
+        )
+        .trim()
+        .toLowerCase();
+
+    return characters.find(
+        character =>
+            character.key.toLowerCase() ===
+                normalized ||
+            character.name.toLowerCase() ===
+                normalized
+    );
+
+}
+
+
+function normalizeCardName(
+    name
+) {
+
+    return String(
+        name || ""
+    )
+    .replace(
+        /\s+/g,
+        " "
+    )
+    .trim();
+
+}
+
+
+function findCardData(
+    cardName
+) {
+
+    const target =
+        normalizeCardName(
+            cardName
+        );
+
+
+    if (
+        databaseCards &&
+        databaseCards[target]
+    ) {
+
+        return databaseCards[target];
+
+    }
+
+
+    const targetLower =
+        target.toLowerCase();
+
+
+    const matchingKey =
+        Object.keys(
+            databaseCards || {}
+        )
+        .find(
+            key =>
+                normalizeCardName(
+                    key
+                )
+                .toLowerCase() ===
+                targetLower
+        );
+
+
+    if (
+        matchingKey
+    ) {
+
+        return databaseCards[
+            matchingKey
+        ];
+
+    }
+
+
+    const targetWithoutCharacter =
+        target
+        .replace(
+            /\s*\([^)]*\)\s*/,
+            " "
+        )
+        .replace(
+            /\s+/g,
+            " "
+        )
+        .trim()
+        .toLowerCase();
+
+
+    const fallbackKey =
+        Object.keys(
+            databaseCards || {}
+        )
+        .find(
+            key =>
+                normalizeCardName(
+                    key
+                )
+                .replace(
+                    /\s*\([^)]*\)\s*/,
+                    " "
+                )
+                .replace(
+                    /\s+/g,
+                    " "
+                )
+                .trim()
+                .toLowerCase() ===
+                targetWithoutCharacter
+        );
+
+
+    if (
+        fallbackKey
+    ) {
+
+        return databaseCards[
+            fallbackKey
+        ];
+
+    }
+
+
+    return null;
+
+}
+
+
+function buildThemeData() {
+
+    themeCards = {};
+
+    characterThemeCards = {};
+
+
+    themes.forEach(
+        theme => {
+
+            themeCards[
+                theme.code
+            ] = [];
+
+        }
+    );
+
+
+    characters.forEach(
+        character => {
+
+            characterThemeCards[
+                character.key
+            ] = {};
+
+            themes.forEach(
+                theme => {
+
+                    characterThemeCards[
+                        character.key
+                    ][
+                        theme.code
+                    ] = [];
+
+                }
+            );
+
+        }
+    );
+
+
+    Object.entries(
+        databaseCharacters || {}
+    )
+    .forEach(
+        (
+            [
+                characterKey,
+                cardNames
+            ]
+        ) => {
+
+            const character =
+                findCharacter(
+                    characterKey
+                );
+
+
+            if (
+                !character
+            ) {
+
+                return;
+
+            }
+
+
+            if (
+                !Array.isArray(
+                    cardNames
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            cardNames.forEach(
+                cardName => {
+
+                    const actualCardName =
+                        String(
+                            cardName || ""
+                        )
+                        .trim();
+
+
+                    if (
+                        !actualCardName
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const themeCode =
+                        getThemeCodeFromCardName(
+                            actualCardName
+                        );
+
+
+                    if (
+                        !themeCode
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const theme =
+                        themes.find(
+                            theme =>
+                                theme.code ===
+                                themeCode
+                        );
+
+
+                    if (
+                        !theme
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    const cardData =
+                        findCardData(
+                            actualCardName
+                        );
+
+
+                    const cardInfo = {
+
+                        name:
+                            actualCardName,
+
+                        element:
+                            cardData &&
+                            cardData.element
+                                ? cardData.element
+                                : ""
+
+                    };
+
+
+                    themeCards[
+                        themeCode
+                    ].push(
+                        cardInfo
+                    );
+
+
+                    characterThemeCards[
+                        character.key
+                    ][
+                        themeCode
+                    ].push(
+                        cardInfo
+                    );
+
+                }
+            );
+
+        }
+    );
+
+
+    Object.keys(
+        themeCards
+    )
+    .forEach(
+        themeCode => {
+
+            themeCards[
+                themeCode
+            ].sort(
+                (
+                    a,
+                    b
+                ) =>
+                    a.name.localeCompare(
+                        b.name,
+                        undefined,
+                        {
+                            numeric: true,
+                            sensitivity:
+                                "base"
+                        }
+                    )
+            );
+
+        }
+    );
+
+
+    Object.keys(
+        characterThemeCards
+    )
+    .forEach(
+        characterKey => {
+
+            Object.keys(
+                characterThemeCards[
+                    characterKey
+                ]
+            )
+            .forEach(
+                themeCode => {
+
+                    characterThemeCards[
+                        characterKey
+                    ][
+                        themeCode
+                    ].sort(
+                        (
+                            a,
+                            b
+                        ) =>
+                            a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true,
+                                    sensitivity:
+                                        "base"
+                                }
+                            )
+                    );
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+function renderThemes() {
+
+    const container =
+        document.getElementById(
+            "themeList"
+        );
+
+    container.innerHTML = "";
+
+
+    themes.forEach(
+        theme => {
+
+            const cards =
+                themeCards[
+                    theme.code
+                ] || [];
+
+
+            const charactersWithTheme =
+                new Set();
+
+
+            cards.forEach(
+                card => {
+
+                    const character =
+                        findCharacter(
+                            getCharacterFromCardName(
+                                card.name
+                            )
+                        );
+
+
+                    if (
+                        character
+                    ) {
+
+                        charactersWithTheme.add(
+                            character.key
+                        );
+
+                    }
+
+                }
+            );
+
+
+            const missingCharacters =
+                characters.filter(
+                    character =>
+                        !charactersWithTheme.has(
+                            character.key
+                        )
+                );
+
+
+            const box =
+                document.createElement(
+                    "div"
+                );
+
+            box.className =
+                "theme-box";
+
+
+            const main =
+                document.createElement(
+                    "div"
+                );
+
+            main.className =
+                "theme-main";
+
+
+            let cardsHTML = "";
+
+
+            if (
+                !cards.length
+            ) {
+
+                cardsHTML = `
+
+                    <div class="theme-card">
+
+                        No cards found for this theme.
+
+                    </div>
+
+                `;
+
+            }
+            else {
+
+                cardsHTML =
+                    cards.map(
+                        card => {
+
+                            const elementImage =
+                                getElementImage(
+                                    card.element
+                                );
+
+
+                            return `
+
+                                <div class="theme-card">
+
+                                    ${
+                                        elementImage
+                                            ? `
+                                                <img
+                                                    src="${elementImage}"
+                                                    class="element-icon"
+                                                    alt="${escapeHTML(card.element)}"
+                                                >
+                                            `
+                                            : ""
+                                    }
+
+                                    <span class="theme-card-name">
+
+                                        ${escapeHTML(
+                                            card.name
+                                        )}
+
+                                    </span>
+
+                                </div>
+
+                            `;
+
+                        }
+                    )
+                    .join("");
+
+            }
+
+
+            main.innerHTML = `
+
+                <div class="theme-heading">
+
+                    <div class="theme-name">
+
+                        ${escapeHTML(
+                            theme.name
+                        )}
+
+                    </div>
+
+                    <div class="theme-code">
+
+                        - ${escapeHTML(
+                            theme.code
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="theme-card-list">
+
+                    ${cardsHTML}
+
+                </div>
+
+            `;
+
+
+            const missing =
+                document.createElement(
+                    "div"
+                );
+
+            missing.className =
+                "theme-missing";
+
+
+            let missingHTML = `
+
+                <div class="missing-title">
+
+                    Characters Missing This Theme
+
+                </div>
+
+                <div class="missing-list">
+
+            `;
+
+
+            if (
+                !missingCharacters.length
+            ) {
+
+                missingHTML += `
+
+                    <div class="missing-none">
+
+                        Every character has a card for this theme.
+
+                    </div>
+
+                `;
+
+            }
+            else {
+
+                missingHTML +=
+                    missingCharacters
+                    .map(
+                        character => `
+
+                            <div class="missing-character">
+
+                                ${escapeHTML(
+                                    character.name
+                                )}
+
+                            </div>
+
+                        `
+                    )
+                    .join("");
+
+            }
+
+
+            missingHTML += `
+
+                </div>
+
+            `;
+
+
+            missing.innerHTML =
+                missingHTML;
+
+
+            box.appendChild(
+                main
+            );
+
+            box.appendChild(
+                missing
+            );
+
+
+            container.appendChild(
+                box
+            );
+
+        }
+    );
+
+}
+
+
+function renderCharacterThemes() {
+
+    const container =
+        document.getElementById(
+            "characterThemeList"
+        );
+
+    container.innerHTML = "";
+
+
+    characters.forEach(
+        character => {
+
+            const box =
+                document.createElement(
+                    "div"
+                );
+
+            box.className =
+                "character-theme-box";
+
+
+            let contentHTML = "";
+
+            const missingThemes = [];
+
+
+            themes.forEach(
+                theme => {
+
+                    const cards =
+                        characterThemeCards[
+                            character.key
+                        ]?.[
+                            theme.code
+                        ] || [];
+
+
+                    if (
+                        cards.length
+                    ) {
+
+                        const cardsHTML =
+                            cards.map(
+                                card => {
+
+                                    const elementImage =
+                                        getElementImage(
+                                            card.element
+                                        );
+
+
+                                    return `
+
+                                        <div class="character-theme-card">
+
+                                            ${
+                                                elementImage
+                                                    ? `
+                                                        <img
+                                                            src="${elementImage}"
+                                                            class="element-icon"
+                                                            alt="${escapeHTML(card.element)}"
+                                                        >
+                                                    `
+                                                    : ""
+                                            }
+
+                                            <span>
+
+                                                ${escapeHTML(
+                                                    card.name.replace(
+                                                        /\s*\([^)]*\)/,
+                                                        ""
+                                                    )
+                                                )}
+
+                                            </span>
+
+                                        </div>
+
+                                    `;
+
+                                }
+                            )
+                            .join("");
+
+
+                        contentHTML += `
+
+                            <div class="character-theme-row">
+
+                                <div class="character-theme-label">
+
+                                    ${escapeHTML(
+                                        theme.name
+                                    )}
+
+                                </div>
+
+                                ${cardsHTML}
+
+                            </div>
+
+                        `;
+
+                    }
+                    else {
+
+                        missingThemes.push(
+                            theme
+                        );
+
+                    }
+
+                }
+            );
+
+
+            let missingHTML = "";
+
+
+            if (
+                !missingThemes.length
+            ) {
+
+                missingHTML = `
+
+                    <div class="character-theme-row">
+
+                        <div class="character-theme-label">
+
+                            Missing Themes
+
+                        </div>
+
+                        <div class="all-themes">
+
+                            This character has a card for every theme.
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+            else {
+
+                missingHTML = `
+
+                    <div class="character-theme-row">
+
+                        <div class="character-theme-label">
+
+                            Missing Themes
+
+                        </div>
+
+                        <div class="character-theme-missing">
+
+                            ${
+                                missingThemes
+                                .map(
+                                    theme => `
+
+                                        <span class="missing-theme">
+
+                                            ${escapeHTML(
+                                                theme.name
+                                            )}
+
+                                        </span>
+
+                                    `
+                                )
+                                .join("")
+                            }
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            if (
+                !contentHTML
+            ) {
+
+                contentHTML = `
+
+                    <div class="character-theme-row">
+
+                        <div class="character-theme-label">
+
+                            Themes
+
+                        </div>
+
+                        <div class="missing-theme">
+
+                            No themed cards found.
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            box.innerHTML = `
+
+                <div class="character-theme-header">
+
+                    <div class="character-theme-name">
+
+                        ${escapeHTML(
+                            character.name
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="character-theme-content">
+
+                    ${contentHTML}
+
+                    ${missingHTML}
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                box
+            );
+
+        }
+    );
+
+}
+
+
+function applyDatabase(
+    data
+) {
+
+    if (
+        !data
+    ) {
+
+        return;
+
+    }
+
+
+    databaseCards =
+        data.cards || {};
+
+    databaseCharacters =
+        data.characters || {};
+
+
+    buildThemeData();
+
+    renderThemes();
+
+    renderCharacterThemes();
+
+
+    document.getElementById(
+        "status"
+    ).style.display =
+        "none";
+
+
+    console.log(
+        "Tokyo Debunker theme database rendered."
+    );
+
+}
+
+
+async function initializeDatabase() {
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    try {
+
+        const data =
+            await window.loadDatabase({
+
+                onUpdate:
+                    freshData => {
+
+                        try {
+
+                            applyDatabase(
+                                freshData
+                            );
+
+
+                            console.log(
+                                "Tokyo Debunker database refreshed."
+                            );
+
+                        }
+                        catch (
+                            error
+                        ) {
+
+                            console.error(
+                                "Error rendering refreshed theme database:",
+                                error
+                            );
+
+                        }
+
+                    },
+
+
+                onError:
+                    error => {
+
+                        console.warn(
+                            "Tokyo Debunker database background refresh failed:",
+                            error
+                        );
+
+                    }
+
+            });
+
+
+        applyDatabase(
+            data
+        );
+
+
+        console.log(
+            "Tokyo Debunker theme database loaded."
+        );
+
+    }
+    catch (
+        error
+    ) {
+
+        console.error(
+            "Theme database error:",
+            error
+        );
+
+
+        status.textContent =
+            "Unable to load theme data.";
+
+
+        status.classList.add(
+            "error"
+        );
+
+
+        status.style.display =
+            "block";
+
+    }
+
+}
+
+
+initializeDatabase();
+
+</script>
+
+</body>
+</html>

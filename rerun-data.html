@@ -1,0 +1,5343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width,initial-scale=1.0"
+>
+
+<title>
+    Rerun Data | Tokyo Debunker Database
+</title>
+
+
+<style>
+
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    margin:0;
+
+    min-height:100vh;
+
+    font-family:
+        "Segoe UI",
+        Arial,
+        sans-serif;
+
+    color:#eee8f7;
+
+    background:
+
+        radial-gradient(
+            circle at 50% -10%,
+            rgba(107,54,157,.22),
+            transparent 42%
+        ),
+
+        radial-gradient(
+            circle at 15% 60%,
+            rgba(74,31,112,.10),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 85% 75%,
+            rgba(82,35,125,.10),
+            transparent 35%
+        ),
+
+        linear-gradient(
+            180deg,
+            #09070d 0%,
+            #100a18 48%,
+            #09070d 100%
+        );
+
+    overflow-x:hidden;
+}
+
+
+body:before{
+
+    content:"";
+
+    position:fixed;
+
+    inset:0;
+
+    pointer-events:none;
+
+    background:
+
+        radial-gradient(
+            ellipse at center,
+            transparent 25%,
+            rgba(0,0,0,.34) 100%
+        );
+
+    z-index:-1;
+}
+
+
+button,
+select,
+input{
+    font:inherit;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header{
+
+    width:100%;
+
+    padding:
+        24px
+        0
+        8px;
+}
+
+
+.header-inner{
+
+    width:
+        min(
+            1500px,
+            calc(100% - 40px)
+        );
+
+    margin:0 auto;
+
+    display:flex;
+
+    align-items:center;
+}
+
+
+.site-logo{
+
+    display:block;
+
+    width:240px;
+
+    height:auto;
+
+    max-height:48px;
+
+    object-fit:contain;
+
+    transform:
+        translateY(-3px);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.page-shell{
+
+    width:
+        min(
+            1500px,
+            calc(100% - 40px)
+        );
+
+    margin:
+        0
+        auto
+        50px;
+}
+
+
+.back-row{
+
+    margin:
+        8px
+        0
+        28px;
+}
+
+
+.back-button{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        9px
+        16px;
+
+    border:
+        1px solid
+        rgba(177,132,219,.32);
+
+    border-radius:7px;
+
+    background:
+        rgba(32,20,43,.72);
+
+    color:#cdb7df;
+
+    text-decoration:none;
+
+    font-size:13px;
+
+    letter-spacing:.4px;
+
+    transition:.2s;
+}
+
+
+.back-button:hover{
+
+    background:
+        rgba(72,39,94,.72);
+
+    border-color:
+        rgba(190,143,230,.55);
+
+    color:#f0e7f7;
+}
+
+
+.page-title{
+
+    margin:
+        0
+        0
+        8px;
+
+    text-align:center;
+
+    font-size:
+        clamp(
+            27px,
+            4vw,
+            42px
+        );
+
+    font-weight:500;
+
+    letter-spacing:6px;
+
+    color:#f1e8f8;
+}
+
+
+.page-subtitle{
+
+    max-width:850px;
+
+    margin:
+        0
+        auto
+        38px;
+
+    text-align:center;
+
+    color:#9d8fa9;
+
+    font-size:14px;
+
+    line-height:1.7;
+}
+
+
+.status{
+
+    text-align:center;
+
+    margin:
+        0
+        auto
+        28px;
+
+    color:#8e8199;
+
+    font-size:13px;
+}
+
+
+.status.error{
+    color:#d78b9a;
+}
+
+
+/* =========================================================
+   GENERAL SECTIONS
+========================================================= */
+
+.section{
+
+    margin-bottom:54px;
+}
+
+
+.section-heading{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:16px;
+
+    margin-bottom:18px;
+}
+
+
+.section-heading:before,
+.section-heading:after{
+
+    content:"";
+
+    height:1px;
+
+    flex:1;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(150,106,184,.32)
+        );
+}
+
+
+.section-heading:after{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(150,106,184,.32),
+            transparent
+        );
+}
+
+
+.section-heading h2{
+
+    margin:0;
+
+    white-space:nowrap;
+
+    font-size:17px;
+
+    font-weight:500;
+
+    letter-spacing:3px;
+
+    color:#d8c4e5;
+}
+
+
+.section-description{
+
+    margin:
+        -5px
+        auto
+        24px;
+
+    max-width:900px;
+
+    text-align:center;
+
+    color:#82758d;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+.loading-panel,
+.empty-panel{
+
+    padding:
+        30px
+        20px;
+
+    text-align:center;
+
+    color:#81748b;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   TOP STATISTICS AREA
+
+   The entire top area is kept separate from the
+   Character Rerun History section underneath.
+========================================================= */
+
+.top-stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        minmax(0,1.35fr)
+
+        minmax(0,.75fr)
+
+        minmax(0,1fr);
+
+    gap:18px;
+
+    align-items:stretch;
+
+    /*
+       Fixed height for the desktop layout.
+       The internal tables scroll instead of
+       increasing the height of this section.
+    */
+
+    height:900px;
+
+    min-height:900px;
+
+    max-height:900px;
+
+    margin-bottom:90px;
+
+    overflow:visible;
+}
+
+
+.top-stats-grid > .section{
+
+    min-width:0;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   LONGEST WAITING CARDS
+========================================================= */
+
+.top-ranking-section{
+
+    display:flex;
+
+    flex-direction:column;
+
+    height:900px;
+
+    min-height:900px;
+
+    max-height:900px;
+
+    min-width:0;
+}
+
+
+.top-ranking-section
+> .section-description{
+
+    flex:
+        0
+        0
+        auto;
+}
+
+
+.top-ranking-section
+> #longestWaitingRanking{
+
+    flex:
+        1
+        1
+        auto;
+
+    min-height:0;
+
+    height:0;
+}
+
+
+/*
+   THIS IS THE IMPORTANT SCROLL CONTAINER.
+
+   The table itself can now scroll vertically,
+   rather than being cut off.
+*/
+
+.top-ranking-section
+> #longestWaitingRanking
+> .data-table-wrap{
+
+    width:100%;
+
+    height:100%;
+
+    max-height:100%;
+
+    overflow-x:auto;
+
+    overflow-y:auto;
+
+    scrollbar-width:auto;
+
+    scrollbar-color:
+        #76528d
+        #21152b;
+}
+
+
+/* =========================================================
+   MIDDLE COLUMN
+========================================================= */
+
+.middle-stats-column{
+
+    min-width:0;
+
+    height:900px;
+
+    min-height:900px;
+
+    max-height:900px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:18px;
+
+    overflow:hidden;
+}
+
+
+.middle-stats-column > .section{
+
+    min-width:0;
+
+    margin:0;
+}
+
+
+/* =========================================================
+   CARD TOTALS
+========================================================= */
+
+.card-total-section{
+
+    flex:
+        0
+        0
+        auto;
+}
+
+
+/* =========================================================
+   CHARACTER CARD COUNT
+========================================================= */
+
+.character-count-section{
+
+    flex:
+        1
+        1
+        auto;
+
+    min-height:0;
+
+    display:flex;
+
+    flex-direction:column;
+
+    overflow:hidden;
+}
+
+
+.character-count-section
+> .section-description{
+
+    flex:
+        0
+        0
+        auto;
+}
+
+
+.character-count-section
+> #characterRanking{
+
+    flex:
+        1
+        1
+        auto;
+
+    min-height:0;
+
+    height:0;
+}
+
+
+.character-count-section
+> #characterRanking
+> .data-table-wrap{
+
+    width:100%;
+
+    height:100%;
+
+    max-height:100%;
+
+    overflow-x:auto;
+
+    overflow-y:auto;
+
+    scrollbar-width:auto;
+
+    scrollbar-color:
+        #76528d
+        #21152b;
+}
+
+
+/* =========================================================
+   SCROLLBARS
+========================================================= */
+
+.data-table-wrap::-webkit-scrollbar{
+
+    width:10px;
+
+    height:10px;
+}
+
+
+.data-table-wrap::-webkit-scrollbar-track{
+
+    background:#21152b;
+}
+
+
+.data-table-wrap::-webkit-scrollbar-thumb{
+
+    background:#76528d;
+
+    border:
+        2px solid
+        #21152b;
+
+    border-radius:8px;
+}
+
+
+.data-table-wrap::-webkit-scrollbar-thumb:hover{
+
+    background:#9368ad;
+}
+
+
+.data-table-wrap::-webkit-scrollbar-corner{
+
+    background:#21152b;
+}
+
+
+/* =========================================================
+   CHARACTER RERUN HISTORY
+
+   This section is explicitly separated from the
+   top statistics area.
+========================================================= */
+
+.character-history-section{
+
+    position:relative;
+
+    clear:both;
+
+    display:block;
+
+    width:100%;
+
+    margin-top:0;
+
+    padding-top:0;
+}
+
+
+.character-history-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+            3,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:18px;
+}
+
+
+.character-block{
+
+    min-width:0;
+
+    width:100%;
+
+    height:390px;
+
+    min-height:390px;
+
+    max-height:390px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    border:
+        1px solid
+        rgba(133,91,160,.25);
+
+    border-radius:9px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(27,17,37,.92),
+            rgba(17,11,24,.95)
+        );
+
+    overflow:hidden;
+}
+
+
+.character-header{
+
+    flex:
+        0
+        0
+        55px;
+
+    height:55px;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    gap:10px;
+
+    padding:
+        15px
+        16px;
+
+    border-bottom:
+        1px solid
+        rgba(133,91,160,.20);
+
+    background:
+        rgba(44,25,57,.35);
+}
+
+
+.character-header-name{
+
+    min-width:0;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+
+    font-size:15px;
+
+    letter-spacing:.7px;
+
+    color:#e8dff0;
+}
+
+
+.character-header-count{
+
+    flex-shrink:0;
+
+    color:#81748b;
+
+    font-size:10px;
+}
+
+
+.table-scroll{
+
+    width:100%;
+
+    height:335px;
+
+    min-height:0;
+
+    flex:
+        1
+        1
+        auto;
+
+    overflow-x:auto;
+
+    overflow-y:auto;
+
+    -webkit-overflow-scrolling:touch;
+
+    scrollbar-width:auto;
+
+    scrollbar-color:
+        #76528d
+        #21152b;
+}
+
+
+.table-scroll::-webkit-scrollbar{
+
+    width:10px;
+
+    height:10px;
+}
+
+
+.table-scroll::-webkit-scrollbar-track{
+
+    background:#21152b;
+}
+
+
+.table-scroll::-webkit-scrollbar-thumb{
+
+    background:#76528d;
+
+    border:
+        2px solid
+        #21152b;
+
+    border-radius:8px;
+}
+
+
+.table-scroll::-webkit-scrollbar-thumb:hover{
+
+    background:#9368ad;
+}
+
+
+.table-scroll::-webkit-scrollbar-corner{
+
+    background:#21152b;
+}
+
+
+/* =========================================================
+   CHARACTER HISTORY TABLE
+========================================================= */
+
+.rotation-table{
+
+    width:100%;
+
+    min-width:500px;
+
+    border-collapse:collapse;
+}
+
+
+.rotation-table th{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:2;
+
+    padding:
+        9px
+        6px;
+
+    background:#21142b;
+
+    color:#aa9ab5;
+
+    font-size:12px;
+
+    font-weight:500;
+
+    letter-spacing:.8px;
+
+    text-transform:uppercase;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid
+        rgba(145,101,174,.22);
+}
+
+
+.rotation-table td{
+
+    padding:
+        8px
+        6px;
+
+    border-bottom:
+        1px solid
+        rgba(116,82,136,.13);
+
+    color:#d0c4d6;
+
+    font-size:14px;
+
+    text-align:center;
+
+    vertical-align:middle;
+
+    line-height:1.3;
+}
+
+
+.rotation-table
+tbody tr:last-child
+td{
+
+    border-bottom:none;
+}
+
+
+.rotation-table
+tbody tr:hover{
+
+    background:
+        rgba(100,61,126,.08);
+}
+
+
+/* =========================================================
+   CARD NAME
+========================================================= */
+
+.card-name-cell{
+
+    width:215px;
+
+    min-width:215px;
+
+    max-width:215px;
+
+    text-align:left !important;
+
+    color:#e0d4e7 !important;
+
+    white-space:nowrap;
+
+    overflow:hidden;
+}
+
+
+.card-name-content{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:6px;
+
+    min-width:0;
+
+    width:100%;
+}
+
+
+.card-element-icon{
+
+    width:18px;
+
+    height:18px;
+
+    flex:
+        0
+        0
+        18px;
+
+    object-fit:contain;
+}
+
+
+.card-name-text{
+
+    min-width:0;
+
+    overflow:hidden;
+
+    text-overflow:ellipsis;
+
+    white-space:nowrap;
+}
+
+
+.date-cell{
+
+    white-space:nowrap;
+
+    width:50px;
+
+    min-width:50px;
+
+    font-size:11px !important;
+
+    color:#b9aabe !important;
+}
+
+
+.new-cell{
+
+    width:24px;
+
+    min-width:24px;
+}
+
+
+.rotation-cell{
+
+    width:30px;
+
+    min-width:30px;
+}
+
+
+.new-badge{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    width:16px;
+
+    height:18px;
+
+    padding:
+        0
+        3px;
+
+    border:
+        1px solid
+        rgba(176,125,223,.35);
+
+    border-radius:4px;
+
+    color:#d8b9e9;
+
+    background:
+        rgba(100,54,135,.20);
+
+    font-size:9px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+}
+
+
+.rerun-mark{
+
+    color:#706474;
+
+    font-size:12px;
+}
+
+
+.rotation-number{
+
+    color:#d2b4df;
+
+    font-size:12px;
+
+    font-weight:500;
+}
+
+
+.rotation-empty{
+
+    color:#625769;
+
+    font-size:12px;
+}
+
+
+/* =========================================================
+   GENERAL DATA TABLES
+========================================================= */
+
+.data-table-wrap{
+
+    width:100%;
+
+    overflow-x:auto;
+
+    border:
+        1px solid
+        rgba(133,91,160,.20);
+
+    border-radius:9px;
+
+    background:
+        rgba(20,13,28,.78);
+
+    scrollbar-width:auto;
+
+    scrollbar-color:
+        #76528d
+        #21152b;
+}
+
+
+.data-table{
+
+    width:100%;
+
+    min-width:0;
+
+    border-collapse:collapse;
+}
+
+
+.data-table th{
+
+    padding:
+        13px
+        14px;
+
+    background:#21142b;
+
+    color:#b09fb9;
+
+    font-size:12px;
+
+    font-weight:500;
+
+    letter-spacing:1px;
+
+    text-transform:uppercase;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid
+        rgba(145,101,174,.22);
+}
+
+
+.data-table td{
+
+    padding:
+        12px
+        14px;
+
+    color:#d0c3d5;
+
+    font-size:15px;
+
+    text-align:center;
+
+    border-bottom:
+        1px solid
+        rgba(116,82,136,.13);
+}
+
+
+.data-table
+tbody tr:last-child
+td{
+
+    border-bottom:none;
+}
+
+
+.data-table
+tbody tr:hover{
+
+    background:
+        rgba(100,61,126,.08);
+}
+
+
+.data-table
+.name-left{
+
+    text-align:left;
+
+    color:#e0d4e7;
+}
+
+
+.rank-number{
+
+    color:#897696;
+
+    width:60px;
+
+    font-size:14px !important;
+}
+
+
+.ranking-rotation{
+
+    color:#d0b1df;
+
+    font-weight:600;
+
+    font-size:15px !important;
+}
+
+
+/* =========================================================
+   LONGEST WAITING CARD
+========================================================= */
+
+.waiting-card{
+
+    color:#cdb6d8;
+}
+
+
+.ranking-card-name{
+
+    justify-content:center;
+}
+
+
+.waiting-date{
+
+    display:block;
+
+    margin-top:3px;
+
+    color:#75677d;
+
+    font-size:10px;
+}
+
+
+.top-ranking-section
+.data-table
+td{
+
+    font-size:15px;
+}
+
+
+.top-ranking-section
+.data-table
+th{
+
+    font-size:12px;
+}
+
+
+.top-ranking-section
+.card-name-text{
+
+    font-size:15px;
+}
+
+
+.top-ranking-section
+.card-element-icon{
+
+    width:18px;
+
+    height:18px;
+
+    flex-basis:18px;
+}
+
+
+.top-ranking-section
+.waiting-date{
+
+    font-size:10px;
+}
+
+
+.top-ranking-section
+.ranking-rotation{
+
+    font-size:16px !important;
+}
+
+
+/* =========================================================
+   CHARACTER CARD COUNT
+========================================================= */
+
+.character-count-section
+.data-table
+th{
+
+    font-size:12px;
+
+    padding:
+        10px
+        8px;
+}
+
+
+.character-count-section
+.data-table
+td{
+
+    font-size:14px;
+
+    padding:
+        9px
+        8px;
+}
+
+
+.character-count-section
+.ranking-rotation{
+
+    font-size:15px !important;
+}
+
+
+/* =========================================================
+   THEME TOTALS
+========================================================= */
+
+.theme-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+        repeat(
+            4,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:12px;
+}
+
+
+.theme-card{
+
+    padding:
+        18px
+        14px;
+
+    border:
+        1px solid
+        rgba(133,91,160,.20);
+
+    border-radius:8px;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            rgba(29,18,39,.86),
+            rgba(17,11,24,.90)
+        );
+
+    text-align:center;
+}
+
+
+.theme-name{
+
+    color:#b09fb8;
+
+    font-size:14px;
+
+    letter-spacing:1px;
+}
+
+
+.theme-code{
+
+    margin-top:4px;
+
+    color:#76677e;
+
+    font-size:10px;
+}
+
+
+.theme-count{
+
+    margin-top:9px;
+
+    color:#d8b9e5;
+
+    font-size:28px;
+
+    font-weight:400;
+}
+
+
+/* =========================================================
+   BOTTOM DECORATION
+========================================================= */
+
+.bottom-decoration{
+
+    width:
+        min(
+            700px,
+            calc(100% - 80px)
+        );
+
+    margin:
+        60px
+        auto
+        34px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    color:#725881;
+
+    opacity:.65;
+}
+
+
+.bottom-decoration span{
+
+    flex:1;
+
+    height:1px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(116,77,145,.55)
+        );
+}
+
+
+.bottom-decoration span:last-child{
+
+    background:
+
+        linear-gradient(
+            90deg,
+            rgba(116,77,145,.55),
+            transparent
+        );
+}
+
+
+.bottom-decoration b{
+
+    font-size:12px;
+
+    font-weight:400;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media(max-width:1100px){
+
+    .character-history-grid{
+
+        grid-template-columns:
+
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+    }
+
+
+    .theme-grid{
+
+        grid-template-columns:
+
+            repeat(
+                3,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+    }
+
+}
+
+
+/* =========================================================
+   SMALL DESKTOP / TABLET
+========================================================= */
+
+@media(max-width:900px){
+
+    .top-stats-grid{
+
+        grid-template-columns:1fr;
+
+        height:auto;
+
+        min-height:0;
+
+        max-height:none;
+
+        margin-bottom:54px;
+
+        overflow:visible;
+    }
+
+
+    .top-ranking-section{
+
+        height:760px;
+
+        min-height:760px;
+
+        max-height:760px;
+    }
+
+
+    .middle-stats-column{
+
+        height:auto;
+
+        min-height:0;
+
+        max-height:none;
+
+        overflow:visible;
+    }
+
+
+    .character-count-section{
+
+        height:700px;
+
+        min-height:0;
+
+        max-height:700px;
+    }
+
+
+    .character-count-section
+    > #characterRanking{
+
+        height:0;
+
+        min-height:0;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:680px){
+
+    .site-header{
+
+        padding-top:18px;
+    }
+
+
+    .header-inner,
+    .page-shell{
+
+        width:
+            calc(100% - 24px);
+    }
+
+
+    .site-logo{
+
+        width:190px;
+    }
+
+
+    .back-row{
+
+        margin-bottom:22px;
+    }
+
+
+    .page-title{
+
+        font-size:25px;
+
+        letter-spacing:4px;
+    }
+
+
+    .page-subtitle{
+
+        font-size:12px;
+
+        margin-bottom:28px;
+    }
+
+
+    .section{
+
+        margin-bottom:40px;
+    }
+
+
+    .section-heading{
+
+        gap:10px;
+    }
+
+
+    .section-heading h2{
+
+        font-size:14px;
+
+        letter-spacing:2px;
+    }
+
+
+    .character-history-grid{
+
+        grid-template-columns:1fr;
+
+        gap:14px;
+    }
+
+
+    .character-block{
+
+        width:100%;
+
+        height:390px;
+
+        min-height:390px;
+
+        max-height:390px;
+    }
+
+
+    .table-scroll{
+
+        height:335px;
+    }
+
+
+    .rotation-table{
+
+        min-width:500px;
+    }
+
+
+    .card-name-cell{
+
+        width:215px;
+
+        min-width:215px;
+
+        max-width:215px;
+    }
+
+
+    .rotation-table td{
+
+        font-size:12px;
+    }
+
+
+    .top-ranking-section{
+
+        height:700px;
+
+        min-height:700px;
+
+        max-height:700px;
+    }
+
+
+    .top-ranking-section
+    .data-table
+    td{
+
+        font-size:14px;
+    }
+
+
+    .character-count-section{
+
+        height:650px;
+
+        min-height:650px;
+
+        max-height:650px;
+    }
+
+
+    .theme-grid{
+
+        grid-template-columns:
+
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+    }
+
+
+    .theme-name{
+
+        font-size:12px;
+    }
+
+
+    .theme-count{
+
+        font-size:25px;
+    }
+
+
+    .bottom-decoration{
+
+        width:
+            calc(100% - 40px);
+
+        margin-top:42px;
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media(max-width:400px){
+
+    .theme-grid{
+
+        grid-template-columns:
+            1fr
+            1fr;
+    }
+
+
+    .back-button{
+
+        font-size:12px;
+
+        padding:
+            8px
+            12px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html">
+            <img
+                src="logo.png"
+                alt="Tokyo Debunker"
+                class="site-logo"
+            >
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="page-shell">
+
+
+<div class="back-row">
+
+    <a
+        href="banners.html"
+        class="back-button"
+    >
+        ← Back to Banners
+    </a>
+
+</div>
+
+
+<h1 class="page-title">
+    RERUN DATA
+</h1>
+
+
+<p class="page-subtitle">
+    Card rerun history, rotation counts,
+    character statistics, and theme totals.
+</p>
+
+
+<div
+    id="status"
+    class="status"
+>
+    Loading rerun data...
+</div>
+
+
+<!-- =========================================================
+     TOP STATISTICS
+========================================================= -->
+
+<div class="top-stats-grid">
+
+
+<!-- =========================================================
+     LONGEST WAITING CARDS
+========================================================= -->
+
+<section
+    class="section top-ranking-section"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            LONGEST WAITING CARDS
+        </h2>
+
+    </div>
+
+
+    <p class="section-description">
+
+        Characters ranked by how many banners have passed
+        since their most recent card ran.
+
+    </p>
+
+
+    <div id="longestWaitingRanking">
+
+        <div class="loading-panel">
+
+            Calculating longest waits...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MIDDLE COLUMN
+========================================================= -->
+
+<div class="middle-stats-column">
+
+
+<!-- =========================================================
+     CARD TOTALS
+========================================================= -->
+
+<section
+    class="section card-total-section"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            CARD TOTALS
+        </h2>
+
+    </div>
+
+
+    <p class="section-description">
+
+        Unique cards across the entire database,
+        ranked by element.
+
+    </p>
+
+
+    <div id="cardTotals">
+
+        <div class="loading-panel">
+
+            Calculating card totals...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CHARACTER CARD COUNT
+========================================================= -->
+
+<section
+    class="section character-count-section"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            CHARACTER CARD COUNT
+        </h2>
+
+    </div>
+
+
+    <p class="section-description">
+
+        Characters ranked by their total number
+        of unique cards.
+
+    </p>
+
+
+    <div id="characterRanking">
+
+        <div class="loading-panel">
+
+            Calculating character card counts...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<!-- =========================================================
+     THEME TOTALS
+========================================================= -->
+
+<section
+    class="section"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            THEME TOTALS
+        </h2>
+
+    </div>
+
+
+    <p class="section-description">
+
+        Number of unique cards recorded for each
+        recognized card theme.
+
+    </p>
+
+
+    <div id="themeTotals">
+
+        <div class="loading-panel">
+
+            Calculating theme totals...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</div>
+
+
+<!-- =========================================================
+     CHARACTER RERUN HISTORY
+========================================================= -->
+
+<section
+    class="section character-history-section"
+>
+
+    <div class="section-heading">
+
+        <h2>
+            CHARACTER RERUN HISTORY
+        </h2>
+
+    </div>
+
+
+    <p class="section-description">
+
+        The last 20 recorded cards for every character.
+        Rotation counts are the number of banners strictly
+        between qualifying appearances.
+
+    </p>
+
+
+    <div
+        id="characterHistory"
+        class="character-history-grid"
+    >
+
+        <div class="loading-panel">
+
+            Loading character data...
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<div class="bottom-decoration">
+
+    <span></span>
+
+    <b>✦</b>
+
+    <span></span>
+
+</div>
+
+
+<script>
+
+
+/* =========================================================
+   API / CACHE
+========================================================= */
+
+const SHEET_API =
+"https://script.google.com/macros/s/AKfycbymbEARugjpkjD-NMolneRJ4CkZjUlV8sIfE2K1YoyFTZ11JiK-CEpunHpOMzzJRhRm1nw/exec";
+
+
+const RERUN_CACHE_KEY =
+"tokyoDebunkerDatabase";
+
+
+const RERUN_CACHE_TIME_KEY =
+"tokyoDebunkerDatabaseTime";
+
+
+const RERUN_CACHE_DURATION =
+5 * 60 * 1000;
+
+
+/* =========================================================
+   CHARACTERS
+========================================================= */
+
+const CHARACTERS = [
+
+    {
+        key:"Jo",
+        name:"Jo Kongoza",
+        house:"Dionysia"
+    },
+
+    {
+        key:"Mio",
+        name:"Mio Susuhara",
+        house:"Dionysia"
+    },
+
+    {
+        key:"Elias",
+        name:"Elias Pratt",
+        house:"Dionysia"
+    },
+
+    {
+        key:"Shion",
+        name:"Shion Genkai",
+        house:"Dionysia"
+    },
+
+    {
+        key:"Jin",
+        name:"Jin Kamurai",
+        house:"Frostheim"
+    },
+
+    {
+        key:"Tohma",
+        name:"Tohma Ishibashi",
+        house:"Frostheim"
+    },
+
+    {
+        key:"Luca",
+        name:"Lucas Errant",
+        house:"Frostheim"
+    },
+
+    {
+        key:"Kaito",
+        name:"Kaito Fuji",
+        house:"Frostheim"
+    },
+
+    {
+        key:"Taiga",
+        name:"Taiga Hoshibami",
+        house:"Sinostra"
+    },
+
+    {
+        key:"Ritsu",
+        name:"Ritsu Shinjo",
+        house:"Sinostra"
+    },
+
+    {
+        key:"Romeo",
+        name:"Romeo Lucci",
+        house:"Sinostra"
+    },
+
+    {
+        key:"Ed",
+        name:"Edward Hart",
+        house:"Obscuary"
+    },
+
+    {
+        key:"Lyca",
+        name:"Lyca Colt",
+        house:"Obscuary"
+    },
+
+    {
+        key:"Rui",
+        name:"Rui Mizuki",
+        house:"Obscuary"
+    },
+
+    {
+        key:"Haru",
+        name:"Haru Sagara",
+        house:"Jabberwock"
+    },
+
+    {
+        key:"Towa",
+        name:"Towa Otonashi",
+        house:"Jabberwock"
+    },
+
+    {
+        key:"Ren",
+        name:"Ren Shiranami",
+        house:"Jabberwock"
+    },
+
+    {
+        key:"Yuri",
+        name:"Yuri Isami",
+        house:"Mortkranken"
+    },
+
+    {
+        key:"Jiro",
+        name:"Jiro Kirisaki",
+        house:"Mortkranken"
+    },
+
+    {
+        key:"Haku",
+        name:"Haku Kusanagi",
+        house:"Hotarubi"
+    },
+
+    {
+        key:"Subaru",
+        name:"Subaru Kagami",
+        house:"Hotarubi"
+    },
+
+    {
+        key:"Zenji",
+        name:"Zenji Kotodama",
+        house:"Hotarubi"
+    },
+
+    {
+        key:"Alan",
+        name:"Alan Mido",
+        house:"Vagastrom"
+    },
+
+    {
+        key:"Sho",
+        name:"Shohei Haizono",
+        house:"Vagastrom"
+    },
+
+    {
+        key:"Leo",
+        name:"Leo Kurosagi",
+        house:"Vagastrom"
+    }
+
+];
+
+
+/* =========================================================
+   THEMES
+========================================================= */
+
+const THEMES = [
+
+    {
+        code:"C",
+        name:"City"
+    },
+
+    {
+        code:"W",
+        name:"Wedding"
+    },
+
+    {
+        code:"O",
+        name:"Onsen"
+    },
+
+    {
+        code:"HA",
+        name:"Hallow"
+    },
+
+    {
+        code:"B",
+        name:"Bedroom"
+    },
+
+    {
+        code:"T",
+        name:"Tarot"
+    },
+
+    {
+        code:"V",
+        name:"Val"
+    },
+
+    {
+        code:"S",
+        name:"Summer"
+    },
+
+    {
+        code:"OC",
+        name:"Job"
+    },
+
+    {
+        code:"G",
+        name:"Gem"
+    },
+
+    {
+        code:"F",
+        name:"Festival"
+    }
+
+];
+
+
+let database = null;
+
+let bannerHistory = [];
+
+let characterHistories = {};
+
+
+/* =========================================================
+   BASIC HELPERS
+========================================================= */
+
+function escapeHTML(value){
+
+    return String(
+        value == null
+            ? ""
+            : value
+    )
+
+    .replace(
+        /&/g,
+        "&amp;"
+    )
+
+    .replace(
+        /</g,
+        "&lt;"
+    )
+
+    .replace(
+        />/g,
+        "&gt;"
+    )
+
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+
+    .replace(
+        /'/g,
+        "&#039;"
+    );
+
+}
+
+
+function naturalSort(a,b){
+
+    return String(a).localeCompare(
+        String(b),
+        undefined,
+        {
+            numeric:true,
+            sensitivity:"base"
+        }
+    );
+
+}
+
+
+function normalizeCardName(value){
+
+    return String(
+        value == null
+            ? ""
+            : value
+    )
+
+    .replace(
+        /\s*\([^)]*\)\s*/g,
+        " "
+    )
+
+    .trim();
+
+}
+
+
+function normalizeKey(value){
+
+    return String(
+        value == null
+            ? ""
+            : value
+    )
+
+    .trim()
+
+    .toLowerCase()
+
+    .replace(
+        /[^a-z0-9]/g,
+        ""
+    );
+
+}
+
+
+/* =========================================================
+   DATE HELPERS
+========================================================= */
+
+function parseDate(value){
+
+    if(
+        value == null
+    ){
+        return null;
+    }
+
+
+    const match =
+        String(value)
+        .trim()
+        .match(
+            /\b(\d{1,2})\/(\d{1,2})\/(\d{2,4})\b/
+        );
+
+
+    if(
+        !match
+    ){
+        return null;
+    }
+
+
+    const month =
+        Number(match[1]);
+
+
+    const day =
+        Number(match[2]);
+
+
+    let year =
+        Number(match[3]);
+
+
+    if(
+        year < 100
+    ){
+        year += 2000;
+    }
+
+
+    const date =
+        new Date(
+            year,
+            month - 1,
+            day
+        );
+
+
+    if(
+        date.getFullYear() !== year ||
+        date.getMonth() !== month - 1 ||
+        date.getDate() !== day
+    ){
+
+        return null;
+
+    }
+
+
+    return date;
+
+}
+
+
+function dateKey(date){
+
+    if(
+        !date
+    ){
+        return "";
+    }
+
+
+    return (
+
+        date.getFullYear() +
+
+        "-" +
+
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        ) +
+
+        "-" +
+
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+
+    );
+
+}
+
+
+function formatDate(date){
+
+    if(
+        !date
+    ){
+        return "—";
+    }
+
+
+    return (
+
+        date.getMonth() + 1
+
+    ) +
+
+    "/" +
+
+    date.getDate() +
+
+    "/" +
+
+    String(
+        date.getFullYear()
+    ).slice(-2);
+
+}
+
+
+function getRunDates(runs){
+
+    if(
+        runs == null
+    ){
+        return [];
+    }
+
+
+    const matches =
+        String(runs).match(
+            /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g
+        );
+
+
+    if(
+        !matches
+    ){
+        return [];
+    }
+
+
+    const unique =
+        new Map();
+
+
+    matches.forEach(
+        value => {
+
+            const date =
+                parseDate(value);
+
+
+            if(
+                date
+            ){
+
+                unique.set(
+                    dateKey(date),
+                    date
+                );
+
+            }
+
+        }
+    );
+
+
+    return Array
+        .from(
+            unique.values()
+        )
+        .sort(
+            (a,b) =>
+                a.getTime() -
+                b.getTime()
+        );
+
+}
+
+
+/* =========================================================
+   CHARACTER / CARD LOOKUPS
+========================================================= */
+
+function getCharacterCardNames(
+    character
+){
+
+    if(
+        !database ||
+        !database.characters
+    ){
+        return [];
+    }
+
+
+    const candidates = [
+
+        character.key,
+
+        character.name
+
+    ];
+
+
+    if(
+        character.key === "Luca"
+    ){
+
+        candidates.push(
+            "Lucas Errant"
+        );
+
+    }
+
+
+    if(
+        character.key === "Ed"
+    ){
+
+        candidates.push(
+            "Edward Hart"
+        );
+
+    }
+
+
+    if(
+        character.key === "Sho"
+    ){
+
+        candidates.push(
+            "Shohei Haizono"
+        );
+
+    }
+
+
+    for(
+        const candidate
+        of candidates
+    ){
+
+        if(
+            Array.isArray(
+                database.characters[
+                    candidate
+                ]
+            )
+        ){
+
+            return database.characters[
+                candidate
+            ];
+
+        }
+
+    }
+
+
+    const normalizedCandidates =
+        candidates.map(
+            value =>
+                normalizeKey(value)
+        );
+
+
+    const matchingKey =
+        Object.keys(
+            database.characters
+        )
+        .find(
+            key =>
+                normalizedCandidates.includes(
+                    normalizeKey(key)
+                )
+        );
+
+
+    if(
+        matchingKey
+    ){
+
+        return database.characters[
+            matchingKey
+        ] || [];
+
+    }
+
+
+    return [];
+
+}
+
+
+function findCard(
+    cardName
+){
+
+    if(
+        !database ||
+        !database.cards
+    ){
+        return null;
+    }
+
+
+    const normalized =
+        normalizeCardName(
+            cardName
+        );
+
+
+    if(
+        !normalized
+    ){
+        return null;
+    }
+
+
+    if(
+        database.cards[
+            normalized
+        ]
+    ){
+
+        return database.cards[
+            normalized
+        ];
+
+    }
+
+
+    const wanted =
+        normalized.toLowerCase();
+
+
+    const key =
+        Object.keys(
+            database.cards
+        )
+        .find(
+            candidate =>
+                normalizeCardName(
+                    candidate
+                ).toLowerCase() === wanted
+        );
+
+
+    if(
+        key
+    ){
+
+        return database.cards[
+            key
+        ];
+
+    }
+
+
+    const cardKey =
+        Object.keys(
+            database.cards
+        )
+        .find(
+            candidate => {
+
+                const card =
+                    database.cards[
+                        candidate
+                    ];
+
+
+                return (
+
+                    card &&
+
+                    normalizeCardName(
+                        card.name
+                    ).toLowerCase() === wanted
+
+                );
+
+            }
+        );
+
+
+    return cardKey
+        ? database.cards[
+            cardKey
+        ]
+        : null;
+
+}
+
+
+function getCardsForCharacter(
+    character
+){
+
+    return getCharacterCardNames(
+        character
+    )
+
+    .map(
+        cardName => {
+
+            const card =
+                findCard(
+                    cardName
+                );
+
+
+            if(
+                !card
+            ){
+                return null;
+            }
+
+
+            return {
+
+                ...card,
+
+                characterKey:
+                    character.key,
+
+                characterName:
+                    character.name,
+
+                originalCardName:
+                    cardName
+
+            };
+
+        }
+    )
+
+    .filter(
+        Boolean
+    );
+
+}
+
+
+/* =========================================================
+   BANNER HISTORY
+========================================================= */
+
+function buildBannerHistory(){
+
+    const bannerMap =
+        new Map();
+
+
+    if(
+        !database ||
+        !database.cards
+    ){
+        return [];
+    }
+
+
+    Object.values(
+        database.cards
+    )
+    .forEach(
+        card => {
+
+            if(
+                !card ||
+                !card.name
+            ){
+                return;
+            }
+
+
+            const dates =
+                getRunDates(
+                    card.runs
+                );
+
+
+            dates.forEach(
+                date => {
+
+                    const key =
+                        dateKey(
+                            date
+                        );
+
+
+                    if(
+                        !bannerMap.has(
+                            key
+                        )
+                    ){
+
+                        bannerMap.set(
+                            key,
+                            {
+
+                                key,
+
+                                date,
+
+                                cards:[]
+
+                            }
+                        );
+
+                    }
+
+
+                    const banner =
+                        bannerMap.get(
+                            key
+                        );
+
+
+                    const exists =
+                        banner.cards.some(
+                            existing =>
+
+                                normalizeCardName(
+                                    existing.name
+                                ).toLowerCase()
+
+                                ===
+
+                                normalizeCardName(
+                                    card.name
+                                ).toLowerCase()
+
+                        );
+
+
+                    if(
+                        !exists
+                    ){
+
+                        banner.cards.push({
+
+                            name:
+                                card.name
+
+                        });
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+    const banners =
+        Array.from(
+            bannerMap.values()
+        );
+
+
+    banners.sort(
+        (a,b) =>
+            a.date.getTime() -
+            b.date.getTime()
+    );
+
+
+    banners.forEach(
+        (banner,index) => {
+
+            banner.index =
+                index;
+
+
+            banner.cards.sort(
+                (a,b) =>
+                    naturalSort(
+                        a.name,
+                        b.name
+                    )
+            );
+
+        }
+    );
+
+
+    return banners;
+
+}
+
+
+function getBannerByDate(
+    date
+){
+
+    const key =
+        dateKey(
+            date
+        );
+
+
+    return (
+
+        bannerHistory.find(
+            banner =>
+                banner.key === key
+        )
+
+        ||
+
+        null
+
+    );
+
+}
+
+
+/* =========================================================
+   CHARACTER HISTORY
+========================================================= */
+
+function buildCharacterHistories(){
+
+    const histories = {};
+
+
+    CHARACTERS.forEach(
+        character => {
+
+            const cards =
+                getCardsForCharacter(
+                    character
+                );
+
+
+            const appearances = [];
+
+
+            cards.forEach(
+                card => {
+
+                    const dates =
+                        getRunDates(
+                            card.runs
+                        );
+
+
+                    dates.forEach(
+                        date => {
+
+                            const banner =
+                                getBannerByDate(
+                                    date
+                                );
+
+
+                            if(
+                                !banner
+                            ){
+                                return;
+                            }
+
+
+                            appearances.push({
+
+                                card,
+
+                                cardName:
+                                    normalizeCardName(
+                                        card.name
+                                    ),
+
+                                date,
+
+                                bannerIndex:
+                                    banner.index,
+
+                                cardKey:
+                                    normalizeCardName(
+                                        card.name
+                                    ).toLowerCase()
+
+                            });
+
+                        }
+                    );
+
+                }
+            );
+
+
+            appearances.sort(
+                (a,b) => {
+
+                    if(
+                        a.bannerIndex !==
+                        b.bannerIndex
+                    ){
+
+                        return (
+                            a.bannerIndex -
+                            b.bannerIndex
+                        );
+
+                    }
+
+
+                    return naturalSort(
+                        a.cardName,
+                        b.cardName
+                    );
+
+                }
+            );
+
+
+            /* =================================================
+               NEW CARD DETECTION
+            ================================================= */
+
+            const seenCards =
+                new Set();
+
+
+            appearances.forEach(
+                appearance => {
+
+                    appearance.isNew =
+                        !seenCards.has(
+                            appearance.cardKey
+                        );
+
+
+                    if(
+                        appearance.isNew
+                    ){
+
+                        seenCards.add(
+                            appearance.cardKey
+                        );
+
+                    }
+
+                }
+            );
+
+
+            /* =================================================
+               ROTATIONS
+            ================================================= */
+
+            let previousAll = null;
+
+            let previousNew = null;
+
+            let previousRerun = null;
+
+
+            appearances.forEach(
+                appearance => {
+
+
+                    /* ALL */
+
+                    if(
+                        previousAll === null
+                    ){
+
+                        appearance.allRotation =
+                            null;
+
+                    }
+                    else{
+
+                        appearance.allRotation =
+                            Math.max(
+                                0,
+
+                                appearance.bannerIndex -
+                                previousAll.bannerIndex -
+                                1
+                            );
+
+                    }
+
+
+                    previousAll =
+                        appearance;
+
+
+                    /* NEW */
+
+                    if(
+                        appearance.isNew
+                    ){
+
+                        if(
+                            previousNew === null
+                        ){
+
+                            appearance.newRotation =
+                                null;
+
+                        }
+                        else{
+
+                            appearance.newRotation =
+                                Math.max(
+                                    0,
+
+                                    appearance.bannerIndex -
+                                    previousNew.bannerIndex -
+                                    1
+                                );
+
+                        }
+
+
+                        previousNew =
+                            appearance;
+
+                    }
+                    else{
+
+                        appearance.newRotation =
+                            null;
+
+                    }
+
+
+                    /* RERUN */
+
+                    if(
+                        !appearance.isNew
+                    ){
+
+                        if(
+                            previousRerun === null
+                        ){
+
+                            appearance.rerunRotation =
+                                null;
+
+                        }
+                        else{
+
+                            appearance.rerunRotation =
+                                Math.max(
+                                    0,
+
+                                    appearance.bannerIndex -
+                                    previousRerun.bannerIndex -
+                                    1
+                                );
+
+                        }
+
+
+                        previousRerun =
+                            appearance;
+
+                    }
+                    else{
+
+                        appearance.rerunRotation =
+                            null;
+
+                    }
+
+                }
+            );
+
+
+            const latestTwenty =
+                appearances
+                .slice(-20)
+                .reverse();
+
+
+            histories[
+                character.key
+            ] = {
+
+                allAppearances:
+                    appearances,
+
+                latestTwenty
+
+            };
+
+        }
+    );
+
+
+    return histories;
+
+}
+
+
+/* =========================================================
+   ELEMENTS
+========================================================= */
+
+function getElementName(
+    card
+){
+
+    if(
+        !card
+    ){
+        return "";
+    }
+
+
+    const raw =
+
+        card.element ??
+
+        card.Element ??
+
+        card.type ??
+
+        card.Type ??
+
+        card.elementName ??
+
+        card.element_name ??
+
+        card.elementNumber ??
+
+        card.elementIndex ??
+
+        "";
+
+
+    const value =
+        String(
+            raw
+        )
+        .trim()
+        .toLowerCase();
+
+
+    if(
+        value === "leaf" ||
+        value === "green" ||
+        value === "1"
+    ){
+
+        return "Leaf";
+
+    }
+
+
+    if(
+        value === "water" ||
+        value === "blue" ||
+        value === "2"
+    ){
+
+        return "Water";
+
+    }
+
+
+    if(
+        value === "fire" ||
+        value === "red" ||
+        value === "3"
+    ){
+
+        return "Fire";
+
+    }
+
+
+    return "";
+
+}
+
+
+function getElementIcon(
+    card
+){
+
+    const element =
+        getElementName(
+            card
+        );
+
+
+    if(
+        !element
+    ){
+        return "";
+    }
+
+
+    return `
+
+        <img
+            class="card-element-icon"
+            src="elements/${element.toLowerCase()}.png"
+            alt="${escapeHTML(
+                element
+            )}"
+        >
+
+    `;
+
+}
+
+
+/* =========================================================
+   ROTATION DISPLAY
+========================================================= */
+
+function formatRotation(
+    value
+){
+
+    if(
+        value === null ||
+        value === undefined
+    ){
+
+        return `
+
+            <span
+                class="rotation-empty"
+            >
+                —
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span
+            class="rotation-number"
+        >
+            ${value}
+        </span>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CHARACTER RERUN HISTORY
+========================================================= */
+
+function renderCharacterHistory(){
+
+    const container =
+        document.getElementById(
+            "characterHistory"
+        );
+
+
+    const html =
+        CHARACTERS
+
+        .map(
+            character => {
+
+                const history =
+                    characterHistories[
+                        character.key
+                    ];
+
+
+                if(
+                    !history ||
+                    history.latestTwenty.length === 0
+                ){
+
+                    return `
+
+                        <article
+                            class="character-block"
+                        >
+
+                            <div
+                                class="character-header"
+                            >
+
+                                <div
+                                    class="character-header-name"
+                                >
+
+                                    ${escapeHTML(
+                                        character.name
+                                    )}
+
+                                </div>
+
+
+                                <div
+                                    class="character-header-count"
+                                >
+
+                                    0 appearances
+
+                                </div>
+
+                            </div>
+
+
+                            <div
+                                class="table-scroll"
+                            >
+
+                                <div
+                                    class="empty-panel"
+                                >
+
+                                    No rerun data found.
+
+                                </div>
+
+                            </div>
+
+                        </article>
+
+                    `;
+
+                }
+
+
+                const appearances =
+                    history.latestTwenty;
+
+
+                const total =
+                    history
+                    .allAppearances
+                    .length;
+
+
+                return `
+
+                    <article
+                        class="character-block"
+                    >
+
+                        <div
+                            class="character-header"
+                        >
+
+                            <div
+                                class="character-header-name"
+                            >
+
+                                ${escapeHTML(
+                                    character.name
+                                )}
+
+                            </div>
+
+
+                            <div
+                                class="character-header-count"
+                            >
+
+                                ${total}
+                                appearances
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="table-scroll"
+                        >
+
+                            <table
+                                class="rotation-table"
+                            >
+
+                                <thead>
+
+                                    <tr>
+
+                                        <th>
+                                            Card
+                                        </th>
+
+                                        <th>
+                                            Date
+                                        </th>
+
+                                        <th>
+                                            New
+                                        </th>
+
+                                        <th>
+                                            All
+                                        </th>
+
+                                        <th>
+                                            New
+                                        </th>
+
+                                        <th>
+                                            Rerun
+                                        </th>
+
+                                    </tr>
+
+                                </thead>
+
+
+                                <tbody>
+
+                                    ${
+                                        appearances
+
+                                        .map(
+                                            appearance => `
+
+                                                <tr>
+
+                                                    <td
+                                                        class="card-name-cell"
+                                                    >
+
+                                                        <div
+                                                            class="card-name-content"
+                                                        >
+
+                                                            ${getElementIcon(
+                                                                appearance.card
+                                                            )}
+
+
+                                                            <span
+                                                                class="card-name-text"
+                                                                title="${escapeHTML(
+                                                                    appearance.cardName
+                                                                )}"
+                                                            >
+
+                                                                ${escapeHTML(
+                                                                    appearance.cardName
+                                                                )}
+
+                                                            </span>
+
+                                                        </div>
+
+                                                    </td>
+
+
+                                                    <td
+                                                        class="date-cell"
+                                                    >
+
+                                                        ${formatDate(
+                                                            appearance.date
+                                                        )}
+
+                                                    </td>
+
+
+                                                    <td
+                                                        class="new-cell"
+                                                    >
+
+                                                        ${
+                                                            appearance.isNew
+
+                                                            ?
+
+                                                            `
+
+                                                                <span
+                                                                    class="new-badge"
+                                                                >
+                                                                    N
+                                                                </span>
+
+                                                            `
+
+                                                            :
+
+                                                            `
+
+                                                                <span
+                                                                    class="rerun-mark"
+                                                                >
+                                                                    —
+                                                                </span>
+
+                                                            `
+                                                        }
+
+                                                    </td>
+
+
+                                                    <td
+                                                        class="rotation-cell"
+                                                    >
+
+                                                        ${formatRotation(
+                                                            appearance.allRotation
+                                                        )}
+
+                                                    </td>
+
+
+                                                    <td
+                                                        class="rotation-cell"
+                                                    >
+
+                                                        ${formatRotation(
+                                                            appearance.newRotation
+                                                        )}
+
+                                                    </td>
+
+
+                                                    <td
+                                                        class="rotation-cell"
+                                                    >
+
+                                                        ${formatRotation(
+                                                            appearance.rerunRotation
+                                                        )}
+
+                                                    </td>
+
+                                                </tr>
+
+                                            `
+                                        )
+                                        .join("")
+                                    }
+
+                                </tbody>
+
+                            </table>
+
+                        </div>
+
+                    </article>
+
+                `;
+
+            }
+        )
+        .join("");
+
+
+    container.innerHTML =
+        html;
+
+}
+
+
+/* =========================================================
+   CHARACTER CARD COUNT
+========================================================= */
+
+function renderCharacterRanking(){
+
+    const container =
+        document.getElementById(
+            "characterRanking"
+        );
+
+
+    const rows =
+        CHARACTERS.map(
+            character => {
+
+                const cards =
+                    getCardsForCharacter(
+                        character
+                    );
+
+
+                const unique =
+                    new Set();
+
+
+                cards.forEach(
+                    card => {
+
+                        const normalized =
+                            normalizeCardName(
+                                card.name
+                            );
+
+
+                        if(
+                            normalized
+                        ){
+
+                            unique.add(
+                                normalized.toLowerCase()
+                            );
+
+                        }
+
+                    }
+                );
+
+
+                return {
+
+                    character,
+
+                    cardCount:
+                        unique.size
+
+                };
+
+            }
+        );
+
+
+    rows.sort(
+        (a,b) => {
+
+            if(
+                b.cardCount !==
+                a.cardCount
+            ){
+
+                return (
+                    b.cardCount -
+                    a.cardCount
+                );
+
+            }
+
+
+            return naturalSort(
+                a.character.name,
+                b.character.name
+            );
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+        <div
+            class="data-table-wrap"
+        >
+
+            <table
+                class="data-table compact-ranking-table"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Character
+                        </th>
+
+                        <th>
+                            Cards
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${
+                        rows
+
+                        .map(
+                            (row,index) => `
+
+                                <tr>
+
+                                    <td
+                                        class="rank-number"
+                                    >
+
+                                        ${index + 1}
+
+                                    </td>
+
+
+                                    <td
+                                        class="name-left"
+                                    >
+
+                                        ${escapeHTML(
+                                            row.character.name
+                                        )}
+
+                                    </td>
+
+
+                                    <td
+                                        class="ranking-rotation"
+                                    >
+
+                                        ${row.cardCount}
+
+                                    </td>
+
+                                </tr>
+
+                            `
+                        )
+
+                        .join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   FIND THE LONGEST-WAITING CARD
+
+   IMPORTANT:
+
+   The card displayed here is STILL the card that has
+   gone the longest without rerunning.
+
+   This is independent of the sorting number.
+========================================================= */
+
+function getLongestWaitingCard(
+    character
+){
+
+    const history =
+        characterHistories[
+            character.key
+        ];
+
+
+    if(
+        !history ||
+        !history.allAppearances ||
+        history.allAppearances.length === 0
+    ){
+
+        return null;
+
+    }
+
+
+    /*
+       Get the most recent appearance of every
+       unique card belonging to this character.
+    */
+
+    const latestByCard =
+        new Map();
+
+
+    history.allAppearances.forEach(
+        appearance => {
+
+            const key =
+                appearance.cardKey;
+
+
+            const existing =
+                latestByCard.get(
+                    key
+                );
+
+
+            if(
+                !existing ||
+                appearance.date.getTime() >
+                existing.date.getTime()
+            ){
+
+                latestByCard.set(
+                    key,
+                    appearance
+                );
+
+            }
+
+        }
+    );
+
+
+    /*
+       Find the card whose most recent appearance
+       is furthest back in time.
+    */
+
+    let longest =
+        null;
+
+
+    latestByCard.forEach(
+        appearance => {
+
+            if(
+                !longest ||
+                appearance.date.getTime() <
+                longest.date.getTime()
+            ){
+
+                longest = {
+
+                    card:
+                        appearance.card,
+
+                    date:
+                        appearance.date,
+
+                    bannerIndex:
+                        appearance.bannerIndex
+
+                };
+
+            }
+
+        }
+    );
+
+
+    return longest;
+
+}
+
+
+/* =========================================================
+   FIND THE CHARACTER'S MOST RECENT CARD
+
+   THIS is what controls the BANNERS SINCE number.
+
+   It is NOT the longest-waiting card.
+
+   It is simply the most recent card that character
+   has had run in a banner.
+========================================================= */
+
+function getLatestCharacterAppearance(
+    character
+){
+
+    const history =
+        characterHistories[
+            character.key
+        ];
+
+
+    if(
+        !history ||
+        !history.allAppearances ||
+        history.allAppearances.length === 0
+    ){
+
+        return null;
+
+    }
+
+
+    let latest =
+        null;
+
+
+    history.allAppearances.forEach(
+        appearance => {
+
+            if(
+                !latest ||
+                appearance.bannerIndex >
+                latest.bannerIndex
+            ){
+
+                latest =
+                    appearance;
+
+            }
+
+        }
+    );
+
+
+    return latest;
+
+}
+
+
+/* =========================================================
+   BANNERS SINCE CHARACTER'S MOST RECENT CARD
+
+   Example:
+
+   Current/latest banner index = 100
+
+   Character's latest card ran on banner index 94
+
+   Banners since =
+
+       100 - 94
+
+       = 6
+
+   This number is used for sorting.
+
+   The displayed card is still the longest-waiting card.
+========================================================= */
+
+function getCharacterBannersSinceLatestCard(
+    character
+){
+
+    const latest =
+        getLatestCharacterAppearance(
+            character
+        );
+
+
+    if(
+        !latest
+    ){
+
+        return null;
+
+    }
+
+
+    if(
+        bannerHistory.length === 0
+    ){
+
+        return null;
+
+    }
+
+
+    const currentBannerIndex =
+        bannerHistory.length - 1;
+
+
+    return Math.max(
+        0,
+
+        currentBannerIndex -
+        latest.bannerIndex
+    );
+
+}
+
+
+/* =========================================================
+   LONGEST WAITING RANKING
+
+   SORTING IS BASED ON:
+
+   banners since the CHARACTER'S MOST RECENT CARD
+
+   DISPLAY IS:
+
+   the CHARACTER'S CARD that has gone the longest
+   without a rerun
+========================================================= */
+
+function renderLongestWaitingRanking(){
+
+    const container =
+        document.getElementById(
+            "longestWaitingRanking"
+        );
+
+
+    const rows =
+        CHARACTERS
+
+        .map(
+            character => {
+
+                const waiting =
+                    getLongestWaitingCard(
+                        character
+                    );
+
+
+                const bannersSince =
+                    getCharacterBannersSinceLatestCard(
+                        character
+                    );
+
+
+                return {
+
+                    character,
+
+                    waiting,
+
+                    bannersSince
+
+                };
+
+            }
+        )
+
+        .filter(
+            row =>
+                row.waiting &&
+                row.bannersSince !== null
+        );
+
+
+    /*
+       SORT BY:
+
+       1. Banners since the CHARACTER'S latest card
+          — highest to lowest.
+
+       2. If tied, older latest-card date first.
+
+       3. If still tied, alphabetical character name.
+    */
+
+    rows.sort(
+        (a,b) => {
+
+            if(
+                b.bannersSince !==
+                a.bannersSince
+            ){
+
+                return (
+                    b.bannersSince -
+                    a.bannersSince
+                );
+
+            }
+
+
+            const aLatest =
+                getLatestCharacterAppearance(
+                    a.character
+                );
+
+
+            const bLatest =
+                getLatestCharacterAppearance(
+                    b.character
+                );
+
+
+            const aTime =
+                aLatest &&
+                aLatest.date
+
+                    ? aLatest.date.getTime()
+
+                    : Infinity;
+
+
+            const bTime =
+                bLatest &&
+                bLatest.date
+
+                    ? bLatest.date.getTime()
+
+                    : Infinity;
+
+
+            if(
+                aTime !==
+                bTime
+            ){
+
+                return (
+                    aTime -
+                    bTime
+                );
+
+            }
+
+
+            return naturalSort(
+                a.character.name,
+                b.character.name
+            );
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+        <div
+            class="data-table-wrap"
+        >
+
+            <table
+                class="data-table"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Character
+                        </th>
+
+                        <th>
+                            Longest Waiting Card
+                        </th>
+
+                        <th>
+                            Banners Since
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${
+                        rows
+
+                        .map(
+                            (row,index) => `
+
+                                <tr>
+
+                                    <td
+                                        class="rank-number"
+                                    >
+
+                                        ${index + 1}
+
+                                    </td>
+
+
+                                    <td
+                                        class="name-left"
+                                    >
+
+                                        ${escapeHTML(
+                                            row.character.name
+                                        )}
+
+                                    </td>
+
+
+                                    <td
+                                        class="waiting-card"
+                                    >
+
+                                        <div
+                                            class="card-name-content ranking-card-name"
+                                        >
+
+                                            ${getElementIcon(
+                                                row.waiting.card
+                                            )}
+
+
+                                            <span
+                                                class="card-name-text"
+                                                title="${escapeHTML(
+                                                    normalizeCardName(
+                                                        row.waiting.card.name
+                                                    )
+                                                )}"
+                                            >
+
+                                                ${escapeHTML(
+                                                    normalizeCardName(
+                                                        row.waiting.card.name
+                                                    )
+                                                )}
+
+                                            </span>
+
+                                        </div>
+
+
+                                        <span
+                                            class="waiting-date"
+                                        >
+
+                                            Last run:
+                                            ${formatDate(
+                                                row.waiting.date
+                                            )}
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <td
+                                        class="ranking-rotation"
+                                    >
+
+                                        ${row.bannersSince}
+
+                                    </td>
+
+                                </tr>
+
+                            `
+                        )
+
+                        .join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CARD TOTALS
+========================================================= */
+
+function renderCardTotals(){
+
+    const container =
+        document.getElementById(
+            "cardTotals"
+        );
+
+
+    const unique =
+        new Map();
+
+
+    Object.values(
+        database.cards || {}
+    )
+    .forEach(
+        card => {
+
+            if(
+                !card ||
+                !card.name
+            ){
+                return;
+            }
+
+
+            const normalized =
+                normalizeCardName(
+                    card.name
+                );
+
+
+            const normalizedKey =
+                normalized.toLowerCase();
+
+
+            if(
+                !unique.has(
+                    normalizedKey
+                )
+            ){
+
+                unique.set(
+                    normalizedKey,
+                    card
+                );
+
+            }
+
+        }
+    );
+
+
+    const counts = {
+
+        Leaf:0,
+
+        Water:0,
+
+        Fire:0
+
+    };
+
+
+    unique.forEach(
+        card => {
+
+            const element =
+                getElementName(
+                    card
+                );
+
+
+            if(
+                counts[
+                    element
+                ] !== undefined
+            ){
+
+                counts[
+                    element
+                ]++;
+
+            }
+
+        }
+    );
+
+
+    const rows = [
+
+        {
+            element:"Leaf",
+            count:counts.Leaf
+        },
+
+        {
+            element:"Water",
+            count:counts.Water
+        },
+
+        {
+            element:"Fire",
+            count:counts.Fire
+        }
+
+    ];
+
+
+    rows.sort(
+        (a,b) =>
+            b.count -
+            a.count
+    );
+
+
+    container.innerHTML = `
+
+        <div
+            class="data-table-wrap"
+        >
+
+            <table
+                class="data-table"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            #
+                        </th>
+
+                        <th>
+                            Element
+                        </th>
+
+                        <th>
+                            Cards
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${
+                        rows
+
+                        .map(
+                            (row,index) => `
+
+                                <tr>
+
+                                    <td
+                                        class="rank-number"
+                                    >
+
+                                        ${index + 1}
+
+                                    </td>
+
+
+                                    <td
+                                        class="name-left"
+                                    >
+
+                                        ${escapeHTML(
+                                            row.element
+                                        )}
+
+                                    </td>
+
+
+                                    <td
+                                        class="ranking-rotation"
+                                    >
+
+                                        ${row.count}
+
+                                    </td>
+
+                                </tr>
+
+                            `
+                        )
+
+                        .join("")
+                    }
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   THEME TOTALS
+========================================================= */
+
+function getThemeCode(
+    cardName
+){
+
+    const normalized =
+        normalizeCardName(
+            cardName
+        )
+        .trim();
+
+
+    const match =
+        normalized.match(
+            /(?:^|[-\s])([A-Z]{1,2})$/
+        );
+
+
+    if(
+        !match
+    ){
+        return "";
+    }
+
+
+    const code =
+        match[1];
+
+
+    return THEMES.some(
+        theme =>
+            theme.code === code
+    )
+
+        ? code
+
+        : "";
+
+}
+
+
+function renderThemeTotals(){
+
+    const container =
+        document.getElementById(
+            "themeTotals"
+        );
+
+
+    const counts = {};
+
+
+    THEMES.forEach(
+        theme => {
+
+            counts[
+                theme.code
+            ] = 0;
+
+        }
+    );
+
+
+    const seen =
+        new Set();
+
+
+    Object.values(
+        database.cards || {}
+    )
+    .forEach(
+        card => {
+
+            if(
+                !card ||
+                !card.name
+            ){
+                return;
+            }
+
+
+            const normalized =
+                normalizeCardName(
+                    card.name
+                );
+
+
+            const normalizedKey =
+                normalized.toLowerCase();
+
+
+            if(
+                seen.has(
+                    normalizedKey
+                )
+            ){
+
+                return;
+
+            }
+
+
+            const themeCode =
+                getThemeCode(
+                    normalized
+                );
+
+
+            if(
+                themeCode
+            ){
+
+                counts[
+                    themeCode
+                ]++;
+
+
+                seen.add(
+                    normalizedKey
+                );
+
+            }
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+        <div
+            class="theme-grid"
+        >
+
+            ${
+                THEMES
+
+                .map(
+                    theme => `
+
+                        <div
+                            class="theme-card"
+                        >
+
+                            <div
+                                class="theme-name"
+                            >
+
+                                ${escapeHTML(
+                                    theme.name
+                                )}
+
+                            </div>
+
+
+                            <div
+                                class="theme-code"
+                            >
+
+                                ${escapeHTML(
+                                    theme.code
+                                )}
+
+                            </div>
+
+
+                            <div
+                                class="theme-count"
+                            >
+
+                                ${
+                                    counts[
+                                        theme.code
+                                    ] || 0
+                                }
+
+                            </div>
+
+                        </div>
+
+                    `
+                )
+
+                .join("")
+            }
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   CACHE
+========================================================= */
+
+function getCachedDatabase(){
+
+    try{
+
+        const raw =
+            localStorage.getItem(
+                RERUN_CACHE_KEY
+            );
+
+
+        if(
+            !raw
+        ){
+            return null;
+        }
+
+
+        return JSON.parse(
+            raw
+        );
+
+    }
+    catch(
+        error
+    ){
+
+        return null;
+
+    }
+
+}
+
+
+function saveCachedDatabase(
+    data
+){
+
+    try{
+
+        localStorage.setItem(
+            RERUN_CACHE_KEY,
+            JSON.stringify(
+                data
+            )
+        );
+
+
+        localStorage.setItem(
+            RERUN_CACHE_TIME_KEY,
+            String(
+                Date.now()
+            )
+        );
+
+    }
+    catch(
+        error
+    ){
+
+        console.warn(
+            "Unable to save database cache.",
+            error
+        );
+
+    }
+
+}
+
+
+function isCacheFresh(){
+
+    try{
+
+        const timestamp =
+            Number(
+                localStorage.getItem(
+                    RERUN_CACHE_TIME_KEY
+                )
+            );
+
+
+        if(
+            !timestamp
+        ){
+            return false;
+        }
+
+
+        return (
+
+            Date.now() -
+            timestamp
+
+        ) < RERUN_CACHE_DURATION;
+
+    }
+    catch(
+        error
+    ){
+
+        return false;
+
+    }
+
+}
+
+
+/* =========================================================
+   JSONP
+========================================================= */
+
+function loadJSONP(
+    url
+){
+
+    return new Promise(
+        (
+            resolve,
+            reject
+        ) => {
+
+
+            const callbackName =
+
+                "rerunDataCallback_" +
+
+                Date.now() +
+
+                "_" +
+
+                Math.random()
+                .toString(36)
+                .slice(2);
+
+
+            const script =
+                document.createElement(
+                    "script"
+                );
+
+
+            let finished =
+                false;
+
+
+            const timeout =
+                setTimeout(
+                    () => {
+
+                        if(
+                            finished
+                        ){
+                            return;
+                        }
+
+
+                        finished =
+                            true;
+
+
+                        cleanup();
+
+
+                        reject(
+                            new Error(
+                                "Request timed out."
+                            )
+                        );
+
+                    },
+                    15000
+                );
+
+
+            function cleanup(){
+
+                clearTimeout(
+                    timeout
+                );
+
+
+                script.remove();
+
+
+                try{
+
+                    delete window[
+                        callbackName
+                    ];
+
+                }
+                catch(
+                    error
+                ){
+
+                    window[
+                        callbackName
+                    ] =
+                        undefined;
+
+                }
+
+            }
+
+
+            window[
+                callbackName
+            ] =
+                data => {
+
+                    if(
+                        finished
+                    ){
+                        return;
+                    }
+
+
+                    finished =
+                        true;
+
+
+                    cleanup();
+
+
+                    resolve(
+                        data
+                    );
+
+                };
+
+
+            script.onerror =
+                () => {
+
+                    if(
+                        finished
+                    ){
+                        return;
+                    }
+
+
+                    finished =
+                        true;
+
+
+                    cleanup();
+
+
+                    reject(
+                        new Error(
+                            "Unable to load database."
+                        )
+                    );
+
+                };
+
+
+            script.src =
+                url +
+
+                (
+                    url.includes("?")
+                        ? "&"
+                        : "?"
+                ) +
+
+                "callback=" +
+
+                encodeURIComponent(
+                    callbackName
+                );
+
+
+            document.body.appendChild(
+                script
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD DATABASE
+========================================================= */
+
+async function loadDatabase(){
+
+    const status =
+        document.getElementById(
+            "status"
+        );
+
+
+    const cached =
+        getCachedDatabase();
+
+
+    /*
+       Render cached data immediately.
+    */
+
+    if(
+        cached
+    ){
+
+        database =
+            cached;
+
+
+        bannerHistory =
+            buildBannerHistory();
+
+
+        characterHistories =
+            buildCharacterHistories();
+
+
+        renderCharacterHistory();
+
+        renderCharacterRanking();
+
+        renderLongestWaitingRanking();
+
+        renderCardTotals();
+
+        renderThemeTotals();
+
+    }
+
+
+    /*
+       Stop here when cache is fresh.
+    */
+
+    if(
+        cached &&
+        isCacheFresh()
+    ){
+
+        status.style.display =
+            "none";
+
+        return;
+
+    }
+
+
+    try{
+
+        const data =
+            await loadJSONP(
+                SHEET_API
+            );
+
+
+        if(
+            !data ||
+            typeof data !==
+            "object"
+        ){
+
+            throw new Error(
+                "Invalid database response."
+            );
+
+        }
+
+
+        database =
+            data;
+
+
+        saveCachedDatabase(
+            data
+        );
+
+
+        bannerHistory =
+            buildBannerHistory();
+
+
+        characterHistories =
+            buildCharacterHistories();
+
+
+        renderCharacterHistory();
+
+        renderCharacterRanking();
+
+        renderLongestWaitingRanking();
+
+        renderCardTotals();
+
+        renderThemeTotals();
+
+
+        status.style.display =
+            "none";
+
+    }
+    catch(
+        error
+    ){
+
+        console.error(
+            error
+        );
+
+
+        if(
+            cached
+        ){
+
+            status.style.display =
+                "none";
+
+        }
+        else{
+
+            status.textContent =
+                "Unable to load rerun data.";
+
+
+            status.classList.add(
+                "error"
+            );
+
+        }
+
+    }
+
+}
+
+
+loadDatabase();
+
+</script>
+
+
+</body>
+
+</html>

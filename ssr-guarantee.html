@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SSR Guarantee — Tokyo Debunker Database</title>
+<link rel="stylesheet" href="style.css">
+<style>
+/* =========================================================
+SSR GUARANTEE PAGE
+========================================================= */
+:root {
+--purple: #9d72c7;
+--purple-light: #c8a8e9;
+--purple-dark: #6e478e;
+--panel: rgba(20, 13, 29, 0.88);
+--panel-soft: rgba(30, 19, 42, 0.82);
+--border: rgba(157, 114, 199, 0.38);
+--border-strong: rgba(184, 138, 226, 0.58);
+--text: #eee8f2;
+--muted: #aaa0b1;
+--green: #9fe0ae;
+--red: #e69aa5;
+--gold: #e4c98b;
+}
+/* =========================================================
+HEADER — MATCH OTHER DATABASE PAGES
+========================================================= */
+.site-header {
+width: 100%;
+padding: 14px 0 12px;
+}
+.header-inner {
+width: min(1520px, calc(100% - 40px));
+margin: 0 auto;
+display: flex;
+align-items: center;
+}
+.site-logo {
+display: block;
+width: 260px;
+height: auto;
+max-height: 48px;
+object-fit: contain;
+}
+/* =========================================================
+PAGE
+========================================================= */
+.ssr-page {
+width: min(1500px, calc(100% - 40px));
+margin: 0 auto;
+padding: 30px 0 80px;
+}
+.ssr-title {
+text-align: center;
+margin-bottom: 8px;
+color: #eee7f3;
+font-size: clamp(30px, 4vw, 48px);
+font-weight: 500;
+letter-spacing: 5px;
+text-shadow:
+0 0 18px rgba(157, 114, 199, 0.25);
+}
+.ssr-subtitle {
+text-align: center;
+color: #a99eaf;
+font-size: 14px;
+letter-spacing: 1.8px;
+margin-bottom: 38px;
+}
+/* =========================================================
+BACK BUTTON
+========================================================= */
+.back-button {
+display: inline-block;
+padding: 9px 16px;
+color: #e8ddec;
+text-decoration: none;
+font-size: 13px;
+background:
+rgba(35, 20, 48, 0.75);
+border:
+1px solid
+rgba(157, 114, 199, 0.65);
+border-radius: 6px;
+transition:
+background 0.2s ease,
+border-color 0.2s ease;
+}
+.back-button:hover {
+background:
+rgba(75, 45, 100, 0.55);
+border-color:
+rgba(190, 145, 225, 0.9);
+}
+/* =========================================================
+LOADING
+========================================================= */
+.database-loading {
+text-align: center;
+padding: 80px 20px;
+color: #aaa0b1;
+font-size: 14px;
+letter-spacing: 1px;
+}
+.database-loading-spinner {
+width: 34px;
+height: 34px;
+margin: 0 auto 18px;
+border: 2px solid rgba(157, 114, 199, 0.18);
+border-top-color: var(--purple-light);
+border-radius: 50%;
+animation: ssrSpin 0.9s linear infinite;
+}
+@keyframes ssrSpin {
+to {
+transform: rotate(360deg);
+}
+}
+.database-error {
+max-width: 700px;
+margin: 40px auto;
+padding: 22px;
+text-align: center;
+color: #dca5ae;
+background: rgba(55, 20, 30, 0.55);
+border:
+1px solid
+rgba(216, 140, 152, 0.35);
+border-radius: 12px;
+}
+/* =========================================================
+SECTIONS
+========================================================= */
+.dashboard-section {
+margin-bottom: 42px;
+}
+.section-heading {
+display: flex;
+align-items: center;
+gap: 14px;
+margin:
+0 0 18px;
+color: #e9dff0;
+font-size: 20px;
+font-weight: 500;
+letter-spacing: 2px;
+}
+.section-heading::before,
+.section-heading::after {
+content: "";
+height: 1px;
+flex: 1;
+background:
+linear-gradient(
+90deg,
+transparent,
+rgba(157, 114, 199, 0.45)
+);
+}
+.section-heading::after {
+background:
+linear-gradient(
+90deg,
+rgba(157, 114, 199, 0.45),
+transparent
+);
+}
+/* =========================================================
+RANKING PANELS
+========================================================= */
+.fun-stats-grid {
+display: grid;
+grid-template-columns:
+repeat(3, minmax(0, 1fr));
+gap: 16px;
+}
+.stat-panel {
+background:
+linear-gradient(
+145deg,
+rgba(38, 23, 51, 0.92),
+rgba(17, 11, 25, 0.92)
+);
+border:
+1px solid
+var(--border);
+border-radius: 12px;
+overflow: hidden;
+box-shadow:
+0 10px 30px rgba(0, 0, 0, 0.22),
+inset 0 0 35px
+rgba(110, 71, 142, 0.04);
+}
+.stat-panel-title {
+padding: 14px 16px;
+color: #d8c7e2;
+font-size: 12px;
+letter-spacing: 1.6px;
+text-transform: uppercase;
+border-bottom:
+1px solid
+rgba(157, 114, 199, 0.18);
+background:
+rgba(10, 7, 15, 0.25);
+}
+.stat-list {
+padding: 6px 0;
+}
+.stat-row {
+display: grid;
+grid-template-columns:
+30px
+minmax(0, 1fr)
+auto;
+align-items: center;
+gap: 10px;
+padding:
+9px 15px;
+color: #d6cedb;
+font-size: 13px;
+border-bottom:
+1px solid
+rgba(255, 255, 255, 0.035);
+}
+.stat-row:last-child {
+border-bottom: none;
+}
+.stat-rank {
+color: #776980;
+text-align: center;
+font-size: 11px;
+}
+.stat-name {
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+.stat-value {
+color: var(--purple-light);
+font-weight: 500;
+white-space: nowrap;
+}
+/* =========================================================
+HOUSE GRID
+========================================================= */
+.house-list {
+display: grid;
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+gap: 24px;
+}
+.house-card {
+position: relative;
+background:
+linear-gradient(
+145deg,
+rgba(32, 20, 43, 0.96),
+rgba(12, 8, 18, 0.96)
+);
+border:
+1px solid
+var(--border);
+border-radius: 15px;
+overflow: hidden;
+box-shadow:
+0 12px 35px rgba(0, 0, 0, 0.28),
+inset 0 0 40px
+rgba(110, 71, 142, 0.035);
+}
+/* =========================================================
+HOUSE HEADER
+========================================================= */
+.house-header {
+display: flex;
+align-items: center;
+gap: 15px;
+padding:
+18px 20px;
+background:
+linear-gradient(
+90deg,
+rgba(80, 50, 105, 0.20),
+rgba(20, 12, 28, 0.15)
+);
+border-bottom:
+1px solid
+rgba(157, 114, 199, 0.20);
+}
+.house-logo {
+width: 50px;
+height: 50px;
+object-fit: contain;
+flex:
+0 0 50px;
+}
+.house-header-info {
+min-width: 0;
+flex: 1;
+}
+.house-name {
+color: #eee7f2;
+font-size: 21px;
+letter-spacing: 1.4px;
+font-weight: 500;
+}
+.house-card-count {
+color: #938798;
+font-size: 12px;
+margin-top: 4px;
+letter-spacing: 0.8px;
+}
+.house-success {
+text-align: right;
+flex: 0 0 auto;
+}
+.house-success-label {
+color: #817486;
+font-size: 9px;
+letter-spacing: 1.3px;
+text-transform: uppercase;
+}
+.house-success-value {
+margin-top: 3px;
+color: var(--gold);
+font-size: 21px;
+font-weight: 500;
+}
+/* =========================================================
+CARD LIST
+========================================================= */
+.card-list {
+max-height: 450px;
+overflow-y: auto;
+border-bottom:
+1px solid
+rgba(157, 114, 199, 0.15);
+}
+.card-list::-webkit-scrollbar {
+width: 7px;
+}
+.card-list::-webkit-scrollbar-track {
+background:
+rgba(0, 0, 0, 0.18);
+}
+.card-list::-webkit-scrollbar-thumb {
+background:
+rgba(157, 114, 199, 0.38);
+border-radius: 10px;
+}
+.card-row {
+display: grid;
+grid-template-columns:
+minmax(0, 1fr)
+60px;
+align-items: center;
+min-height: 43px;
+border-bottom:
+1px solid
+rgba(255, 255, 255, 0.035);
+}
+.card-row:last-child {
+border-bottom: none;
+}
+.card-name {
+min-width: 0;
+padding:
+9px 14px
+9px 18px;
+color: #d8d0dc;
+font-size: 12px;
+line-height: 1.35;
+}
+.card-character {
+color: #817487;
+font-size: 10px;
+margin-left: 6px;
+}
+.card-mr {
+height: 100%;
+display: flex;
+align-items: center;
+justify-content: center;
+border-left:
+1px solid
+rgba(157, 114, 199, 0.12);
+font-size: 13px;
+font-weight: 500;
+}
+.mr-positive {
+color: var(--green);
+}
+.mr-negative {
+color: var(--red);
+}
+.mr-zero {
+color: #9f96a4;
+}
+/* =========================================================
+HOUSE STATISTICS
+========================================================= */
+.house-stats {
+padding: 17px;
+}
+.mr-stat-title {
+color: #b8abbc;
+font-size: 10px;
+letter-spacing: 1.5px;
+text-transform: uppercase;
+margin-bottom: 10px;
+}
+.mr-bars {
+display: grid;
+gap: 7px;
+margin-bottom: 18px;
+}
+.mr-bar-row {
+display: grid;
+grid-template-columns:
+32px
+1fr
+50px;
+align-items: center;
+gap: 8px;
+}
+.mr-bar-label {
+color: #b9adbd;
+font-size: 11px;
+text-align: center;
+}
+.mr-bar-track {
+height: 7px;
+background:
+rgba(255, 255, 255, 0.055);
+border-radius: 8px;
+overflow: hidden;
+}
+.mr-bar-fill {
+height: 100%;
+border-radius: 8px;
+background:
+linear-gradient(
+90deg,
+#76518f,
+#b28bd0
+);
+}
+.mr-bar-value {
+color: #c8bdcc;
+font-size: 10px;
+text-align: right;
+}
+/* =========================================================
+CATEGORY STATISTICS
+========================================================= */
+.category-stats {
+display: grid;
+grid-template-columns:
+repeat(5, minmax(0, 1fr));
+gap: 6px;
+}
+.category-stat {
+padding:
+10px 4px;
+text-align: center;
+background:
+rgba(255, 255, 255, 0.025);
+border:
+1px solid
+rgba(157, 114, 199, 0.12);
+border-radius: 7px;
+}
+.category-stat-value {
+color: #eee4f3;
+font-size: 17px;
+font-weight: 600;
+line-height: 1.2;
+}
+.category-stat-label {
+color: #c1b5c6;
+font-size: 10px;
+margin-top: 5px;
+line-height: 1.2;
+letter-spacing: 0.2px;
+}
+/* =========================================================
+HOUSE FOOTER
+========================================================= */
+.house-footer {
+display: grid;
+grid-template-columns:
+repeat(5, 1fr);
+border-top:
+1px solid
+rgba(157, 114, 199, 0.16);
+}
+.house-footer-stat {
+padding:
+12px 4px;
+text-align: center;
+border-right:
+1px solid
+rgba(157, 114, 199, 0.10);
+}
+.house-footer-stat:last-child {
+border-right: none;
+}
+.house-footer-value {
+color: #eee5f2;
+font-size: 16px;
+font-weight: 600;
+line-height: 1.2;
+}
+.house-footer-label {
+margin-top: 4px;
+color: #c0b4c5;
+font-size: 9px;
+letter-spacing: 0.7px;
+text-transform: uppercase;
+}
+/* =========================================================
+DECORATION
+========================================================= */
+.ssr-decoration {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 12px;
+margin-top: 55px;
+opacity: 0.55;
+}
+.ssr-decoration-line {
+width:
+min(170px, 25vw);
+height: 1px;
+background:
+linear-gradient(
+90deg,
+transparent,
+#8d65ad,
+transparent
+);
+}
+.ssr-decoration-diamond {
+width: 7px;
+height: 7px;
+border:
+1px solid
+#9b72bc;
+transform: rotate(45deg);
+}
+/* =========================================================
+RESPONSIVE
+========================================================= */
+@media (max-width: 1100px) {
+.house-list {
+grid-template-columns: 1fr;
+}
+.fun-stats-grid {
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+}
+}
+@media (max-width: 700px) {
+/* Match the smaller header used by the other pages */
+.site-header {
+padding: 10px 0;
+}
+.header-inner {
+width: calc(100% - 24px);
+}
+.site-logo {
+width: 190px;
+max-height: 42px;
+}
+.ssr-page {
+width:
+calc(100% - 24px);
+padding-top: 25px;
+}
+.back-button {
+padding: 8px 13px;
+font-size: 12px;
+}
+.ssr-title {
+font-size: 28px;
+letter-spacing: 3px;
+}
+.ssr-subtitle {
+font-size: 11px;
+line-height: 1.6;
+margin-bottom: 28px;
+}
+.section-heading {
+font-size: 16px;
+letter-spacing: 1.4px;
+}
+.fun-stats-grid {
+grid-template-columns: 1fr;
+gap: 12px;
+}
+.house-list {
+gap: 16px;
+}
+.house-header {
+padding: 14px;
+}
+.house-logo {
+width: 42px;
+height: 42px;
+flex-basis: 42px;
+}
+.house-name {
+font-size: 17px;
+}
+.house-success-value {
+font-size: 18px;
+}
+.card-list {
+max-height: 380px;
+}
+.card-name {
+padding-left: 13px;
+font-size: 11px;
+}
+.category-stats {
+grid-template-columns:
+repeat(5, minmax(0, 1fr));
+gap: 4px;
+}
+.category-stat {
+padding: 9px 2px;
+}
+.category-stat-value {
+font-size: 15px;
+}
+.category-stat-label {
+font-size: 8px;
+}
+.house-footer-value {
+font-size: 14px;
+}
+.house-footer-label {
+font-size: 7px;
+}
+}
+@media (max-width: 420px) {
+.ssr-page {
+width:
+calc(100% - 16px);
+}
+.ssr-title {
+font-size: 24px;
+}
+.house-header {
+gap: 10px;
+}
+.house-logo {
+width: 37px;
+height: 37px;
+flex-basis: 37px;
+}
+.house-name {
+font-size: 15px;
+}
+.house-success-label {
+font-size: 7px;
+}
+.house-success-value {
+font-size: 16px;
+}
+.category-stat-value {
+font-size: 13px;
+}
+.category-stat-label {
+font-size: 7px;
+}
+.house-footer-value {
+font-size: 12px;
+}
+.house-footer-label {
+font-size: 6px;
+}
+}
+</style>
+</head>
+<body>
+<!-- =========================================================
+HEADER
+========================================================= -->
+<header class="site-header">
+<div class="header-inner">
+<a
+href="index.html"
+class="logo-link"
+>
+<img
+src="logo.png"
+alt="Tokyo Debunker"
+class="site-logo"
+>
+</a>
+</div>
+</header>
+<!-- =========================================================
+MAIN
+========================================================= -->
+<main class="ssr-page">
+<a href="banners.html" class="back-button">
+← Back to Banners
+</a>
+<h1 class="ssr-title">
+SSR GUARANTEE
+</h1>
+<p class="ssr-subtitle">
+An overview of released cards, MR ratings, and house statistics
+</p>
+<div
+id="databaseLoading"
+class="database-loading"
+>
+<div
+class="database-loading-spinner"
+></div>
+Loading card database...
+</div>
+<div
+id="databaseError"
+class="database-error"
+style="display:none;"
+></div>
+<div
+id="databaseContent"
+style="display:none;"
+>
+<!-- =================================================
+HOUSE STATISTICS
+================================================= -->
+<section class="dashboard-section">
+<h2 class="section-heading">
+HOUSE STATISTICS
+</h2>
+<div class="fun-stats-grid">
+<div class="stat-panel">
+<div class="stat-panel-title">
+Chance of Success
+</div>
+<div
+id="successRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Most Sweepers
+</div>
+<div
+id="sweeperRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Most Guards
+</div>
+<div
+id="guardRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Stun Revenge
+</div>
+<div
+id="stunRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Sleep Revenge
+</div>
+<div
+id="sleepRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Curse Revenge
+</div>
+<div
+id="curseRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Most Cards
+</div>
+<div
+id="cardCountRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Highest Character MR
+</div>
+<div
+id="highestCharacterRanking"
+class="stat-list"
+></div>
+</div>
+<div class="stat-panel">
+<div class="stat-panel-title">
+Lowest Character MR
+</div>
+<div
+id="lowestCharacterRanking"
+class="stat-list"
+></div>
+</div>
+</div>
+</section>
+<!-- =================================================
+CARDS BY HOUSE
+================================================= -->
+<section class="dashboard-section">
+<h2 class="section-heading">
+CARDS BY HOUSE
+</h2>
+<div
+id="houseList"
+class="house-list"
+></div>
+</section>
+<div class="ssr-decoration">
+<div class="ssr-decoration-line"></div>
+<div class="ssr-decoration-diamond"></div>
+<div class="ssr-decoration-line"></div>
+</div>
+</div>
+</main>
+<script src="database-loader.js"></script>
+<script>
+/* =========================================================
+HOUSE DATA
+========================================================= */
+const HOUSES = [
+{
+name: "Dionysia",
+logo:
+"houses/dionysia.png",
+characters: [
+{
+key: "Jo",
+name: "Jo Kongoza"
+},
+{
+key: "Mio",
+name: "Mio Susuhara"
+},
+{
+key: "Elias",
+name: "Elias Pratt"
+},
+{
+key: "Shion",
+name: "Shion Genkai"
+}
+]
+},
+{
+name: "Frostheim",
+logo:
+"houses/frostheim.png",
+characters: [
+{
+key: "Jin",
+name: "Jin Kamurai"
+},
+{
+key: "Tohma",
+name: "Tohma Ishibashi"
+},
+{
+key: "Luca",
+name: "Lucas Errant"
+},
+{
+key: "Kaito",
+name: "Kaito Fuji"
+}
+]
+},
+{
+name: "Sinostra",
+logo:
+"houses/sinostra.png",
+characters: [
+{
+key: "Taiga",
+name: "Taiga Hoshibami"
+},
+{
+key: "Ritsu",
+name: "Ritsu Shinjo"
+},
+{
+key: "Romeo",
+name: "Romeo Lucci"
+}
+]
+},
+{
+name: "Obscuary",
+logo:
+"houses/obscuary.png",
+characters: [
+{
+key: "Ed",
+name: "Edward Hart"
+},
+{
+key: "Lyca",
+name: "Lyca Colt"
+},
+{
+key: "Rui",
+name: "Rui Mizuki"
+}
+]
+},
+{
+name: "Jabberwock",
+logo:
+"houses/jabberwock.png",
+characters: [
+{
+key: "Haru",
+name: "Haru Sagara"
+},
+{
+key: "Towa",
+name: "Towa Otonashi"
+},
+{
+key: "Ren",
+name: "Ren Shiranami"
+}
+]
+},
+{
+name: "Mortkranken",
+logo:
+"houses/mortkranken.png",
+characters: [
+{
+key: "Yuri",
+name: "Yuri Isami"
+},
+{
+key: "Jiro",
+name: "Jiro Kirisaki"
+}
+]
+},
+{
+name: "Hotarubi",
+logo:
+"houses/hotarubi.png",
+characters: [
+{
+key: "Haku",
+name: "Haku Kusanagi"
+},
+{
+key: "Subaru",
+name: "Subaru Kagami"
+},
+{
+key: "Zenji",
+name: "Zenji Kotodama"
+}
+]
+},
+{
+name: "Vagastrom",
+logo:
+"houses/vagastrom.png",
+characters: [
+{
+key: "Alan",
+name: "Alan Mido"
+},
+{
+key: "Sho",
+name: "Shohei Haizono"
+},
+{
+key: "Leo",
+name: "Leo Kurosagi"
+}
+]
+}
+];
+/* =========================================================
+ESCAPE HTML
+========================================================= */
+function escapeHTML(value) {
+if (
+value === null ||
+value === undefined
+) {
+return "";
+}
+return String(value)
+.replace(
+/&/g,
+"&amp;"
+)
+.replace(
+/</g,
+"&lt;"
+)
+.replace(
+/>/g,
+"&gt;"
+)
+.replace(
+/"/g,
+"&quot;"
+)
+.replace(
+/'/g,
+"&#039;"
+);
+}
+/* =========================================================
+NORMALIZE CARD NAME
+========================================================= */
+function normalizeCardName(name) {
+return String(name || "")
+.replace(
+/\s*\([^)]*\)/g,
+""
+)
+.replace(
+/\s+/g,
+" "
+)
+.trim();
+}
+/* =========================================================
+PARSE MR
+========================================================= */
+function parseMR(value) {
+if (
+value === null ||
+value === undefined
+) {
+return null;
+}
+const text =
+String(value).trim();
+if (!text) {
+return null;
+}
+const match =
+text.match(
+/-?\d+(?:\.\d+)?/
+);
+if (!match) {
+return null;
+}
+const number =
+Number(match[0]);
+if (
+!Number.isFinite(number)
+) {
+return null;
+}
+return number;
+}
+/* =========================================================
+GET TAGS
+========================================================= */
+function getTags(card) {
+if (!card) {
+return [];
+}
+const raw =
+card.tags ??
+card.Tags ??
+"";
+return String(raw)
+.split(",")
+.map(
+tag =>
+tag.trim()
+)
+.filter(Boolean);
+}
+/* =========================================================
+HAS TAG
+========================================================= */
+function hasTag(
+card,
+wantedTag
+) {
+const wanted =
+wantedTag.toLowerCase();
+return getTags(card)
+.some(
+tag =>
+tag.toLowerCase() ===
+wanted
+);
+}
+/* =========================================================
+GET CARD MR
+========================================================= */
+function getCardMR(card) {
+return parseMR(
+card
+? card.mr
+: null
+);
+}
+/* =========================================================
+GET CARD NAME
+========================================================= */
+function getCardName(card) {
+if (!card) {
+return "";
+}
+return normalizeCardName(
+card.name || ""
+);
+}
+/* =========================================================
+GET CARDS FOR CHARACTER
+========================================================= */
+function getCardsForCharacter(
+database,
+characterKey
+) {
+const characterCards =
+database.characters &&
+database.characters[characterKey];
+if (
+!Array.isArray(
+characterCards
+)
+) {
+return [];
+}
+const result = [];
+for (
+const characterCardName
+of characterCards
+) {
+const normalizedName =
+normalizeCardName(
+characterCardName
+);
+let card =
+database.cards &&
+database.cards[normalizedName];
+if (
+!card &&
+database.cards
+) {
+const matchingKey =
+Object.keys(
+database.cards
+).find(
+key =>
+normalizeCardName(
+key
+).toLowerCase() ===
+normalizedName.toLowerCase()
+);
+if (
+matchingKey
+) {
+card =
+database.cards[
+matchingKey
+];
+}
+}
+if (
+card
+) {
+result.push({
+...card,
+characterKey:
+characterKey,
+characterCardName:
+characterCardName
+});
+}
+}
+return result;
+}
+/* =========================================================
+BUILD HOUSE DATA
+========================================================= */
+function buildHouseData(
+database
+) {
+return HOUSES.map(
+house => {
+const houseCards = [];
+for (
+const character
+of house.characters
+) {
+const cards =
+getCardsForCharacter(
+database,
+character.key
+);
+cards.forEach(
+card => {
+houseCards.push({
+...card,
+characterName:
+character.name,
+characterKey:
+character.key
+});
+}
+);
+}
+return {
+...house,
+cards:
+houseCards
+};
+}
+);
+}
+/* =========================================================
+HOUSE STATISTICS
+========================================================= */
+function calculateHouseStats(
+cards
+) {
+const total =
+cards.length;
+const mrCounts = {
+"2": 0,
+"1": 0,
+"0": 0,
+"-1": 0,
+"-2": 0
+};
+let positive = 0;
+let negative = 0;
+let sweepers = 0;
+let guards = 0;
+let stunRevenge = 0;
+let sleepRevenge = 0;
+let curseRevenge = 0;
+for (
+const card
+of cards
+) {
+const mr =
+getCardMR(card);
+if (
+mr !== null
+) {
+if (
+mr === 2
+) {
+mrCounts["2"]++;
+}
+else if (
+mr === 1
+) {
+mrCounts["1"]++;
+}
+else if (
+mr === 0
+) {
+mrCounts["0"]++;
+}
+else if (
+mr === -1
+) {
+mrCounts["-1"]++;
+}
+else if (
+mr === -2
+) {
+mrCounts["-2"]++;
+}
+if (
+mr > 0
+) {
+positive++;
+}
+if (
+mr < 0
+) {
+negative++;
+}
+}
+if (
+hasTag(
+card,
+"Sweep2"
+)
+) {
+sweepers++;
+}
+if (
+hasTag(
+card,
+"Guard"
+)
+) {
+guards++;
+}
+if (
+hasTag(
+card,
+"STRev"
+)
+) {
+stunRevenge++;
+}
+if (
+hasTag(
+card,
+"SLRev"
+)
+) {
+sleepRevenge++;
+}
+if (
+hasTag(
+card,
+"CRev"
+)
+) {
+curseRevenge++;
+}
+}
+function percentage(
+count
+) {
+if (
+total === 0
+) {
+return 0;
+}
+return (
+count /
+total
+) * 100;
+}
+const chanceOfSuccess =
+total === 0
+? 0
+: (
+(
+positive -
+negative
+)
+/
+total
+) * 100;
+return {
+total,
+positive,
+negative,
+sweepers,
+guards,
+stunRevenge,
+sleepRevenge,
+curseRevenge,
+chanceOfSuccess,
+mrPercentages: {
+"2":
+percentage(
+mrCounts["2"]
+),
+"1":
+percentage(
+mrCounts["1"]
+),
+"0":
+percentage(
+mrCounts["0"]
+),
+"-1":
+percentage(
+mrCounts["-1"]
+),
+"-2":
+percentage(
+mrCounts["-2"]
+)
+}
+};
+}
+/* =========================================================
+FORMAT PERCENT
+========================================================= */
+function formatPercent(
+value
+) {
+return (
+Number(value) || 0
+).toFixed(2) + "%";
+}
+/* =========================================================
+MR CLASS
+========================================================= */
+function getMRClass(
+mr
+) {
+if (
+mr === null
+) {
+return "mr-zero";
+}
+if (
+mr > 0
+) {
+return "mr-positive";
+}
+if (
+mr < 0
+) {
+return "mr-negative";
+}
+return "mr-zero";
+}
+/* =========================================================
+MR BAR
+========================================================= */
+function createMRBar(
+label,
+percentage
+) {
+const width =
+Math.max(
+0,
+Math.min(
+100,
+percentage
+)
+);
+return `
+<div class="mr-bar-row">
+<div class="mr-bar-label">
+${label}
+</div>
+<div class="mr-bar-track">
+<div
+class="mr-bar-fill"
+style="width:${width}%"
+></div>
+</div>
+<div class="mr-bar-value">
+${formatPercent(
+percentage
+)}
+</div>
+</div>
+`;
+}
+/* =========================================================
+CATEGORY STAT
+========================================================= */
+function createCategoryStat(
+percentage,
+label
+) {
+return `
+<div class="category-stat">
+<div class="category-stat-value">
+${formatPercent(
+percentage
+)}
+</div>
+<div class="category-stat-label">
+${escapeHTML(
+label
+)}
+</div>
+</div>
+`;
+}
+/* =========================================================
+FOOTER STAT
+========================================================= */
+function createFooterStat(
+value,
+label
+) {
+return `
+<div class="house-footer-stat">
+<div class="house-footer-value">
+${escapeHTML(
+value
+)}
+</div>
+<div class="house-footer-label">
+${escapeHTML(
+label
+)}
+</div>
+</div>
+`;
+}
+/* =========================================================
+RENDER HOUSE
+========================================================= */
+function renderHouse(
+house
+) {
+const stats =
+calculateHouseStats(
+house.cards
+);
+const cardsHTML =
+house.cards
+.map(
+card => {
+const mr =
+getCardMR(
+card
+);
+const mrDisplay =
+mr === null
+? "—"
+: mr > 0
+? "+" + mr
+: String(mr);
+return `
+<div class="card-row">
+<div class="card-name">
+${escapeHTML(
+getCardName(
+card
+)
+)}
+<span
+class="card-character"
+>
+(${escapeHTML(
+card.characterName
+)})
+</span>
+</div>
+<div
+class="card-mr
+${getMRClass(mr)}"
+>
+${escapeHTML(
+mrDisplay
+)}
+</div>
+</div>
+`;
+}
+)
+.join("");
+return `
+<article class="house-card">
+<div class="house-header">
+<img
+src="${escapeHTML(
+house.logo
+)}"
+alt="${escapeHTML(
+house.name
+)}"
+class="house-logo"
+>
+<div class="house-header-info">
+<div class="house-name">
+${escapeHTML(
+house.name
+)}
+</div>
+<div class="house-card-count">
+${stats.total}
+${
+stats.total === 1
+? "card"
+: "cards"
+}
+</div>
+</div>
+<div class="house-success">
+<div class="house-success-label">
+Chance of Success
+</div>
+<div class="house-success-value">
+${formatPercent(
+stats.chanceOfSuccess
+)}
+</div>
+</div>
+</div>
+<div class="card-list">
+${
+cardsHTML ||
+`
+<div
+style="
+padding:30px;
+text-align:center;
+color:#766a7c;
+font-size:12px;
+"
+>
+No cards found.
+</div>
+`
+}
+</div>
+<div class="house-stats">
+<div class="mr-stat-title">
+MR Distribution
+</div>
+<div class="mr-bars">
+${createMRBar(
+"2",
+stats.mrPercentages["2"]
+)}
+${createMRBar(
+"1",
+stats.mrPercentages["1"]
+)}
+${createMRBar(
+"0",
+stats.mrPercentages["0"]
+)}
+${createMRBar(
+"-1",
+stats.mrPercentages["-1"]
+)}
+${createMRBar(
+"-2",
+stats.mrPercentages["-2"]
+)}
+</div>
+<div class="category-stats">
+${createCategoryStat(
+stats.total > 0
+? (
+stats.sweepers /
+stats.total
+) * 100
+: 0,
+"Sweeper"
+)}
+${createCategoryStat(
+stats.total > 0
+? (
+stats.guards /
+stats.total
+) * 100
+: 0,
+"Guard"
+)}
+${createCategoryStat(
+stats.total > 0
+? (
+stats.stunRevenge /
+stats.total
+) * 100
+: 0,
+"Stun Rev."
+)}
+${createCategoryStat(
+stats.total > 0
+? (
+stats.sleepRevenge /
+stats.total
+) * 100
+: 0,
+"Sleep Rev."
+)}
+${createCategoryStat(
+stats.total > 0
+? (
+stats.curseRevenge /
+stats.total
+) * 100
+: 0,
+"Curse Rev."
+)}
+</div>
+</div>
+<div class="house-footer">
+${createFooterStat(
+stats.positive,
+"Positive MR"
+)}
+${createFooterStat(
+stats.negative,
+"Negative MR"
+)}
+${createFooterStat(
+stats.sweepers,
+"Sweepers"
+)}
+${createFooterStat(
+stats.guards,
+"Guards"
+)}
+${createFooterStat(
+stats.total,
+"Total Cards"
+)}
+</div>
+</article>
+`;
+}
+/* =========================================================
+RANKING ROW
+========================================================= */
+function createRankingRow(
+rank,
+name,
+value
+) {
+return `
+<div class="stat-row">
+<div class="stat-rank">
+${rank}
+</div>
+<div class="stat-name">
+${escapeHTML(
+name
+)}
+</div>
+<div class="stat-value">
+${escapeHTML(
+value
+)}
+</div>
+</div>
+`;
+}
+/* =========================================================
+HOUSE RANKING
+========================================================= */
+function renderHouseRanking(
+elementId,
+houseData,
+valueFunction,
+displayFunction
+) {
+const sorted =
+[...houseData]
+.sort(
+(a, b) => {
+const difference =
+valueFunction(b) -
+valueFunction(a);
+if (
+difference !== 0
+) {
+return difference;
+}
+return a.name.localeCompare(
+b.name
+);
+}
+);
+document.getElementById(
+elementId
+).innerHTML =
+sorted
+.map(
+(house, index) =>
+createRankingRow(
+index + 1,
+house.name,
+displayFunction(
+house
+)
+)
+)
+.join("");
+}
+/* =========================================================
+CHARACTER MR DATA
+=========================================================
+HIGHEST:
+Sum of every positive MR value.
+LOWEST:
+Sum of every negative MR value.
+MR 0 does not contribute to either total.
+========================================================= */
+function buildCharacterMRData(
+database
+) {
+const characters = [];
+for (
+const house
+of HOUSES
+) {
+for (
+const character
+of house.characters
+) {
+const cards =
+getCardsForCharacter(
+database,
+character.key
+);
+let positiveMR = 0;
+let negativeMR = 0;
+for (
+const card
+of cards
+) {
+const mr =
+getCardMR(
+card
+);
+if (
+mr === null
+) {
+continue;
+}
+if (
+mr > 0
+) {
+positiveMR += mr;
+}
+if (
+mr < 0
+) {
+negativeMR += mr;
+}
+}
+characters.push({
+name:
+character.name,
+positiveMR:
+positiveMR,
+negativeMR:
+negativeMR
+});
+}
+}
+return characters;
+}
+/* =========================================================
+CHARACTER MR RANKINGS
+========================================================= */
+function renderCharacterRankings(
+database
+) {
+const characters =
+buildCharacterMRData(
+database
+);
+/*
+* HIGHEST CHARACTER MR
+*
+* Top 8 characters by combined
+* positive MR.
+*/
+const highest =
+[...characters]
+.sort(
+(a, b) => {
+const difference =
+b.positiveMR -
+a.positiveMR;
+if (
+difference !== 0
+) {
+return difference;
+}
+return a.name.localeCompare(
+b.name
+);
+}
+)
+.slice(
+0,
+8
+);
+/*
+* LOWEST CHARACTER MR
+*
+* Top 8 characters by combined
+* negative MR.
+*
+* Most negative first.
+*/
+const lowest =
+[...characters]
+.sort(
+(a, b) => {
+const difference =
+a.negativeMR -
+b.negativeMR;
+if (
+difference !== 0
+) {
+return difference;
+}
+return a.name.localeCompare(
+b.name
+);
+}
+)
+.slice(
+0,
+8
+);
+document.getElementById(
+"highestCharacterRanking"
+).innerHTML =
+highest
+.map(
+(character, index) =>
+createRankingRow(
+index + 1,
+character.name,
+"+" +
+character.positiveMR
+)
+)
+.join("");
+document.getElementById(
+"lowestCharacterRanking"
+).innerHTML =
+lowest
+.map(
+(character, index) =>
+createRankingRow(
+index + 1,
+character.name,
+String(
+character.negativeMR
+)
+)
+)
+.join("");
+}
+/* =========================================================
+RENDER STATISTICS
+========================================================= */
+function renderStatistics(
+houseData,
+database
+) {
+renderHouseRanking(
+"successRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).chanceOfSuccess,
+house =>
+formatPercent(
+calculateHouseStats(
+house.cards
+).chanceOfSuccess
+)
+);
+renderHouseRanking(
+"sweeperRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).sweepers,
+house =>
+String(
+calculateHouseStats(
+house.cards
+).sweepers
+)
+);
+renderHouseRanking(
+"guardRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).guards,
+house =>
+String(
+calculateHouseStats(
+house.cards
+).guards
+)
+);
+renderHouseRanking(
+"stunRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).stunRevenge,
+house =>
+String(
+calculateHouseStats(
+house.cards
+).stunRevenge
+)
+);
+renderHouseRanking(
+"sleepRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).sleepRevenge,
+house =>
+String(
+calculateHouseStats(
+house.cards
+).sleepRevenge
+)
+);
+renderHouseRanking(
+"curseRanking",
+houseData,
+house =>
+calculateHouseStats(
+house.cards
+).curseRevenge,
+house =>
+String(
+calculateHouseStats(
+house.cards
+).curseRevenge
+)
+);
+renderHouseRanking(
+"cardCountRanking",
+houseData,
+house =>
+house.cards.length,
+house =>
+String(
+house.cards.length
+)
+);
+renderCharacterRankings(
+database
+);
+}
+/* =========================================================
+RENDER PAGE
+========================================================= */
+function renderPage(
+database
+) {
+if (
+!database ||
+!database.characters ||
+!database.cards
+) {
+throw new Error(
+"The database did not contain the expected characters and cards data."
+);
+}
+const houseData =
+buildHouseData(
+database
+);
+document.getElementById(
+"houseList"
+).innerHTML =
+houseData
+.map(
+house =>
+renderHouse(
+house
+)
+)
+.join("");
+renderStatistics(
+houseData,
+database
+);
+document.getElementById(
+"databaseLoading"
+).style.display =
+"none";
+document.getElementById(
+"databaseError"
+).style.display =
+"none";
+document.getElementById(
+"databaseContent"
+).style.display =
+"block";
+}
+/* =========================================================
+LOAD DATABASE
+========================================================= */
+async function initializeDatabase() {
+try {
+const data =
+await window.loadDatabase({
+onUpdate:
+freshData => {
+try {
+renderPage(
+freshData
+);
+console.log(
+"Tokyo Debunker database refreshed."
+);
+}
+catch (error) {
+console.error(
+"Error rendering refreshed database:",
+error
+);
+}
+},
+onError:
+error => {
+console.warn(
+"Tokyo Debunker database background refresh failed:",
+error
+);
+}
+});
+renderPage(
+data
+);
+console.log(
+"Tokyo Debunker database loaded."
+);
+}
+catch (error) {
+console.error(
+"SSR database error:",
+error
+);
+document.getElementById(
+"databaseLoading"
+).style.display =
+"none";
+const errorBox =
+document.getElementById(
+"databaseError"
+);
+errorBox.style.display =
+"block";
+errorBox.textContent =
+"Unable to load the card database. " +
+"Please refresh the page and try again.";
+}
+}
+/* =========================================================
+START
+========================================================= */
+initializeDatabase();
+</script>
+</body>
+</html>

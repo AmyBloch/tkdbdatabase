@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+name="viewport"
+content="width=device-width, initial-scale=1.0"
+>
+<title>
+Characters | Tokyo Debunker Database
+</title>
+<link
+rel="stylesheet"
+href="style.css"
+>
+<style>
+.character-page {
+width: 100%;
+max-width: 1200px;
+margin: 0 auto;
+padding: 40px 20px 80px;
+}
+.character-header {
+text-align: center;
+margin-bottom: 35px;
+}
+.character-header h1 {
+font-size: 38px;
+letter-spacing: 5px;
+margin-bottom: 12px;
+}
+.character-header p {
+color: #b9abc9;
+font-size: 15px;
+}
+.advanced-search-button {
+display: inline-block;
+margin: 5px auto 0;
+padding: 10px 22px;
+border:
+1px solid
+rgba(180, 130, 255, 0.5);
+border-radius: 8px;
+background:
+rgba(90, 45, 130, 0.35);
+color: #eee;
+text-decoration: none;
+font-size: 14px;
+font-weight: 600;
+letter-spacing: 0.5px;
+transition:
+background 0.2s,
+border-color 0.2s,
+transform 0.2s;
+}
+.advanced-search-button:hover {
+background:
+rgba(120, 70, 180, 0.5);
+border-color:
+rgba(200, 160, 255, 0.8);
+transform:
+translateY(-1px);
+}
+.header-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 5px;
+}
+
+.header-buttons .advanced-search-button {
+    margin: 0;
+}
+.house-list {
+display: flex;
+flex-direction: column;
+gap: 18px;
+}
+.house {
+width: 100%;
+}
+.house-button {
+width: 100%;
+min-height: 90px;
+display: flex;
+align-items: center;
+gap: 20px;
+padding: 15px 22px;
+border:
+1px solid
+rgba(170, 110, 220, 0.35);
+border-radius: 10px;
+background:
+linear-gradient(
+90deg,
+rgba(45, 22, 65, 0.85),
+rgba(15, 10, 25, 0.9)
+);
+color: white;
+cursor: pointer;
+transition:
+background 0.25s,
+border-color 0.25s,
+box-shadow 0.25s;
+}
+.house-button:hover {
+border-color:
+rgba(190, 130, 255, 0.7);
+background:
+linear-gradient(
+90deg,
+rgba(60, 28, 85, 0.9),
+rgba(20, 12, 32, 0.95)
+);
+box-shadow:
+0 5px 20px
+rgba(100, 50, 150, 0.15);
+}
+.house-logo {
+width: 60px;
+height: 60px;
+object-fit: contain;
+flex-shrink: 0;
+}
+.house-name {
+font-size: 20px;
+letter-spacing: 2px;
+font-weight: 600;
+}
+.house-arrow {
+margin-left: auto;
+font-size: 20px;
+transition:
+transform 0.25s;
+}
+.house.open .house-arrow {
+transform: rotate(180deg);
+}
+.house-content {
+display: none;
+padding: 20px 10px 10px;
+}
+.house.open .house-content {
+display: block;
+}
+.character-grid {
+display: grid;
+grid-template-columns:
+repeat(4, minmax(0, 1fr));
+gap: 15px;
+}
+.character-entry {
+min-width: 0;
+}
+.character-button {
+width: 100%;
+border:
+1px solid
+rgba(150, 100, 190, 0.3);
+border-radius: 8px;
+background:
+linear-gradient(
+145deg,
+rgba(35, 18, 50, 0.9),
+rgba(15, 10, 22, 0.95)
+);
+color: white;
+cursor: pointer;
+overflow: hidden;
+transition:
+border-color 0.2s,
+transform 0.2s,
+box-shadow 0.2s;
+}
+.character-button:hover {
+border-color:
+rgba(190, 130, 255, 0.7);
+transform:
+translateY(-2px);
+box-shadow:
+0 6px 20px
+rgba(100, 50, 150, 0.15);
+}
+.character-portrait {
+width: 100%;
+height: 180px;
+object-fit: contain;
+object-position: center;
+display: block;
+background:
+rgba(10, 7, 18, 0.5);
+}
+.character-name {
+padding: 13px 8px;
+font-size: 14px;
+letter-spacing: 0.5px;
+text-align: center;
+}
+.character-info {
+display: none;
+margin-top: 8px;
+padding: 18px;
+border:
+1px solid
+rgba(150, 100, 190, 0.3);
+border-radius: 8px;
+background:
+rgba(12, 8, 18, 0.9);
+}
+.character-entry.open .character-info {
+display: block;
+}
+.card-list-title {
+margin-bottom: 12px;
+color: #d8c1ec;
+font-size: 14px;
+font-weight: 600;
+letter-spacing: 2px;
+text-transform: uppercase;
+}
+.card-list {
+display: flex;
+flex-direction: column;
+gap: 7px;
+}
+.card-entry {
+width: 100%;
+}
+.card-button {
+width: 100%;
+display: flex;
+align-items: center;
+justify-content: space-between;
+gap: 10px;
+padding: 10px 12px;
+border:
+1px solid
+rgba(170, 110, 220, 0.18);
+border-left:
+2px solid
+rgba(170, 110, 220, 0.65);
+border-radius: 4px;
+background:
+rgba(35, 20, 48, 0.6);
+color: #d7cfdf;
+font-size: 13px;
+text-align: left;
+cursor: pointer;
+transition:
+background 0.2s,
+border-color 0.2s,
+color 0.2s;
+}
+.card-button:hover {
+background:
+rgba(55, 30, 75, 0.7);
+border-color:
+rgba(190, 130, 255, 0.5);
+color: white;
+}
+.card-arrow {
+flex-shrink: 0;
+transition:
+transform 0.2s;
+}
+.card-entry.open .card-arrow {
+transform:
+rotate(180deg);
+}
+.card-button.element-leaf {
+background:
+rgba(113, 155, 112, 0.90);
+color: #24192B;
+border-color:
+rgba(113, 155, 112, 0.90);
+}
+.card-button.element-fire {
+background:
+rgba(184, 115, 115, 0.90);
+color: #24192B;
+border-color:
+rgba(184, 115, 115, 0.90);
+}
+.card-button.element-water {
+background:
+rgba(110, 145, 176, 0.90);
+color: #24192B;
+border-color:
+rgba(110, 145, 176, 0.90);
+}
+.card-button.element-leaf:hover {
+background:
+rgba(100, 141, 99, 0.90);
+border-color:
+rgba(100, 141, 99, 0.90);
+color: #24192B;
+}
+.card-button.element-fire:hover {
+background:
+rgba(169, 102, 102, 0.90);
+border-color:
+rgba(169, 102, 102, 0.90);
+color: #24192B;
+}
+.card-button.element-water:hover {
+background:
+rgba(98, 133, 163, 0.90);
+border-color:
+rgba(98, 133, 163, 0.90);
+color: #24192B;
+}
+.card-details {
+display: none;
+margin: 0 0 8px 0;
+padding: 15px;
+border:
+1px solid
+rgba(150, 100, 190, 0.22);
+border-top: none;
+border-radius:
+0 0 6px 6px;
+background:
+rgba(18, 11, 26, 0.95);
+}
+.card-entry.open .card-details {
+display: block;
+}
+.card-stats {
+display: grid;
+grid-template-columns:
+repeat(4, minmax(0, 1fr));
+gap: 8px;
+margin-bottom: 15px;
+}
+.card-stat {
+padding: 9px 10px;
+border-radius: 4px;
+background:
+rgba(40, 24, 53, 0.55);
+border:
+1px solid
+rgba(150, 100, 190, 0.15);
+text-align: center;
+}
+.card-stat-label {
+display: block;
+margin-bottom: 4px;
+color: #9d8aaa;
+font-size: 10px;
+text-transform: uppercase;
+letter-spacing: 1px;
+text-align: center;
+}
+.card-stat-value {
+color: #e1d8e8;
+font-size: 13px;
+display: flex;
+align-items: center;
+justify-content: center;
+text-align: center;
+}
+.element-icon {
+width: 22px;
+height: 22px;
+object-fit: contain;
+display: block;
+}
+.card-passive {
+margin-bottom: 15px;
+padding-bottom: 14px;
+border-bottom:
+1px solid
+rgba(150, 100, 190, 0.18);
+}
+.detail-label {
+display: block;
+margin-bottom: 5px;
+color: #c9acd9;
+font-size: 11px;
+font-weight: 600;
+letter-spacing: 1px;
+text-transform: uppercase;
+}
+.detail-value {
+color: #d7cfdf;
+font-size: 13px;
+line-height: 1.5;
+white-space: pre-line;
+}
+.skill {
+padding: 12px 0;
+border-bottom:
+1px solid
+rgba(150, 100, 190, 0.14);
+}
+.skill:last-child {
+border-bottom: none;
+}
+.skill-name {
+margin-bottom: 6px;
+color: #e1c9ef;
+font-size: 13px;
+font-weight: 600;
+}
+.skill-description {
+color: #bdb2c7;
+font-size: 12px;
+line-height: 1.55;
+white-space: pre-line;
+}
+.ultimate {
+margin-top: 6px;
+padding-top: 12px;
+border-top:
+1px solid
+rgba(170, 110, 220, 0.28);
+}
+.card-loading,
+.card-empty {
+color: #95869f;
+font-size: 13px;
+}
+@media (max-width: 850px) {
+.character-page {
+padding-top: 30px;
+}
+.character-grid {
+grid-template-columns:
+repeat(3, minmax(0, 1fr));
+}
+.character-portrait {
+height: 170px;
+object-fit: contain;
+}
+}
+@media (max-width: 600px) {
+.character-page {
+padding:
+25px 12px 60px;
+}
+.character-header h1 {
+font-size: 28px;
+letter-spacing: 3px;
+}
+.character-header p {
+font-size: 13px;
+}
+.header-buttons {
+    flex-direction: column;
+    width: 100%;
+}
+
+.advanced-search-button {
+    width: 100%;
+    max-width: 300px;
+    box-sizing: border-box;
+}
+.house-button {
+min-height: 75px;
+padding:
+10px 14px;
+gap: 12px;
+}
+.house-logo {
+width: 48px;
+height: 48px;
+}
+.house-name {
+font-size: 16px;
+}
+.character-grid {
+grid-template-columns:
+repeat(2, minmax(0, 1fr));
+gap: 10px;
+}
+.character-portrait {
+height: 150px;
+object-fit: contain;
+}
+.character-name {
+font-size: 13px;
+padding:
+11px 5px;
+}
+.house-content {
+padding:
+15px 3px 5px;
+}
+.character-info {
+padding: 12px;
+}
+.card-details {
+padding: 12px;
+}
+.card-stats {
+grid-template-columns: 1fr 1fr;
+}
+}
+@media (max-width: 380px) {
+.character-grid {
+grid-template-columns: 1fr;
+}
+.character-portrait {
+height: 210px;
+object-fit: contain;
+}
+}
+</style>
+</head>
+<body>
+<nav class="navbar">
+<div class="nav-logo">
+<a href="index.html">
+<img
+src="logo.png"
+alt="Tokyo Debunker"
+>
+</a>
+</div>
+</nav>
+<main class="character-page">
+<div class="character-header">
+<h1>
+CHARACTERS
+</h1>
+<p>
+Browse characters by house
+</p>
+<div class="header-buttons">
+
+    <a
+        href="advanced-search.html"
+        class="advanced-search-button"
+    >
+        Advanced Search
+    </a>
+
+    <a
+        href="themes.html"
+        class="advanced-search-button"
+    >
+        Themes
+    </a>
+
+</div>
+</div>
+<div
+class="house-list"
+id="houseList"
+></div>
+</main>
+<script src="database-loader.js"></script>
+<script>
+let databaseCharacters = {};
+let databaseCards = {};
+const houses = [
+{
+name: "Dionysia",
+logo: "houses/dionysia.png",
+characters: [
+{
+key: "Jo",
+name: "Jo Kongoza",
+image: "characters/Jo_Kongoza.png"
+},
+{
+key: "Mio",
+name: "Mio Susuhara",
+image: "characters/Mio_Susuhara.png"
+},
+{
+key: "Elias",
+name: "Elias Pratt",
+image: "characters/Elias_Pratt.png"
+},
+{
+key: "Shion",
+name: "Shion Genkai",
+image: "characters/Shion_Genkai.png"
+}
+]
+},
+{
+name: "Frostheim",
+logo: "houses/frostheim.png",
+characters: [
+{
+key: "Jin",
+name: "Jin Kamurai",
+image: "characters/Jin_Kamurai.png"
+},
+{
+key: "Tohma",
+name: "Tohma Ishibashi",
+image: "characters/Tohma_Ishibashi.png"
+},
+{
+key: "Luca",
+name: "Lucas Errant",
+image: "characters/Lucas_Errant.png"
+},
+{
+key: "Kaito",
+name: "Kaito Fuji",
+image: "characters/Kaito_Fuji.png"
+}
+]
+},
+{
+name: "Sinostra",
+logo: "houses/sinostra.png",
+characters: [
+{
+key: "Taiga",
+name: "Taiga Hoshibami",
+image: "characters/Taiga_Hoshibami.png"
+},
+{
+key: "Ritsu",
+name: "Ritsu Shinjo",
+image: "characters/Ritsu_Shinjo.png"
+},
+{
+key: "Romeo",
+name: "Romeo Lucci",
+image: "characters/Romeo_Lucci.png"
+}
+]
+},
+{
+name: "Obscuary",
+logo: "houses/obscuary.png",
+characters: [
+{
+key: "Ed",
+name: "Edward Hart",
+image: "characters/Edward_Hart.png"
+},
+{
+key: "Lyca",
+name: "Lyca Colt",
+image: "characters/Lyca_Colt.png"
+},
+{
+key: "Rui",
+name: "Rui Mizuki",
+image: "characters/Rui_Mizuki.png"
+}
+]
+},
+{
+name: "Jabberwock",
+logo: "houses/jabberwock.png",
+characters: [
+{
+key: "Haru",
+name: "Haru Sagara",
+image: "characters/Haru_Sagara.png"
+},
+{
+key: "Towa",
+name: "Towa Otonashi",
+image: "characters/Towa_Otonashi.png"
+},
+{
+key: "Ren",
+name: "Ren Shiranami",
+image: "characters/Ren_Shiranami.png"
+}
+]
+},
+{
+name: "Mortkranken",
+logo: "houses/mortkranken.png",
+characters: [
+{
+key: "Yuri",
+name: "Yuri Isami",
+image: "characters/Yuri_Isami.png"
+},
+{
+key: "Jiro",
+name: "Jiro Kirisaki",
+image: "characters/Jiro_Kirisaki.png"
+}
+]
+},
+{
+name: "Hotarubi",
+logo: "houses/hotarubi.png",
+characters: [
+{
+key: "Haku",
+name: "Haku Kusanagi",
+image: "characters/Haku_Kusanagi.png"
+},
+{
+key: "Subaru",
+name: "Subaru Kagami",
+image: "characters/Subaru_Kagami.png"
+},
+{
+key: "Zenji",
+name: "Zenji Kotodama",
+image: "characters/Zenji_Kotodama.png"
+}
+]
+},
+{
+name: "Vagastrom",
+logo: "houses/vagastrom.png",
+characters: [
+{
+key: "Alan",
+name: "Alan Mido",
+image: "characters/Alan_Mido.png"
+},
+{
+key: "Sho",
+name: "Shohei Haizono",
+image: "characters/Shohei_Haizono.png"
+},
+{
+key: "Leo",
+name: "Leo Kurosagi",
+image: "characters/Leo_Kurosagi.png"
+}
+]
+}
+];
+function normalizeCardName(name) {
+return String(name)
+.replace(/\s*\([^)]*\)/g, "")
+.replace(/\s+/g, " ")
+.trim();
+}
+function escapeHTML(text) {
+const div =
+document.createElement("div");
+div.textContent =
+text == null
+? ""
+: String(text);
+return div.innerHTML;
+}
+function getElementImage(element) {
+const value =
+String(element || "")
+.trim()
+.toLowerCase();
+if (value === "fire") {
+return "elements/fire.png";
+}
+if (value === "water") {
+return "elements/water.png";
+}
+if (value === "leaf") {
+return "elements/leaf.png";
+}
+return "";
+}
+function createCardDetails(card) {
+if (!card) {
+return `
+<div class="card-empty">
+Card information not found.
+</div>
+`;
+}
+let html = "";
+html += `
+<div class="card-stats">
+<div class="card-stat">
+<span class="card-stat-label">
+ATK
+</span>
+<span class="card-stat-value">
+${escapeHTML(card.atk)}
+</span>
+</div>
+<div class="card-stat">
+<span class="card-stat-label">
+SPD
+</span>
+<span class="card-stat-value">
+${escapeHTML(card.speed)}
+</span>
+</div>
+<div class="card-stat">
+<span class="card-stat-label">
+MR
+</span>
+<span class="card-stat-value">
+${escapeHTML(card.mr)}
+</span>
+</div>
+<div class="card-stat">
+<span class="card-stat-label">
+EL
+</span>
+<span class="card-stat-value">
+${
+getElementImage(card.element)
+? `
+<img
+src="${getElementImage(card.element)}"
+class="element-icon"
+alt="${escapeHTML(card.element)}"
+>
+`
+: escapeHTML(card.element)
+}
+</span>
+</div>
+</div>
+`;
+if (card.passive) {
+html += `
+<div class="card-passive">
+<span class="detail-label">
+Passive
+</span>
+<div class="detail-value">
+${escapeHTML(card.passive)}
+</div>
+</div>
+`;
+}
+if (card.skills) {
+card.skills.forEach(
+skill => {
+if (
+!skill.name &&
+!skill.description
+) {
+return;
+}
+html += `
+<div class="skill">
+<div class="skill-name">
+${escapeHTML(skill.name)}
+</div>
+<div class="skill-description">
+${escapeHTML(skill.description)}
+</div>
+</div>
+`;
+}
+);
+}
+if (
+card.ultimate &&
+(
+card.ultimate.name ||
+card.ultimate.description
+)
+) {
+html += `
+<div class="skill ultimate">
+<div class="skill-name">
+${escapeHTML(
+card.ultimate.name
+)}
+</div>
+<div class="skill-description">
+${escapeHTML(
+card.ultimate.description
+)}
+</div>
+</div>
+`;
+}
+return html;
+}
+function updateCharacterCards(
+characterEntry,
+characterData
+) {
+const characterCards =
+databaseCharacters[
+characterData.key
+] || [];
+const cardList =
+characterEntry.querySelector(
+".card-list"
+);
+if (!cardList) {
+return;
+}
+cardList.innerHTML = "";
+if (characterCards.length === 0) {
+cardList.innerHTML = `
+<div class="card-empty">
+No cards found.
+</div>
+`;
+return;
+}
+characterCards.forEach(
+cardName => {
+const cardEntry =
+document.createElement(
+"div"
+);
+cardEntry.className =
+"card-entry";
+const cardButton =
+document.createElement(
+"button"
+);
+cardButton.className =
+"card-button";
+const displayName =
+normalizeCardName(
+cardName
+);
+cardButton.innerHTML = `
+<span>
+${escapeHTML(
+displayName
+)}
+</span>
+<span class="card-arrow">
+▼
+</span>
+`;
+const cardDetails =
+document.createElement(
+"div"
+);
+cardDetails.className =
+"card-details";
+const cardData =
+databaseCards[
+displayName
+];
+if (
+cardData &&
+cardData.element
+) {
+const element =
+String(
+cardData.element
+)
+.trim()
+.toLowerCase();
+if (
+element === "leaf"
+) {
+cardButton.classList.add(
+"element-leaf"
+);
+}
+if (
+element === "fire"
+) {
+cardButton.classList.add(
+"element-fire"
+);
+}
+if (
+element === "water"
+) {
+cardButton.classList.add(
+"element-water"
+);
+}
+}
+cardDetails.innerHTML =
+createCardDetails(
+cardData
+);
+cardButton.addEventListener(
+"click",
+() => {
+cardEntry
+.classList
+.toggle(
+"open"
+);
+}
+);
+cardEntry.appendChild(
+cardButton
+);
+cardEntry.appendChild(
+cardDetails
+);
+cardList.appendChild(
+cardEntry
+);
+}
+);
+}
+function updateAllCards() {
+document
+.querySelectorAll(
+".character-entry"
+)
+.forEach(
+characterEntry => {
+const characterKey =
+characterEntry.dataset.characterKey;
+const characterData =
+houses
+.flatMap(
+house =>
+house.characters
+)
+.find(
+character =>
+character.key ===
+characterKey
+);
+if (characterData) {
+updateCharacterCards(
+characterEntry,
+characterData
+);
+}
+}
+);
+}
+function renderCharacters() {
+const houseList =
+document.getElementById(
+"houseList"
+);
+houseList.innerHTML = "";
+houses.forEach(
+houseData => {
+const house =
+document.createElement(
+"div"
+);
+house.className =
+"house";
+const houseButton =
+document.createElement(
+"button"
+);
+houseButton.className =
+"house-button";
+houseButton.innerHTML = `
+<img
+src="${houseData.logo}"
+class="house-logo"
+alt="${houseData.name}"
+>
+<span class="house-name">
+${houseData.name}
+</span>
+<span class="house-arrow">
+▼
+</span>
+`;
+const houseContent =
+document.createElement(
+"div"
+);
+houseContent.className =
+"house-content";
+const characterGrid =
+document.createElement(
+"div"
+);
+characterGrid.className =
+"character-grid";
+houseData.characters.forEach(
+characterData => {
+const entry =
+document.createElement(
+"div"
+);
+entry.className =
+"character-entry";
+entry.dataset.characterKey =
+characterData.key;
+const characterButton =
+document.createElement(
+"button"
+);
+characterButton.className =
+"character-button";
+characterButton.innerHTML = `
+<img
+src="${characterData.image}"
+class="character-portrait"
+alt="${characterData.name}"
+>
+<div class="character-name">
+${characterData.name}
+</div>
+`;
+const characterInfo =
+document.createElement(
+"div"
+);
+characterInfo.className =
+"character-info";
+characterInfo.innerHTML = `
+<div class="card-list-title">
+Cards
+</div>
+<div class="card-list">
+<div class="card-loading">
+Loading cards...
+</div>
+</div>
+`;
+characterButton.addEventListener(
+"click",
+() => {
+entry.classList.toggle(
+"open"
+);
+}
+);
+entry.appendChild(
+characterButton
+);
+entry.appendChild(
+characterInfo
+);
+characterGrid.appendChild(
+entry
+);
+}
+);
+houseContent.appendChild(
+characterGrid
+);
+houseButton.addEventListener(
+"click",
+() => {
+house.classList.toggle(
+"open"
+);
+}
+);
+house.appendChild(
+houseButton
+);
+house.appendChild(
+houseContent
+);
+houseList.appendChild(
+house
+);
+}
+);
+}
+async function loadCharacterData() {
+try {
+const data =
+await loadDatabase({
+onUpdate:
+freshData => {
+databaseCharacters =
+freshData.characters || {};
+databaseCards =
+freshData.cards || {};
+updateAllCards();
+console.log(
+"Tokyo Debunker database refreshed."
+);
+},
+onError:
+error => {
+console.warn(
+"Tokyo Debunker database background refresh failed:",
+error
+);
+}
+});
+databaseCharacters =
+data.characters || {};
+databaseCards =
+data.cards || {};
+updateAllCards();
+} catch (error) {
+console.error(
+"Error loading database:",
+error
+);
+document
+.querySelectorAll(
+".card-loading"
+)
+.forEach(
+loadingElement => {
+loadingElement.innerHTML = `
+Unable to load card data.
+<br><br>
+Please refresh the page
+and try again.
+`;
+}
+);
+}
+}
+renderCharacters();
+loadCharacterData();
+</script>
+</body>
+</html>

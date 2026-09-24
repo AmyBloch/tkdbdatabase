@@ -1,0 +1,3409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Advanced Search | Tokyo Debunker Database
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <style>
+
+        /* ========================================
+           PAGE
+        ======================================== */
+
+        .advanced-page {
+            width: 100%;
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 40px 20px 80px;
+            box-sizing: border-box;
+        }
+
+        .advanced-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .advanced-header h1 {
+            font-size: 38px;
+            letter-spacing: 5px;
+            margin-bottom: 12px;
+        }
+
+        .advanced-header p {
+            color: #b9abc9;
+            font-size: 15px;
+        }
+
+
+        /* ========================================
+           BACK BUTTON
+        ======================================== */
+
+        .back-button {
+            display: inline-block;
+
+            margin-bottom: 25px;
+            padding: 9px 18px;
+
+            border: 1px solid
+                rgba(170, 110, 220, 0.4);
+
+            border-radius: 7px;
+
+            background:
+                rgba(45, 22, 65, 0.5);
+
+            color: #d9cde2;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            transition: 0.2s;
+        }
+
+        .back-button:hover {
+            border-color:
+                rgba(200, 150, 255, 0.7);
+
+            background:
+                rgba(70, 35, 95, 0.6);
+
+            color: white;
+        }
+
+
+        /* ========================================
+           FILTER PANEL
+        ======================================== */
+
+        .filter-panel {
+            padding: 22px;
+
+            border: 1px solid
+                rgba(170, 110, 220, 0.3);
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(35, 18, 50, 0.8),
+                    rgba(12, 8, 18, 0.9)
+                );
+
+            margin-bottom: 30px;
+
+            box-sizing: border-box;
+        }
+
+        .filter-title {
+            margin-bottom: 18px;
+
+            color: #e1c9ef;
+
+            font-size: 15px;
+            font-weight: 600;
+
+            letter-spacing: 2px;
+
+            text-transform: uppercase;
+        }
+
+        .filter-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+        }
+
+        .filter-group {
+            min-width: 0;
+        }
+
+        .filter-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .filter-label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #b9abc9;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+        .filter-input,
+        .filter-select {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 11px 12px;
+
+            border: 1px solid
+                rgba(170, 110, 220, 0.35);
+
+            border-radius: 6px;
+
+            background:
+                rgba(10, 7, 18, 0.85);
+
+            color: white;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            border-color:
+                rgba(200, 150, 255, 0.75);
+
+            box-shadow:
+                0 0 12px
+                rgba(130, 70, 180, 0.15);
+        }
+
+        .filter-select option {
+            background: #171020;
+            color: white;
+        }
+
+
+        /* ========================================
+           RANGE
+        ======================================== */
+
+        .range-row {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 8px;
+        }
+
+
+        /* ========================================
+           BUTTONS
+        ======================================== */
+
+        .filter-buttons {
+            display: flex;
+
+            gap: 10px;
+
+            margin-top: 18px;
+        }
+
+        .filter-button {
+            padding:
+                10px 20px;
+
+            border: 1px solid
+                rgba(180, 130, 255, 0.5);
+
+            border-radius: 7px;
+
+            background:
+                rgba(90, 45, 130, 0.4);
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 13px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .filter-button:hover {
+            background:
+                rgba(120, 70, 180, 0.55);
+
+            border-color:
+                rgba(210, 170, 255, 0.8);
+        }
+
+        .clear-button {
+            background:
+                rgba(40, 25, 50, 0.7);
+
+            border-color:
+                rgba(150, 120, 170, 0.3);
+
+            color: #c0b5c8;
+        }
+
+        .clear-button:hover {
+            background:
+                rgba(65, 40, 80, 0.8);
+        }
+
+
+        /* ========================================
+           RESULT COUNT
+        ======================================== */
+
+        .result-count {
+            margin-bottom: 15px;
+
+            color: #a99ab3;
+
+            font-size: 13px;
+        }
+
+
+        /* ========================================
+           TABLE WRAPPER
+        ======================================== */
+
+        .results-container {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .results-table-wrapper {
+            width: 100%;
+            max-width: 100%;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            -webkit-overflow-scrolling:
+                touch;
+
+            box-sizing: border-box;
+        }
+
+
+        /* ========================================
+           TABLE
+        ======================================== */
+
+        .results-table {
+            width: 1350px;
+            min-width: 1350px;
+            max-width: none;
+
+            table-layout: fixed;
+
+            border-collapse: separate;
+            border-spacing: 0;
+
+            margin: 0;
+        }
+
+        .results-table th:nth-child(1),
+        .results-table td:nth-child(1) {
+            width: 16%;
+        }
+
+        .results-table th:nth-child(2),
+        .results-table td:nth-child(2) {
+            width: 3%;
+        }
+
+        .results-table th:nth-child(3),
+        .results-table td:nth-child(3) {
+            width: 4%;
+        }
+
+        .results-table th:nth-child(4),
+        .results-table td:nth-child(4) {
+            width: 11%;
+        }
+
+        .results-table th:nth-child(5),
+        .results-table td:nth-child(5),
+        .results-table th:nth-child(6),
+        .results-table td:nth-child(6),
+        .results-table th:nth-child(7),
+        .results-table td:nth-child(7),
+        .results-table th:nth-child(8),
+        .results-table td:nth-child(8) {
+            width: 10.5%;
+        }
+
+        .results-table th:nth-child(9),
+        .results-table td:nth-child(9) {
+            width: 14%;
+        }
+
+        .results-table th:nth-child(10),
+        .results-table td:nth-child(10) {
+            width: 6%;
+        }
+
+
+        /* ========================================
+           TABLE HEADER
+        ======================================== */
+
+        .results-table thead th {
+            box-sizing: border-box;
+
+            padding:
+                9px 10px;
+
+            background:
+                rgba(55, 31, 70, 0.95);
+
+            border-right:
+                1px solid
+                rgba(170, 110, 220, 0.2);
+
+            border-bottom:
+                1px solid
+                rgba(170, 110, 220, 0.3);
+
+            color: #e5d8ec;
+
+            font-size: 10px;
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            line-height: 1.2;
+
+            text-align: center;
+            vertical-align: middle;
+
+            white-space: nowrap;
+        }
+
+        .results-table thead th:first-child {
+            border-top-left-radius: 8px;
+        }
+
+        .results-table thead th:last-child {
+            border-top-right-radius: 8px;
+            border-right: none;
+        }
+
+
+        /* ========================================
+           TABLE BODY
+        ======================================== */
+
+        .results-table tbody td {
+            box-sizing: border-box;
+
+            padding:
+                9px 10px;
+
+            vertical-align: top;
+
+            border-right:
+                1px solid
+                rgba(36, 25, 43, 0.18);
+
+            border-bottom:
+                1px solid
+                rgba(36, 25, 43, 0.18);
+
+            font-size: 11px;
+
+            line-height: 1.35;
+
+            overflow-wrap: anywhere;
+        }
+
+        .results-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tbody td:last-child {
+            border-right: none;
+        }
+
+
+        /* ========================================
+           CARD NAME
+        ======================================== */
+
+        .results-table tbody td:nth-child(1) {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-card-name {
+            color: #e8ddea;
+
+            font-weight: 600;
+
+            line-height: 1.35;
+
+            overflow-wrap: anywhere;
+
+            text-align: center;
+        }
+
+
+        /* ========================================
+           AT
+        ======================================== */
+
+        .results-table tbody td:nth-child(2) {
+            text-align: center;
+            vertical-align: middle;
+
+            white-space: nowrap;
+        }
+
+        .table-atk-type {
+            color: #e0d2e8;
+
+            font-weight: 700;
+
+            text-align: center;
+
+            line-height: 1.35;
+        }
+
+
+        /* ========================================
+           SPEED
+        ======================================== */
+
+        .results-table tbody td:nth-child(3) {
+            text-align: center;
+            vertical-align: middle;
+
+            white-space: nowrap;
+        }
+
+        .table-speed {
+            color: #ddd0e4;
+
+            font-weight: 600;
+
+            text-align: center;
+
+            line-height: 1.35;
+        }
+
+
+        /* ========================================
+           PASSIVE
+        ======================================== */
+
+        .results-table tbody td:nth-child(4) {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+        .table-passive {
+            color: #cfc1d7;
+
+            line-height: 1.35;
+
+            overflow-wrap: anywhere;
+
+            text-align: center;
+        }
+
+
+        /* ========================================
+           SKILLS
+        ======================================== */
+
+        .table-skill-name {
+            display: block;
+
+            margin-bottom: 3px;
+
+            color: #e3d5ea;
+
+            font-weight: 600;
+
+            line-height: 1.3;
+
+            overflow-wrap: anywhere;
+        }
+
+        .table-skill-description {
+            display: block;
+
+            color: #c0b5c7;
+
+            line-height: 1.35;
+
+            overflow-wrap: anywhere;
+        }
+
+
+        /* ========================================
+           RERUN
+        ======================================== */
+
+        .results-table tbody td:nth-child(10) {
+            text-align: center;
+            vertical-align: middle;
+
+            white-space: nowrap;
+        }
+
+        .table-rerun-time {
+            color: #cfc4d5;
+
+            line-height: 1.35;
+
+            text-align: center;
+
+            white-space: nowrap;
+        }
+
+
+        /* ========================================
+           ELEMENT COLORS
+        ======================================== */
+
+        .results-table tbody tr.element-leaf {
+            background:
+                rgba(113, 155, 112, 0.90);
+        }
+
+        .results-table tbody tr.element-fire {
+            background:
+                rgba(184, 115, 115, 0.90);
+        }
+
+        .results-table tbody tr.element-water {
+            background:
+                rgba(110, 145, 176, 0.90);
+        }
+
+
+        .results-table tbody tr.element-leaf td,
+        .results-table tbody tr.element-fire td,
+        .results-table tbody tr.element-water td {
+            color: #24192b;
+        }
+
+        .results-table tbody tr.element-leaf .table-card-name,
+        .results-table tbody tr.element-fire .table-card-name,
+        .results-table tbody tr.element-water .table-card-name,
+        .results-table tbody tr.element-leaf .table-atk-type,
+        .results-table tbody tr.element-fire .table-atk-type,
+        .results-table tbody tr.element-water .table-atk-type,
+        .results-table tbody tr.element-leaf .table-speed,
+        .results-table tbody tr.element-fire .table-speed,
+        .results-table tbody tr.element-water .table-speed,
+        .results-table tbody tr.element-leaf .table-passive,
+        .results-table tbody tr.element-fire .table-passive,
+        .results-table tbody tr.element-water .table-passive,
+        .results-table tbody tr.element-leaf .table-rerun-time,
+        .results-table tbody tr.element-fire .table-rerun-time,
+        .results-table tbody tr.element-water .table-rerun-time,
+        .results-table tbody tr.element-leaf .table-skill-name,
+        .results-table tbody tr.element-fire .table-skill-name,
+        .results-table tbody tr.element-water .table-skill-name {
+            color: #24192b;
+        }
+
+        .results-table tbody tr.element-leaf
+        .table-skill-description,
+        .results-table tbody tr.element-fire
+        .table-skill-description,
+        .results-table tbody tr.element-water
+        .table-skill-description {
+            color:
+                rgba(36, 25, 43, 0.78);
+        }
+
+        .results-table tbody tr.element-leaf:hover {
+            background:
+                rgba(125, 168, 124, 0.95);
+        }
+
+        .results-table tbody tr.element-fire:hover {
+            background:
+                rgba(198, 126, 126, 0.95);
+        }
+
+        .results-table tbody tr.element-water:hover {
+            background:
+                rgba(123, 159, 191, 0.95);
+        }
+
+
+        /* ========================================
+           FLOATING SCROLLBAR
+        ======================================== */
+
+        .floating-horizontal-scroll {
+            position: fixed;
+
+            left: 20px;
+            right: 20px;
+            bottom: 12px;
+
+            height: 14px;
+
+            z-index: 9999;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            background:
+                rgba(20, 12, 28, 0.96);
+
+            border:
+                1px solid
+                rgba(150, 100, 190, 0.45);
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 4px 20px
+                rgba(0, 0, 0, 0.45);
+
+            box-sizing: border-box;
+        }
+
+        .floating-horizontal-scroll-inner {
+            height: 1px;
+
+            width: 1350px;
+
+            min-width: 1350px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar {
+            height: 12px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar-track {
+            background:
+                rgba(20, 12, 28, 0.96);
+
+            border-radius: 8px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar-thumb {
+            background:
+                rgba(130, 85, 160, 0.9);
+
+            border-radius: 8px;
+
+            border:
+                2px solid
+                rgba(20, 12, 28, 0.96);
+        }
+
+
+        /* ========================================
+           NO RESULTS
+        ======================================== */
+
+        .no-results,
+        .loading {
+            padding:
+                35px 20px;
+
+            text-align: center;
+
+            color: #95869f;
+
+            background: transparent;
+        }
+
+
+        /* ========================================
+           MOBILE
+        ======================================== */
+
+        @media (max-width: 700px) {
+
+            .advanced-page {
+                padding:
+                    25px 12px 60px;
+            }
+
+            .advanced-header h1 {
+                font-size: 28px;
+                letter-spacing: 3px;
+            }
+
+            .advanced-header p {
+                font-size: 13px;
+            }
+
+            .filter-panel {
+                padding: 15px;
+            }
+
+            .filter-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-group.full {
+                grid-column: auto;
+            }
+
+            .range-row {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .filter-buttons {
+                flex-direction: column;
+            }
+
+            .filter-button {
+                width: 100%;
+            }
+
+            .results-table-wrapper {
+                width: 100%;
+
+                overflow-x: auto;
+                overflow-y: hidden;
+
+                touch-action:
+                    pan-x pan-y;
+            }
+
+            .results-table {
+                width: 1350px;
+                min-width: 1350px;
+            }
+
+            .floating-horizontal-scroll {
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+            }
+
+            .results-table thead th {
+                padding:
+                    8px;
+
+                font-size: 9px;
+            }
+
+            .results-table tbody td {
+                padding:
+                    8px;
+
+                font-size: 10px;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ========================================
+         NAVIGATION
+    ======================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-logo">
+
+            <a href="index.html">
+
+                <img
+                    src="logo.png"
+                    alt="Tokyo Debunker"
+                >
+
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <main class="advanced-page">
+
+
+        <a
+            href="characters.html"
+            class="back-button"
+        >
+            ← Back to Characters
+        </a>
+
+
+        <div class="advanced-header">
+
+            <h1>
+                ADVANCED SEARCH
+            </h1>
+
+            <p>
+                Search and filter cards across the database
+            </p>
+
+        </div>
+
+
+        <!-- ========================================
+             FILTER PANEL
+        ======================================== -->
+
+        <section class="filter-panel">
+
+            <div class="filter-title">
+                Card Filters
+            </div>
+
+
+            <div class="filter-grid">
+
+
+                <div class="filter-group full">
+
+                    <label
+                        class="filter-label"
+                        for="searchInput"
+                    >
+                        Card Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="filter-input"
+                        placeholder="Search card name..."
+                    >
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="houseFilter"
+                    >
+                        House
+                    </label>
+
+                    <select
+                        id="houseFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Houses
+                        </option>
+
+                        <option value="Dionysia">
+                            Dionysia
+                        </option>
+
+                        <option value="Frostheim">
+                            Frostheim
+                        </option>
+
+                        <option value="Sinostra">
+                            Sinostra
+                        </option>
+
+                        <option value="Obscuary">
+                            Obscuary
+                        </option>
+
+                        <option value="Jabberwock">
+                            Jabberwock
+                        </option>
+
+                        <option value="Mortkranken">
+                            Mortkranken
+                        </option>
+
+                        <option value="Hotarubi">
+                            Hotarubi
+                        </option>
+
+                        <option value="Vagastrom">
+                            Vagastrom
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="characterFilter"
+                    >
+                        Character Name
+                    </label>
+
+                    <select
+                        id="characterFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Characters
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="elementFilter"
+                    >
+                        Element
+                    </label>
+
+                    <select
+                        id="elementFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Elements
+                        </option>
+
+                        <option value="Fire">
+                            Fire
+                        </option>
+
+                        <option value="Water">
+                            Water
+                        </option>
+
+                        <option value="Leaf">
+                            Leaf
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="atkTypeFilter"
+                    >
+                        ATK Type
+                    </label>
+
+                    <select
+                        id="atkTypeFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All ATK Types
+                        </option>
+
+                        <option value="S">
+                            S
+                        </option>
+
+                        <option value="P">
+                            P
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="passiveFilter"
+                    >
+                        Passive
+                    </label>
+
+                    <select
+                        id="passiveFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Passives
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="skill1Filter"
+                    >
+                        Skill 1
+                    </label>
+
+                    <select
+                        id="skill1Filter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Skills
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="skill2Filter"
+                    >
+                        Skill 2
+                    </label>
+
+                    <select
+                        id="skill2Filter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Skills
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        MR Range
+                    </label>
+
+                    <div class="range-row">
+
+                        <input
+                            type="number"
+                            id="minMr"
+                            class="filter-input"
+                            placeholder="Min MR"
+                        >
+
+                        <input
+                            type="number"
+                            id="maxMr"
+                            class="filter-input"
+                            placeholder="Max MR"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="omitSkillFilter"
+                    >
+                        Omit Skill
+                    </label>
+
+                    <select
+                        id="omitSkillFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            No Omit Skill
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Speed Range
+                    </label>
+
+                    <div class="range-row">
+
+                        <input
+                            type="number"
+                            id="minSpeed"
+                            class="filter-input"
+                            placeholder="Min Speed"
+                        >
+
+                        <input
+                            type="number"
+                            id="maxSpeed"
+                            class="filter-input"
+                            placeholder="Max Speed"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="sortFilter"
+                    >
+                        Sort Results
+                    </label>
+
+                    <select
+                        id="sortFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="default">
+                            Default
+                        </option>
+
+                        <option value="rerun-desc">
+                            Rerun Time: Longest → Shortest
+                        </option>
+
+                        <option value="rerun-asc">
+                            Rerun Time: Shortest → Longest
+                        </option>
+
+                        <option value="mr-desc">
+                            MR: Highest → Lowest
+                        </option>
+
+                        <option value="mr-asc">
+                            MR: Lowest → Highest
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-buttons">
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    id="searchButton"
+                >
+                    Search
+                </button>
+
+                <button
+                    type="button"
+                    class="filter-button clear-button"
+                    id="clearButton"
+                >
+                    Clear Filters
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <div
+            class="result-count"
+            id="resultCount"
+        >
+            Loading cards...
+        </div>
+
+
+        <div
+            class="results-container"
+            id="results"
+        >
+
+            <div class="loading">
+                Loading database...
+            </div>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- ========================================
+         FLOATING TABLE SCROLLBAR
+    ======================================== -->
+
+    <div
+        class="floating-horizontal-scroll"
+        id="floatingHorizontalScroll"
+        style="display: none;"
+    >
+
+        <div
+            class="floating-horizontal-scroll-inner"
+            id="floatingHorizontalScrollInner"
+        ></div>
+
+    </div>
+
+
+    <script src="database-loader.js"></script>
+
+    <script>
+
+        /* ========================================
+           HOUSE / CHARACTER DATA
+        ======================================== */
+
+        const houses = [
+
+            {
+                name: "Dionysia",
+
+                characters: [
+                    "Jo",
+                    "Mio",
+                    "Elias",
+                    "Shion"
+                ]
+            },
+
+            {
+                name: "Frostheim",
+
+                characters: [
+                    "Jin",
+                    "Tohma",
+                    "Luca",
+                    "Kaito"
+                ]
+            },
+
+            {
+                name: "Sinostra",
+
+                characters: [
+                    "Taiga",
+                    "Ritsu",
+                    "Romeo"
+                ]
+            },
+
+            {
+                name: "Obscuary",
+
+                characters: [
+                    "Ed",
+                    "Lyca",
+                    "Rui"
+                ]
+            },
+
+            {
+                name: "Jabberwock",
+
+                characters: [
+                    "Haru",
+                    "Towa",
+                    "Ren"
+                ]
+            },
+
+            {
+                name: "Mortkranken",
+
+                characters: [
+                    "Yuri",
+                    "Jiro"
+                ]
+            },
+
+            {
+                name: "Hotarubi",
+
+                characters: [
+                    "Haku",
+                    "Subaru",
+                    "Zenji"
+                ]
+            },
+
+            {
+                name: "Vagastrom",
+
+                characters: [
+                    "Alan",
+                    "Sho",
+                    "Leo"
+                ]
+            }
+
+        ];
+
+
+        /* ========================================
+           CHARACTER DISPLAY NAMES
+
+           IMPORTANT:
+           These keys match the Google Sheet.
+        ======================================== */
+
+        const characterNames = {
+
+            Jo: "Jo Kongoza",
+            Mio: "Mio Susuhara",
+            Elias: "Elias Pratt",
+            Shion: "Shion Genkai",
+
+            Jin: "Jin Kamurai",
+            Tohma: "Tohma Ishibashi",
+            Luca: "Lucas Errant",
+            Kaito: "Kaito Fuji",
+
+            Taiga: "Taiga Hoshibami",
+            Ritsu: "Ritsu Shinjo",
+            Romeo: "Romeo Lucci",
+
+            Ed: "Edward Hart",
+            Lyca: "Lyca Colt",
+            Rui: "Rui Mizuki",
+
+            Haru: "Haru Sagara",
+            Towa: "Towa Otonashi",
+            Ren: "Ren Shiranami",
+
+            Yuri: "Yuri Isami",
+            Jiro: "Jiro Kirisaki",
+
+            Haku: "Haku Kusanagi",
+            Subaru: "Subaru Kagami",
+            Zenji: "Zenji Kotodama",
+
+            Alan: "Alan Mido",
+            Sho: "Shohei Haizono",
+            Leo: "Leo Kurosagi"
+
+        };
+
+
+        let database = null;
+
+
+        /* ========================================
+           ESCAPE HTML
+        ======================================== */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.textContent =
+                value == null
+                    ? ""
+                    : String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        /* ========================================
+           NORMALIZE CARD NAME
+        ======================================== */
+
+        function normalizeCardName(name) {
+
+            return String(
+                name || ""
+            )
+            .replace(
+                /\s*\([^)]*\)/g,
+                ""
+            )
+            .replace(
+                /\s+/g,
+                " "
+            )
+            .trim();
+
+        }
+
+
+        /* ========================================
+           NUMBER VALUE
+        ======================================== */
+
+        function numberValue(value) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                value === ""
+            ) {
+
+                return null;
+
+            }
+
+            const cleaned =
+                String(value)
+                    .replace(/,/g, "")
+                    .replace(/[^\d.-]/g, "");
+
+            const number =
+                parseFloat(cleaned);
+
+            return Number.isNaN(number)
+                ? null
+                : number;
+
+        }
+
+
+        /* ========================================
+           ADD DROPDOWN OPTION
+        ======================================== */
+
+        function addOption(
+            select,
+            value,
+            text
+        ) {
+
+            if (
+                value === null ||
+                value === undefined ||
+                value === ""
+            ) {
+
+                return;
+
+            }
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+            option.value =
+                value;
+
+            option.textContent =
+                text || value;
+
+            select.appendChild(
+                option
+            );
+
+        }
+
+
+        /* ========================================
+           CHARACTER DROPDOWN
+        ======================================== */
+
+        function buildCharacterDropdown() {
+
+            const select =
+                document.getElementById(
+                    "characterFilter"
+                );
+
+            select.innerHTML = `
+                <option value="">
+                    All Characters
+                </option>
+            `;
+
+            Object.keys(
+                characterNames
+            )
+            .forEach(
+                key => {
+
+                    addOption(
+                        select,
+                        key,
+                        characterNames[key]
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           FILTER DROPDOWNS
+        ======================================== */
+
+        function buildFilterDropdowns() {
+
+            const lookup =
+                database.cardLookup ||
+                {};
+
+
+            const passiveSelect =
+                document.getElementById(
+                    "passiveFilter"
+                );
+
+            const skill1Select =
+                document.getElementById(
+                    "skill1Filter"
+                );
+
+            const skill2Select =
+                document.getElementById(
+                    "skill2Filter"
+                );
+
+            const omitSkillSelect =
+                document.getElementById(
+                    "omitSkillFilter"
+                );
+
+
+            passiveSelect.innerHTML = `
+                <option value="">
+                    All Passives
+                </option>
+            `;
+
+            skill1Select.innerHTML = `
+                <option value="">
+                    All Skills
+                </option>
+            `;
+
+            skill2Select.innerHTML = `
+                <option value="">
+                    All Skills
+                </option>
+            `;
+
+            omitSkillSelect.innerHTML = `
+                <option value="">
+                    No Omit Skill
+                </option>
+            `;
+
+
+            const passives =
+                Array.isArray(
+                    lookup.passives
+                )
+                    ? lookup.passives
+                    : [];
+
+
+            passives.forEach(
+                passive => {
+
+                    addOption(
+                        passiveSelect,
+                        passive,
+                        passive
+                    );
+
+                }
+            );
+
+
+            const skills =
+                Array.isArray(
+                    lookup.skill1
+                )
+                    ? lookup.skill1
+                    : [];
+
+
+            skills.forEach(
+                skill => {
+
+                    addOption(
+                        skill1Select,
+                        skill,
+                        skill
+                    );
+
+                    addOption(
+                        skill2Select,
+                        skill,
+                        skill
+                    );
+
+                }
+            );
+
+
+            const omitSkills =
+                Array.isArray(
+                    lookup.omitSkill
+                )
+                    ? lookup.omitSkill
+                    : skills;
+
+
+            omitSkills.forEach(
+                skill => {
+
+                    addOption(
+                        omitSkillSelect,
+                        skill,
+                        skill
+                    );
+
+                }
+            );
+
+        }
+
+
+        /* ========================================
+           GET CARD OWNERS
+        ======================================== */
+
+        function getCardOwners(cardKey) {
+
+            const owners = [];
+
+            const characters =
+                database.characters ||
+                {};
+
+
+            Object.keys(
+                characters
+            )
+            .forEach(
+                characterKey => {
+
+                    const characterCards =
+                        characters[
+                            characterKey
+                        ] || [];
+
+
+                    const hasCard =
+                        characterCards.some(
+                            cardName =>
+                                normalizeCardName(
+                                    cardName
+                                ) ===
+                                normalizeCardName(
+                                    cardKey
+                                )
+                        );
+
+
+                    if (hasCard) {
+
+                        owners.push(
+                            characterKey
+                        );
+
+                    }
+
+                }
+            );
+
+
+            return owners;
+
+        }
+
+
+        /* ========================================
+           GET CARD SKILL NAMES
+        ======================================== */
+
+        function getCardSkillNames(card) {
+
+            if (
+                !Array.isArray(
+                    card.skills
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return card.skills
+                .map(
+                    skill =>
+                        String(
+                            skill.name || ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                )
+                .filter(Boolean);
+
+        }
+
+
+        /* ========================================
+           ELEMENT CLASS
+        ======================================== */
+
+        function getElementClass(element) {
+
+            const value =
+                String(
+                    element || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (value === "leaf") {
+                return "element-leaf";
+            }
+
+            if (value === "fire") {
+                return "element-fire";
+            }
+
+            if (value === "water") {
+                return "element-water";
+            }
+
+            return "";
+
+        }
+
+
+        /* ========================================
+           RERUN DATE
+        ======================================== */
+
+        function getRerunDate(card) {
+
+            if (
+                !card ||
+                !card.lastRerunDate
+            ) {
+
+                return null;
+
+            }
+
+
+            const parts =
+                String(
+                    card.lastRerunDate
+                )
+                .split("-")
+                .map(Number);
+
+
+            if (
+                parts.length !== 3 ||
+                parts.some(
+                    value =>
+                        Number.isNaN(value)
+                )
+            ) {
+
+                return null;
+
+            }
+
+
+            const date =
+                new Date(
+                    parts[0],
+                    parts[1] - 1,
+                    parts[2]
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return null;
+
+            }
+
+
+            return date;
+
+        }
+
+
+        /* ========================================
+           RERUN AGE
+        ======================================== */
+
+        function getRerunAgeMs(card) {
+
+            const rerunDate =
+                getRerunDate(
+                    card
+                );
+
+
+            if (!rerunDate) {
+                return null;
+            }
+
+
+            return Math.max(
+                0,
+                Date.now() -
+                rerunDate.getTime()
+            );
+
+        }
+
+
+        /* ========================================
+           RERUN DISPLAY
+        ======================================== */
+
+        function formatRerunTime(card) {
+
+            const rerunDate =
+                getRerunDate(
+                    card
+                );
+
+
+            if (!rerunDate) {
+                return "—";
+            }
+
+
+            const now =
+                new Date();
+
+
+            let years =
+                now.getFullYear() -
+                rerunDate.getFullYear();
+
+
+            let months =
+                now.getMonth() -
+                rerunDate.getMonth();
+
+
+            let days =
+                now.getDate() -
+                rerunDate.getDate();
+
+
+            if (days < 0) {
+
+                months--;
+
+                const previousMonth =
+                    new Date(
+                        now.getFullYear(),
+                        now.getMonth(),
+                        0
+                    );
+
+                days +=
+                    previousMonth.getDate();
+
+            }
+
+
+            if (months < 0) {
+
+                years--;
+
+                months += 12;
+
+            }
+
+
+            const parts = [];
+
+
+            if (years > 0) {
+                parts.push(
+                    `${years}Y`
+                );
+            }
+
+            if (months > 0) {
+                parts.push(
+                    `${months}M`
+                );
+            }
+
+            if (days > 0) {
+                parts.push(
+                    `${days}D`
+                );
+            }
+
+
+            if (
+                parts.length === 0
+            ) {
+
+                return "<1D";
+
+            }
+
+
+            return parts.join(" ");
+
+        }
+
+
+        /* ========================================
+           FILTER CARDS
+        ======================================== */
+
+        function filterCards() {
+
+            if (!database) {
+                return [];
+            }
+
+
+            const cards =
+                database.cards ||
+                {};
+
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                )
+                .value
+                .toLowerCase()
+                .trim();
+
+
+            const house =
+                document.getElementById(
+                    "houseFilter"
+                ).value;
+
+
+            const character =
+                document.getElementById(
+                    "characterFilter"
+                ).value;
+
+
+            const element =
+                document.getElementById(
+                    "elementFilter"
+                ).value;
+
+
+            const atkType =
+                document.getElementById(
+                    "atkTypeFilter"
+                ).value;
+
+
+            const passive =
+                document.getElementById(
+                    "passiveFilter"
+                ).value;
+
+
+            const skill1 =
+                document.getElementById(
+                    "skill1Filter"
+                ).value;
+
+
+            const skill2 =
+                document.getElementById(
+                    "skill2Filter"
+                ).value;
+
+
+            const omitSkill =
+                document.getElementById(
+                    "omitSkillFilter"
+                ).value;
+
+
+            const minMr =
+                numberValue(
+                    document.getElementById(
+                        "minMr"
+                    ).value
+                );
+
+
+            const maxMr =
+                numberValue(
+                    document.getElementById(
+                        "maxMr"
+                    ).value
+                );
+
+
+            const minSpeed =
+                numberValue(
+                    document.getElementById(
+                        "minSpeed"
+                    ).value
+                );
+
+
+            const maxSpeed =
+                numberValue(
+                    document.getElementById(
+                        "maxSpeed"
+                    ).value
+                );
+
+
+            const sortType =
+                document.getElementById(
+                    "sortFilter"
+                ).value;
+
+
+            const results = [];
+
+
+            Object.keys(
+                cards
+            )
+            .forEach(
+                cardKey => {
+
+                    const card =
+                        cards[cardKey];
+
+
+                    const displayName =
+                        String(
+                            card.name ||
+                            cardKey
+                        );
+
+
+                    const owners =
+                        getCardOwners(
+                            cardKey
+                        );
+
+
+                    /* CARD NAME */
+
+                    if (
+                        search &&
+                        !displayName
+                            .toLowerCase()
+                            .includes(search)
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /* HOUSE */
+
+                    if (house) {
+
+                        const houseData =
+                            houses.find(
+                                houseInfo =>
+                                    houseInfo.name ===
+                                    house
+                            );
+
+
+                        if (!houseData) {
+                            return;
+                        }
+
+
+                        const belongsToHouse =
+                            owners.some(
+                                owner =>
+                                    houseData
+                                        .characters
+                                        .includes(
+                                            owner
+                                        )
+                            );
+
+
+                        if (
+                            !belongsToHouse
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* CHARACTER */
+
+                    if (character) {
+
+                        if (
+                            !owners.includes(
+                                character
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* ELEMENT */
+
+                    if (element) {
+
+                        if (
+                            String(
+                                card.element ||
+                                ""
+                            )
+                            .trim()
+                            .toLowerCase() !==
+                            element.toLowerCase()
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* ATK TYPE */
+
+                    if (atkType) {
+
+                        if (
+                            String(
+                                card.atkType ||
+                                ""
+                            )
+                            .trim()
+                            .toUpperCase() !==
+                            atkType
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* PASSIVE */
+
+                    if (passive) {
+
+                        if (
+                            String(
+                                card.passive ||
+                                ""
+                            )
+                            .trim() !==
+                            passive
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* SKILLS */
+
+                    const skillNames =
+                        getCardSkillNames(
+                            card
+                        );
+
+
+                    /* SKILL 1 */
+
+                    if (skill1) {
+
+                        if (
+                            !skillNames.includes(
+                                skill1
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* SKILL 2 */
+
+                    if (skill2) {
+
+                        if (
+                            !skillNames.includes(
+                                skill2
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* OMIT SKILL */
+
+                    if (omitSkill) {
+
+                        if (
+                            skillNames.includes(
+                                omitSkill
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* MR */
+
+                    const mr =
+                        numberValue(
+                            card.mr
+                        );
+
+
+                    if (
+                        minMr !== null &&
+                        (
+                            mr === null ||
+                            mr < minMr
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        maxMr !== null &&
+                        (
+                            mr === null ||
+                            mr > maxMr
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /* SPEED */
+
+                    const speed =
+                        numberValue(
+                            card.speed
+                        );
+
+
+                    if (
+                        minSpeed !== null &&
+                        (
+                            speed === null ||
+                            speed < minSpeed
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        maxSpeed !== null &&
+                        (
+                            speed === null ||
+                            speed > maxSpeed
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    results.push({
+
+                        key:
+                            cardKey,
+
+                        card:
+                            card,
+
+                        name:
+                            displayName,
+
+                        owners:
+                            owners
+
+                    });
+
+                }
+            );
+
+
+            /* ========================================
+               SORT
+            ======================================== */
+
+            if (
+                sortType ===
+                "rerun-desc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aTime =
+                            getRerunAgeMs(
+                                a.card
+                            );
+
+                        const bTime =
+                            getRerunAgeMs(
+                                b.card
+                            );
+
+
+                        if (
+                            aTime === null &&
+                            bTime === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aTime === null) {
+                            return 1;
+                        }
+
+                        if (bTime === null) {
+                            return -1;
+                        }
+
+                        return bTime - aTime;
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sortType ===
+                "rerun-asc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aTime =
+                            getRerunAgeMs(
+                                a.card
+                            );
+
+                        const bTime =
+                            getRerunAgeMs(
+                                b.card
+                            );
+
+
+                        if (
+                            aTime === null &&
+                            bTime === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aTime === null) {
+                            return 1;
+                        }
+
+                        if (bTime === null) {
+                            return -1;
+                        }
+
+                        return aTime - bTime;
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sortType ===
+                "mr-desc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aMr =
+                            numberValue(
+                                a.card.mr
+                            );
+
+                        const bMr =
+                            numberValue(
+                                b.card.mr
+                            );
+
+
+                        if (
+                            aMr === null &&
+                            bMr === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aMr === null) {
+                            return 1;
+                        }
+
+                        if (bMr === null) {
+                            return -1;
+                        }
+
+                        return bMr - aMr;
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sortType ===
+                "mr-asc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aMr =
+                            numberValue(
+                                a.card.mr
+                            );
+
+                        const bMr =
+                            numberValue(
+                                b.card.mr
+                            );
+
+
+                        if (
+                            aMr === null &&
+                            bMr === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aMr === null) {
+                            return 1;
+                        }
+
+                        if (bMr === null) {
+                            return -1;
+                        }
+
+                        return aMr - bMr;
+
+                    }
+                );
+
+            }
+
+
+            else {
+
+                results.sort(
+                    (a, b) =>
+                        a.name.localeCompare(
+                            b.name,
+                            undefined,
+                            {
+                                numeric: true
+                            }
+                        )
+                );
+
+            }
+
+
+            return results;
+
+        }
+
+
+        /* ========================================
+           FORMAT SKILL CELL
+        ======================================== */
+
+        function formatSkillCell(skill) {
+
+            if (!skill) {
+                return "—";
+            }
+
+
+            const name =
+                skill.name || "";
+
+            const description =
+                skill.description || "";
+
+
+            if (
+                !name &&
+                !description
+            ) {
+
+                return "—";
+
+            }
+
+
+            return `
+
+                ${
+                    name
+                        ? `
+                            <span
+                                class="table-skill-name"
+                            >
+                                ${escapeHTML(
+                                    name
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <span
+                                class="table-skill-description"
+                            >
+                                ${escapeHTML(
+                                    description
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+            `;
+
+        }
+
+
+        /* ========================================
+           FORMAT UNIQUE
+        ======================================== */
+
+        function formatUniqueCell(unique) {
+
+            if (!unique) {
+                return "—";
+            }
+
+
+            const name =
+                unique.name || "";
+
+            const description =
+                unique.description || "";
+
+
+            if (
+                !name &&
+                !description
+            ) {
+
+                return "—";
+
+            }
+
+
+            return `
+
+                ${
+                    name
+                        ? `
+                            <span
+                                class="table-skill-name"
+                            >
+                                ${escapeHTML(
+                                    name
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <span
+                                class="table-skill-description"
+                            >
+                                ${escapeHTML(
+                                    description
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+            `;
+
+        }
+
+
+        /* ========================================
+           FLOATING SCROLLBAR
+        ======================================== */
+
+        function setupFloatingScrollbar() {
+
+            const tableWrapper =
+                document.querySelector(
+                    ".results-table-wrapper"
+                );
+
+            const floatingScrollbar =
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                );
+
+            const floatingInner =
+                document.getElementById(
+                    "floatingHorizontalScrollInner"
+                );
+
+
+            if (
+                !tableWrapper ||
+                !floatingScrollbar ||
+                !floatingInner
+            ) {
+
+                return;
+
+            }
+
+
+            const table =
+                tableWrapper.querySelector(
+                    ".results-table"
+                );
+
+
+            if (!table) {
+                return;
+            }
+
+
+            floatingInner.style.width =
+                table.scrollWidth + "px";
+
+
+            let syncing = false;
+
+
+            floatingScrollbar.onscroll =
+                function () {
+
+                    if (syncing) {
+                        return;
+                    }
+
+
+                    syncing = true;
+
+
+                    tableWrapper.scrollLeft =
+                        floatingScrollbar.scrollLeft;
+
+
+                    requestAnimationFrame(
+                        () => {
+                            syncing = false;
+                        }
+                    );
+
+                };
+
+
+            tableWrapper.onscroll =
+                function () {
+
+                    if (syncing) {
+                        return;
+                    }
+
+
+                    syncing = true;
+
+
+                    floatingScrollbar.scrollLeft =
+                        tableWrapper.scrollLeft;
+
+
+                    requestAnimationFrame(
+                        () => {
+                            syncing = false;
+                        }
+                    );
+
+                };
+
+
+            floatingScrollbar.scrollLeft =
+                tableWrapper.scrollLeft;
+
+        }
+
+
+        /* ========================================
+           RENDER RESULTS
+        ======================================== */
+
+        function renderResults() {
+
+            const results =
+                filterCards();
+
+
+            const container =
+                document.getElementById(
+                    "results"
+                );
+
+
+            const count =
+                document.getElementById(
+                    "resultCount"
+                );
+
+
+            count.textContent =
+                `${results.length} card${
+                    results.length === 1
+                        ? ""
+                        : "s"
+                } found`;
+
+
+            if (
+                results.length === 0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="no-results">
+
+                        No cards match
+                        your selected filters.
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                ).style.display =
+                    "none";
+
+
+                return;
+
+            }
+
+
+            let html = `
+
+                <div
+                    class="results-table-wrapper"
+                >
+
+                    <table
+                        class="results-table"
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Card Name
+                                </th>
+
+                                <th>
+                                    AT
+                                </th>
+
+                                <th>
+                                    SPD
+                                </th>
+
+                                <th>
+                                    Passive
+                                </th>
+
+                                <th>
+                                    S1
+                                </th>
+
+                                <th>
+                                    S2
+                                </th>
+
+                                <th>
+                                    S3
+                                </th>
+
+                                <th>
+                                    S4
+                                </th>
+
+                                <th>
+                                    Unique
+                                </th>
+
+                                <th>
+                                    Rerun Time
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+            `;
+
+
+            results.forEach(
+                result => {
+
+                    const card =
+                        result.card;
+
+
+                    const elementClass =
+                        getElementClass(
+                            card.element
+                        );
+
+
+                    const skills =
+                        Array.isArray(
+                            card.skills
+                        )
+                            ? card.skills
+                            : [];
+
+
+                    html += `
+
+                        <tr
+                            class="${elementClass}"
+                        >
+
+                            <td>
+
+                                <div
+                                    class="table-card-name"
+                                >
+                                    ${escapeHTML(
+                                        result.name
+                                        
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-atk-type"
+                                >
+                                    ${escapeHTML(
+                                        card.atkType ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-speed"
+                                >
+                                    ${escapeHTML(
+                                        card.speed ??
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-passive"
+                                >
+                                    ${escapeHTML(
+                                        card.passive ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[0]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[1]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[2]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[3]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatUniqueCell(
+                                    card.ultimate
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-rerun-time"
+                                >
+                                    ${escapeHTML(
+                                        formatRerunTime(
+                                            card
+                                        )
+                                    )}
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            html += `
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            `;
+
+
+            container.innerHTML =
+                html;
+
+
+            const floatingScrollbar =
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                );
+
+
+            floatingScrollbar.style.display =
+                "block";
+
+
+            setupFloatingScrollbar();
+
+        }
+
+
+        /* ========================================
+           CLEAR FILTERS
+        ======================================== */
+
+        function clearFilters() {
+
+            document.getElementById(
+                "searchInput"
+            ).value = "";
+
+            document.getElementById(
+                "houseFilter"
+            ).value = "";
+
+            document.getElementById(
+                "characterFilter"
+            ).value = "";
+
+            document.getElementById(
+                "elementFilter"
+            ).value = "";
+
+            document.getElementById(
+                "atkTypeFilter"
+            ).value = "";
+
+            document.getElementById(
+                "passiveFilter"
+            ).value = "";
+
+            document.getElementById(
+                "skill1Filter"
+            ).value = "";
+
+            document.getElementById(
+                "skill2Filter"
+            ).value = "";
+
+            document.getElementById(
+                "omitSkillFilter"
+            ).value = "";
+
+            document.getElementById(
+                "minMr"
+            ).value = "";
+
+            document.getElementById(
+                "maxMr"
+            ).value = "";
+
+            document.getElementById(
+                "minSpeed"
+            ).value = "";
+
+            document.getElementById(
+                "maxSpeed"
+            ).value = "";
+
+            document.getElementById(
+                "sortFilter"
+            ).value = "default";
+
+
+            renderResults();
+
+        }
+
+
+        /* ========================================
+           LOAD DATABASE
+        ======================================== */
+
+        async function initializeDatabase() {
+
+            try {
+
+                const data =
+                    await window.loadDatabase({
+
+                        onUpdate:
+                            freshData => {
+
+                                database =
+                                    freshData;
+
+                                buildCharacterDropdown();
+
+                                buildFilterDropdowns();
+
+                                renderResults();
+
+                                console.log(
+                                    "Tokyo Debunker database refreshed."
+                                );
+
+                            },
+
+                        onError:
+                            error => {
+
+                                console.warn(
+                                    "Tokyo Debunker database background refresh failed:",
+                                    error
+                                );
+
+                            }
+
+                    });
+
+
+                database =
+                    data;
+
+                buildCharacterDropdown();
+
+                buildFilterDropdowns();
+
+                renderResults();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading database:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "resultCount"
+                ).textContent =
+                    "Unable to load database.";
+
+
+                document.getElementById(
+                    "results"
+                ).innerHTML = `
+
+                    <div class="no-results">
+
+                        Unable to load the database.
+
+                        <br><br>
+
+                        Please refresh the page
+                        and try again.
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                ).style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* ========================================
+           EVENTS
+        ======================================== */
+
+        document.getElementById(
+            "searchButton"
+        ).addEventListener(
+            "click",
+            renderResults
+        );
+
+
+        document.getElementById(
+            "clearButton"
+        ).addEventListener(
+            "click",
+            clearFilters
+        );
+
+
+        document.getElementById(
+            "sortFilter"
+        ).addEventListener(
+            "change",
+            renderResults
+        );
+
+
+        document.getElementById(
+            "searchInput"
+        ).addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    renderResults();
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           INITIAL LOAD
+        ======================================== */
+
+        initializeDatabase();
+
+    </script>
+
+
+</body>
+
+</html>

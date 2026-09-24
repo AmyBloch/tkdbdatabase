@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Banners | Tokyo Debunker Database</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+
+        /* =========================
+           BANNERS PAGE
+           ========================= */
+
+        .banner-page {
+            width: 100%;
+            max-width: 1050px;
+            margin: 0 auto;
+            padding: 50px 20px 80px;
+            box-sizing: border-box;
+        }
+
+
+        /* =========================
+           PAGE TITLE
+           ========================= */
+
+        .banner-header {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .banner-header h1 {
+            margin: 0;
+
+            color: #eee5f4;
+            font-size: 32px;
+            font-weight: 500;
+            letter-spacing: 7px;
+        }
+
+        .banner-header p {
+            margin: 12px 0 0;
+
+            color: #a99ab8;
+            font-size: 13px;
+            letter-spacing: 2px;
+        }
+
+
+        /* =========================
+           BANNER OPTIONS
+           ========================= */
+
+        .banner-options {
+            width: 100%;
+
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+
+        /* =========================
+           BUTTON / CARD
+           ========================= */
+
+        .banner-option {
+            position: relative;
+
+            min-height: 210px;
+            padding: 30px 20px;
+
+            box-sizing: border-box;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+            text-decoration: none;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(35, 20, 48, 0.95),
+                    rgba(15, 10, 22, 0.98)
+                );
+
+            border: 1px solid rgba(180, 145, 215, 0.35);
+            border-radius: 4px;
+
+            transition:
+                transform 0.25s ease,
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        .banner-option:hover {
+            transform: translateY(-5px);
+
+            border-color:
+                rgba(201, 156, 255, 0.85);
+
+            box-shadow:
+                0 12px 30px
+                rgba(100, 60, 150, 0.25);
+        }
+
+
+        /* =========================
+           ICON
+           ========================= */
+
+        .banner-option .card-icon {
+            width: 70px;
+            height: 70px;
+
+            margin-bottom: 18px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            color: #c99cff;
+
+            filter:
+                drop-shadow(
+                    0 0 8px
+                    rgba(180, 120, 240, 0.25)
+                );
+        }
+
+        .banner-option .card-icon svg {
+            width: 64px;
+            height: 64px;
+        }
+
+
+        /* =========================
+           TEXT
+           ========================= */
+
+        .banner-option h2 {
+            margin: 0 0 8px;
+
+            color: #eee5f4;
+
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+
+        .banner-option p {
+            margin: 0;
+
+            color: #a99ab8;
+
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           ARROW
+           ========================= */
+
+        .banner-option .arrow {
+            position: absolute;
+
+            right: 15px;
+            bottom: 12px;
+
+            color: #9d7ab8;
+
+            font-size: 23px;
+
+            transition:
+                transform 0.25s ease,
+                color 0.25s ease;
+        }
+
+        .banner-option:hover .arrow {
+            color: #d5b2f5;
+            transform: translateX(4px);
+        }
+
+
+        /* =========================
+           RESPONSIVE
+           ========================= */
+
+        @media (max-width: 850px) {
+
+            .banner-options {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .banner-page {
+                padding: 35px 16px 60px;
+            }
+
+            .banner-header {
+                margin-bottom: 40px;
+            }
+
+            .banner-header h1 {
+                font-size: 27px;
+                letter-spacing: 5px;
+            }
+
+            .banner-header p {
+                font-size: 11px;
+                letter-spacing: 1.5px;
+            }
+
+            .banner-options {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .banner-option {
+                min-height: 190px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         HEADER
+         ========================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <a href="index.html">
+                <img
+                    src="logo.png"
+                    alt="Tokyo Debunker"
+                >
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <!-- =========================
+         MAIN CONTENT
+         ========================= -->
+
+    <main class="banner-page">
+
+
+        <!-- PAGE TITLE -->
+
+        <section class="banner-header">
+
+            <h1>
+                BANNERS
+            </h1>
+
+            <p>
+                Explore banner information and tools
+            </p>
+
+        </section>
+
+
+        <!-- =========================
+             BANNER OPTIONS
+             ========================= -->
+
+        <section class="banner-options">
+
+
+            <!-- =========================
+                 SSR GUARANTEE
+                 ========================= -->
+
+            <a
+                href="ssr-guarantee.html"
+                class="banner-option"
+            >
+
+                <div class="card-icon">
+
+                    <svg
+                        width="64"
+                        height="64"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+
+                        <!-- Outer star -->
+
+                        <path
+                            d="
+                                M50 10
+                                L61 37
+                                L90 39
+                                L68 57
+                                L75 86
+                                L50 70
+                                L25 86
+                                L32 57
+                                L10 39
+                                L39 37
+                                Z
+                            "
+                            fill="currentColor"
+                        />
+
+                        <!-- Inner star -->
+
+                        <path
+                            d="
+                                M50 25
+                                L56 42
+                                L74 43
+                                L60 54
+                                L64 71
+                                L50 61
+                                L36 71
+                                L40 54
+                                L26 43
+                                L44 42
+                                Z
+                            "
+                            fill="rgba(15,10,22,0.9)"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <h2>
+                    SSR Guarantee
+                </h2>
+
+                <p>
+                    Track SSR guarantees<br>
+                     and house information
+                </p>
+
+                <span class="arrow">
+                    ›
+                </span>
+
+            </a>
+
+
+            <!-- =========================
+                 BANNER PAIRINGS
+                 ========================= -->
+
+            <a
+                href="banner-pairings.html"
+                class="banner-option"
+            >
+
+                <div class="card-icon">
+
+                    <svg
+                        width="64"
+                        height="64"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+
+                        <!-- Left card -->
+
+                        <rect
+                            x="13"
+                            y="24"
+                            width="34"
+                            height="50"
+                            rx="4"
+                            fill="currentColor"
+                        />
+
+                        <rect
+                            x="18"
+                            y="29"
+                            width="24"
+                            height="40"
+                            rx="2"
+                            fill="rgba(15,10,22,0.28)"
+                        />
+
+
+                        <!-- Right card -->
+
+                        <rect
+                            x="53"
+                            y="24"
+                            width="34"
+                            height="50"
+                            rx="4"
+                            fill="currentColor"
+                        />
+
+                        <rect
+                            x="58"
+                            y="29"
+                            width="24"
+                            height="40"
+                            rx="2"
+                            fill="rgba(15,10,22,0.28)"
+                        />
+
+
+                        <!-- Connecting line -->
+
+                        <path
+                            d="M42 49H58"
+                            stroke="currentColor"
+                            stroke-width="5"
+                            stroke-linecap="round"
+                        />
+
+
+                        <!-- Center diamond -->
+
+                        <path
+                            d="
+                                M50 39
+                                L59 49
+                                L50 59
+                                L41 49
+                                Z
+                            "
+                            fill="currentColor"
+                        />
+
+                        <path
+                            d="
+                                M50 44
+                                L55 49
+                                L50 54
+                                L45 49
+                                Z
+                            "
+                            fill="rgba(15,10,22,0.9)"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <h2>
+                    Banner Pairings
+                </h2>
+
+                <p>
+                    Explore characters and<br>
+                    cards appearing together
+                </p>
+
+                <span class="arrow">
+                    ›
+                </span>
+
+            </a>
+
+
+            <!-- =========================
+                 BANNER DATABASE
+                 ========================= -->
+
+            <a
+                href="banner-database.html"
+                class="banner-option"
+            >
+
+                <div class="card-icon">
+
+                    <svg
+                        width="64"
+                        height="64"
+                        viewBox="0 0 100 100"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                        aria-hidden="true"
+                    >
+
+                        <!-- Top -->
+
+                        <ellipse
+                            cx="50"
+                            cy="25"
+                            rx="31"
+                            ry="11"
+                            fill="currentColor"
+                        />
+
+                        <!-- Top inner -->
+
+                        <ellipse
+                            cx="50"
+                            cy="25"
+                            rx="22"
+                            ry="6"
+                            fill="rgba(15,10,22,0.9)"
+                        />
+
+
+                        <!-- Main body -->
+
+                        <path
+                            d="
+                                M19 25
+                                V67
+                                C19 73 33 78 50 78
+                                C67 78 81 73 81 67
+                                V25
+                            "
+                            fill="currentColor"
+                        />
+
+
+                        <!-- Inner body -->
+
+                        <path
+                            d="
+                                M25 34
+                                V65
+                                C25 69 36 73 50 73
+                                C64 73 75 69 75 65
+                                V34
+                                C70 38 61 40 50 40
+                                C39 40 30 38 25 34
+                                Z
+                            "
+                            fill="rgba(15,10,22,0.28)"
+                        />
+
+
+                        <!-- Middle separator -->
+
+                        <path
+                            d="
+                                M19 46
+                                C19 52 33 57 50 57
+                                C67 57 81 52 81 46
+                            "
+                            stroke="rgba(15,10,22,0.9)"
+                            stroke-width="4"
+                            fill="none"
+                        />
+
+                    </svg>
+
+                </div>
+
+                <h2>
+                    Banner Database
+                </h2>
+
+                <p>
+                    Browse current and<br>
+                    previous banners
+                </p>
+
+                <span class="arrow">
+                    ›
+                </span>
+
+            </a>
+
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         BOTTOM DECORATION
+         ========================= -->
+
+    <div class="bottom-decoration">
+
+        <span></span>
+
+        <b>✦</b>
+
+        <span></span>
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,3677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Banner Pairings — Tokyo Debunker Database</title>
+
+<link
+    rel="stylesheet"
+    href="style.css"
+>
+
+
+
+<style>
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+body {
+    min-height: 100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(91, 48, 119, 0.16),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 20% 80%,
+            rgba(53, 28, 74, 0.12),
+            transparent 35%
+        ),
+        linear-gradient(
+            145deg,
+            #070509 0%,
+            #0d0712 45%,
+            #09050d 100%
+        );
+
+    color: #eee7f2;
+}
+
+.page-shell {
+    width: min(
+        1500px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+    padding-bottom: 70px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.site-header {
+    padding: 22px 0 10px;
+}
+
+.header-inner {
+    width: min(
+        1500px,
+        calc(100% - 40px)
+    );
+
+    margin: 0 auto;
+
+    display: flex;
+    align-items: center;
+}
+
+.site-logo {
+    display: block;
+
+    width: 240px;
+    height: auto;
+    max-height: 48px;
+
+    object-fit: contain;
+
+    transform: translateY(-3px);
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-row {
+    margin-top: 18px;
+    margin-bottom: 30px;
+}
+
+.back-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 9px 16px;
+
+    border:
+        1px solid
+        rgba(143, 93, 171, 0.48);
+
+    border-radius: 8px;
+
+    background:
+        rgba(34, 18, 44, 0.65);
+
+    color: #d9c8df;
+
+    font-size: 15px;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.back-button:hover {
+    background:
+        rgba(62, 31, 78, 0.8);
+
+    border-color:
+        rgba(173, 115, 202, 0.7);
+
+    transform:
+        translateX(-2px);
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.page-title {
+    margin: 10px 0 8px;
+
+    text-align: center;
+
+    font-size:
+        clamp(28px, 4vw, 42px);
+
+    font-weight: 600;
+
+    letter-spacing: 0.16em;
+
+    color: #eee4f2;
+
+    text-shadow:
+        0 0 18px
+        rgba(159, 94, 190, 0.25);
+}
+
+.page-subtitle {
+    max-width: 900px;
+
+    margin:
+        0 auto 36px;
+
+    text-align: center;
+
+    color: #a99bad;
+
+    font-size: 16px;
+
+    line-height: 1.65;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-message {
+    margin: 25px auto;
+
+    text-align: center;
+
+    color: #9f92a5;
+
+    font-size: 16px;
+}
+
+.status-message.error {
+    color: #d59da8;
+}
+
+
+/* =========================================================
+   SECTION
+========================================================= */
+
+.section {
+    margin-top: 38px;
+}
+
+.section-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 16px;
+}
+
+.section-heading::before,
+.section-heading::after {
+    content: "";
+
+    height: 1px;
+
+    flex: 1;
+
+    background:
+        linear-gradient(
+            90deg,
+            transparent,
+            rgba(132, 86, 163, 0.45),
+            transparent
+        );
+}
+
+.section-heading h2 {
+    margin: 0;
+
+    color: #ddd0e3;
+
+    font-size: 21px;
+
+    font-weight: 500;
+
+    letter-spacing: 0.12em;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   PAIRING GRID
+========================================================= */
+
+.pairings-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.pairing-panel {
+    min-width: 0;
+
+    border:
+        1px solid
+        rgba(116, 75, 141, 0.35);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 17, 39, 0.82),
+            rgba(14, 9, 20, 0.88)
+        );
+
+    box-shadow:
+        0 10px 35px
+        rgba(0, 0, 0, 0.25);
+
+    overflow: hidden;
+}
+
+.panel-title {
+    padding: 15px 17px;
+
+    border-bottom:
+        1px solid
+        rgba(116, 75, 141, 0.3);
+
+    color: #d8c5df;
+
+    font-size: 17px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.08em;
+
+    text-transform: uppercase;
+}
+
+.panel-description {
+    padding:
+        10px 17px 12px;
+
+    color: #8e8193;
+
+    font-size: 14px;
+
+    line-height: 1.45;
+
+    border-bottom:
+        1px solid
+        rgba(116, 75, 141, 0.18);
+}
+
+
+/* =========================================================
+   SCROLL AREAS
+========================================================= */
+
+.pairing-scroll,
+.lookup-scroll,
+.banner-card-list {
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    scrollbar-width: thin;
+
+    scrollbar-color:
+        rgba(132, 86, 163, 0.65)
+        rgba(20, 12, 27, 0.6);
+}
+
+.pairing-scroll::-webkit-scrollbar,
+.lookup-scroll::-webkit-scrollbar,
+.banner-card-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+.pairing-scroll::-webkit-scrollbar-track,
+.lookup-scroll::-webkit-scrollbar-track,
+.banner-card-list::-webkit-scrollbar-track {
+    background:
+        rgba(20, 12, 27, 0.6);
+}
+
+.pairing-scroll::-webkit-scrollbar-thumb,
+.lookup-scroll::-webkit-scrollbar-thumb,
+.banner-card-list::-webkit-scrollbar-thumb {
+    background:
+        rgba(132, 86, 163, 0.65);
+
+    border-radius: 10px;
+}
+
+.pairing-scroll {
+    height: 620px;
+}
+
+
+/* =========================================================
+   PAIRING ROW
+========================================================= */
+
+.pairing-row {
+    padding: 13px 16px;
+
+    border-bottom:
+        1px solid
+        rgba(109, 71, 130, 0.18);
+
+    transition:
+        background 0.15s ease;
+}
+
+.pairing-row:hover {
+    background:
+        rgba(86, 47, 105, 0.13);
+}
+
+.pairing-row-top {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 12px;
+}
+
+.pairing-names {
+    min-width: 0;
+
+    color: #e1d5e5;
+
+    font-size: 16px;
+
+    line-height: 1.45;
+}
+
+.pairing-names span {
+    margin: 0 3px;
+
+    color: #917a9b;
+}
+
+.pairing-count {
+    flex: 0 0 auto;
+
+    min-width: 28px;
+
+    padding: 3px 7px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(107, 63, 130, 0.25);
+
+    border:
+        1px solid
+        rgba(133, 86, 161, 0.3);
+
+    color: #d4b9df;
+
+    font-size: 13px;
+
+    font-weight: 600;
+
+    text-align: center;
+}
+
+.pairing-dates {
+    margin-top: 7px;
+
+    color: #918697;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+.pairing-date-line {
+    margin-bottom: 2px;
+}
+
+.pairing-date-type {
+    margin-left: 4px;
+
+    color: #76677c;
+}
+
+
+/* =========================================================
+   LOOKUP
+========================================================= */
+
+.lookup-select-wrap,
+.banner-select-wrap {
+    max-width: 500px;
+
+    margin:
+        0 auto 24px;
+}
+
+.lookup-select-wrap label,
+.banner-select-wrap label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    color: #a99bad;
+
+    font-size: 14px;
+
+    letter-spacing: 0.06em;
+}
+
+.lookup-select,
+.banner-select {
+    width: 100%;
+
+    padding: 11px 13px;
+
+    border:
+        1px solid
+        rgba(130, 83, 157, 0.48);
+
+    border-radius: 7px;
+
+    background:
+        rgba(24, 13, 31, 0.9);
+
+    color: #ded2e2;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    cursor: pointer;
+}
+
+.lookup-select:focus,
+.banner-select:focus {
+    border-color:
+        rgba(172, 113, 200, 0.75);
+}
+
+.lookup-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, minmax(0, 1fr));
+
+    gap: 18px;
+}
+
+.lookup-panel {
+    min-width: 0;
+
+    border:
+        1px solid
+        rgba(116, 75, 141, 0.35);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 17, 39, 0.82),
+            rgba(14, 9, 20, 0.88)
+        );
+
+    overflow: hidden;
+}
+
+.lookup-panel-title {
+    padding: 14px 16px;
+
+    border-bottom:
+        1px solid
+        rgba(116, 75, 141, 0.3);
+
+    color: #d8c5df;
+
+    font-size: 16px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+}
+
+.lookup-scroll {
+    height: 500px;
+}
+
+.lookup-row {
+    padding: 12px 15px;
+
+    border-bottom:
+        1px solid
+        rgba(109, 71, 130, 0.18);
+}
+
+.lookup-row:hover {
+    background:
+        rgba(86, 47, 105, 0.13);
+}
+
+.lookup-row-top {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    gap: 10px;
+}
+
+.lookup-duo {
+    color: #dfd2e4;
+
+    font-size: 15px;
+
+    line-height: 1.45;
+}
+
+.lookup-count {
+    flex: 0 0 auto;
+
+    padding: 3px 7px;
+
+    border-radius: 5px;
+
+    background:
+        rgba(107, 63, 130, 0.25);
+
+    border:
+        1px solid
+        rgba(133, 86, 161, 0.3);
+
+    color: #d4b9df;
+
+    font-size: 13px;
+
+    font-weight: 600;
+}
+
+.lookup-dates {
+    margin-top: 6px;
+
+    color: #918697;
+
+    font-size: 13px;
+
+    line-height: 1.55;
+}
+
+.lookup-date {
+    margin-bottom: 2px;
+}
+
+.lookup-empty,
+.banner-empty {
+    padding: 30px 18px;
+
+    color: #817486;
+
+    font-size: 14px;
+
+    text-align: center;
+
+    line-height: 1.6;
+}
+
+
+/* =========================================================
+   BANNER LOOKUP
+========================================================= */
+
+.banner-result {
+    max-width: 900px;
+
+    margin: 0 auto;
+
+    border:
+        1px solid
+        rgba(116, 75, 141, 0.35);
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(30, 17, 39, 0.82),
+            rgba(14, 9, 20, 0.88)
+        );
+
+    overflow: hidden;
+}
+
+.banner-result-header {
+    padding: 15px 18px;
+
+    border-bottom:
+        1px solid
+        rgba(116, 75, 141, 0.3);
+}
+
+.banner-result-date {
+    color: #ddd0e3;
+
+    font-size: 18px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.06em;
+}
+
+.banner-card-count {
+    margin-top: 4px;
+
+    color: #8e8193;
+
+    font-size: 13px;
+}
+
+.banner-card-list {
+    height: 420px;
+}
+
+.banner-card-row {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 11px 16px;
+
+    border-bottom:
+        1px solid
+        rgba(109, 71, 130, 0.18);
+}
+
+.banner-card-name {
+    min-width: 0;
+
+    color: #dfd2e4;
+
+    font-size: 15px;
+}
+
+.banner-card-character {
+    flex: 0 0 auto;
+
+    color: #918697;
+
+    font-size: 14px;
+
+    text-align: right;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .pairings-grid,
+    .lookup-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pairing-scroll {
+        height: 500px;
+    }
+
+    .lookup-scroll {
+        height: 420px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .page-shell {
+        width:
+            calc(100% - 24px);
+    }
+
+    .header-inner {
+        width:
+            calc(100% - 24px);
+    }
+
+    .site-logo {
+        width: 190px;
+    }
+
+    .back-row {
+        margin-top: 12px;
+
+        margin-bottom: 22px;
+    }
+
+    .page-title {
+        font-size: 26px;
+
+        letter-spacing: 0.1em;
+    }
+
+    .page-subtitle {
+        font-size: 14px;
+
+        margin-bottom: 28px;
+    }
+
+    .section {
+        margin-top: 30px;
+    }
+
+    .section-heading {
+        gap: 9px;
+    }
+
+    .section-heading h2 {
+        font-size: 17px;
+    }
+
+    .pairing-scroll {
+        height: 430px;
+    }
+
+    .lookup-scroll {
+        height: 380px;
+    }
+
+    .banner-card-list {
+        height: 360px;
+    }
+
+    .pairing-row {
+        padding: 12px;
+    }
+
+    .pairing-names {
+        font-size: 15px;
+    }
+
+    .pairing-dates {
+        font-size: 12px;
+    }
+
+    .lookup-row {
+        padding: 11px 12px;
+    }
+
+    .lookup-duo {
+        font-size: 14px;
+    }
+
+    .lookup-dates {
+        font-size: 12px;
+    }
+
+    .banner-card-row {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 4px;
+    }
+
+    .banner-card-character {
+        text-align: left;
+    }
+
+}
+
+
+@media (max-width: 420px) {
+
+    .page-shell {
+        width:
+            calc(100% - 18px);
+    }
+
+    .header-inner {
+        width:
+            calc(100% - 18px);
+    }
+
+    .site-logo {
+        width: 165px;
+    }
+
+    .page-title {
+        font-size: 22px;
+    }
+
+    .panel-title,
+    .lookup-panel-title {
+        font-size: 15px;
+    }
+
+    .panel-description {
+        font-size: 13px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<header class="site-header">
+
+    <div class="header-inner">
+
+        <a href="index.html">
+
+            <img
+                src="logo.png"
+                alt="Tokyo Debunker"
+                class="site-logo"
+            >
+
+        </a>
+
+    </div>
+
+</header>
+
+
+<main class="page-shell">
+
+
+    <div class="back-row">
+
+        <a
+            href="banners.html"
+            class="back-button"
+        >
+            ← Back to Banners
+        </a>
+
+    </div>
+
+
+    <h1 class="page-title">
+        BANNER PAIRINGS
+    </h1>
+
+
+    <p class="page-subtitle">
+        Explore character pairings based on debut banners
+        and characters appearing on banners within a short
+        period of one another.
+    </p>
+
+
+    <div
+        id="statusMessage"
+        class="status-message"
+    >
+        Loading banner data...
+    </div>
+
+
+    <!-- =====================================================
+         CHARACTER PAIRINGS
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                Character Pairings
+            </h2>
+
+        </div>
+
+
+        <div class="pairings-grid">
+
+
+            <div class="pairing-panel">
+
+                <div class="panel-title">
+                    Debut Duos
+                </div>
+
+                <div class="panel-description">
+                    Characters whose cards first appeared
+                    on the same banner date.
+                </div>
+
+                <div
+                    id="debutPairings"
+                    class="pairing-scroll"
+                ></div>
+
+            </div>
+
+
+            <div class="pairing-panel">
+
+                <div class="panel-title">
+                    Concurrent Duos
+                </div>
+
+                <div class="panel-description">
+                    Characters appearing on adjacent banners
+                    within 1–4 days of one another.
+                </div>
+
+                <div
+                    id="concurrentPairings"
+                    class="pairing-scroll"
+                ></div>
+
+            </div>
+
+
+            <div class="pairing-panel">
+
+                <div class="panel-title">
+                    Combined Duos
+                </div>
+
+                <div class="panel-description">
+                    All pairing occurrences from debut and
+                    concurrent banner appearances combined.
+                </div>
+
+                <div
+                    id="combinedPairings"
+                    class="pairing-scroll"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         CHARACTER LOOKUP
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                Character Lookup
+            </h2>
+
+        </div>
+
+
+        <div class="lookup-select-wrap">
+
+            <label for="characterSelect">
+                Select a character
+            </label>
+
+            <select
+                id="characterSelect"
+                class="lookup-select"
+            >
+
+                <option value="">
+                    Select a character...
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="lookup-grid">
+
+
+            <div class="lookup-panel">
+
+                <div class="lookup-panel-title">
+                    Debut Duos
+                </div>
+
+                <div
+                    id="lookupDebut"
+                    class="lookup-scroll"
+                >
+
+                    <div class="lookup-empty">
+                        Select a character above.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="lookup-panel">
+
+                <div class="lookup-panel-title">
+                    Concurrent Duos
+                </div>
+
+                <div
+                    id="lookupConcurrent"
+                    class="lookup-scroll"
+                >
+
+                    <div class="lookup-empty">
+                        Select a character above.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="lookup-panel">
+
+                <div class="lookup-panel-title">
+                    Combined Duos
+                </div>
+
+                <div
+                    id="lookupCombined"
+                    class="lookup-scroll"
+                >
+
+                    <div class="lookup-empty">
+                        Select a character above.
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         BANNER LOOKUP
+    ====================================================== -->
+
+    <section class="section">
+
+        <div class="section-heading">
+
+            <h2>
+                Banner Lookup
+            </h2>
+
+        </div>
+
+
+        <div class="banner-select-wrap">
+
+            <label for="bannerSelect">
+                Select a banner date
+            </label>
+
+            <select
+                id="bannerSelect"
+                class="banner-select"
+            >
+
+                <option value="">
+                    Select a banner...
+                </option>
+
+            </select>
+
+        </div>
+
+
+        <div class="banner-result">
+
+            <div class="banner-result-header">
+
+                <div
+                    id="bannerResultDate"
+                    class="banner-result-date"
+                >
+                    Select a banner
+                </div>
+
+                <div
+                    id="bannerCardCount"
+                    class="banner-card-count"
+                >
+                    0 cards
+                </div>
+
+            </div>
+
+
+            <div
+                id="bannerCardList"
+                class="banner-card-list"
+            >
+
+                <div class="banner-empty">
+
+                    Select a banner above to see the
+                    cards that ran on that date.
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+    <div
+        id="bannerHistoryInfo"
+        class="status-message"
+        style="margin-top: 28px;"
+    ></div>
+
+
+</main>
+
+
+<!-- =========================================================
+     SHARED DATABASE LOADER
+========================================================= -->
+
+<script src="database-loader.js"></script>
+
+
+<script>
+
+/* =========================================================
+   CHARACTER DEFINITIONS
+========================================================= */
+
+const CHARACTER_DEFINITIONS = [
+
+    {
+        key: "Jo",
+        name: "Jo Kongoza",
+        house: "Dionysia"
+    },
+
+    {
+        key: "Mio",
+        name: "Mio Susuhara",
+        house: "Dionysia"
+    },
+
+    {
+        key: "Elias",
+        name: "Elias Pratt",
+        house: "Dionysia"
+    },
+
+    {
+        key: "Shion",
+        name: "Shion Genkai",
+        house: "Dionysia"
+    },
+
+    {
+        key: "Jin",
+        name: "Jin Kamurai",
+        house: "Frostheim"
+    },
+
+    {
+        key: "Tohma",
+        name: "Tohma Ishibashi",
+        house: "Frostheim"
+    },
+
+    {
+        key: "Luca",
+        name: "Lucas Errant",
+        house: "Frostheim"
+    },
+
+    {
+        key: "Kaito",
+        name: "Kaito Fuji",
+        house: "Frostheim"
+    },
+
+    {
+        key: "Taiga",
+        name: "Taiga Hoshibami",
+        house: "Sinostra"
+    },
+
+    {
+        key: "Ritsu",
+        name: "Ritsu Shinjo",
+        house: "Sinostra"
+    },
+
+    {
+        key: "Romeo",
+        name: "Romeo Lucci",
+        house: "Sinostra"
+    },
+
+    {
+        key: "Ed",
+        name: "Edward Hart",
+        house: "Obscuary"
+    },
+
+    {
+        key: "Lyca",
+        name: "Lyca Colt",
+        house: "Obscuary"
+    },
+
+    {
+        key: "Rui",
+        name: "Rui Mizuki",
+        house: "Obscuary"
+    },
+
+    {
+        key: "Haru",
+        name: "Haru Sagara",
+        house: "Jabberwock"
+    },
+
+    {
+        key: "Towa",
+        name: "Towa Otonashi",
+        house: "Jabberwock"
+    },
+
+    {
+        key: "Ren",
+        name: "Ren Shiranami",
+        house: "Jabberwock"
+    },
+
+    {
+        key: "Yuri",
+        name: "Yuri Isami",
+        house: "Mortkranken"
+    },
+
+    {
+        key: "Jiro",
+        name: "Jiro Kirisaki",
+        house: "Mortkranken"
+    },
+
+    {
+        key: "Haku",
+        name: "Haku Kusanagi",
+        house: "Hotarubi"
+    },
+
+    {
+        key: "Subaru",
+        name: "Subaru Kagami",
+        house: "Hotarubi"
+    },
+
+    {
+        key: "Zenji",
+        name: "Zenji Kotodama",
+        house: "Hotarubi"
+    },
+
+    {
+        key: "Alan",
+        name: "Alan Mido",
+        house: "Vagastrom"
+    },
+
+    {
+        key: "Sho",
+        name: "Shohei Haizono",
+        house: "Vagastrom"
+    },
+
+    {
+        key: "Leo",
+        name: "Leo Kurosagi",
+        house: "Vagastrom"
+    }
+
+];
+
+
+/* =========================================================
+   STATE
+========================================================= */
+
+let databaseCards = {};
+
+let bannerHistory = [];
+
+let pairingData = {
+
+    debut: [],
+
+    concurrent: [],
+
+    combined: []
+
+};
+
+
+/* =========================================================
+   HELPERS
+========================================================= */
+
+function escapeHTML(value) {
+
+    return String(
+        value ?? ""
+    )
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+        .replace(
+            /</g,
+            "&lt;"
+        )
+        .replace(
+            />/g,
+            "&gt;"
+        )
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+function resolveCharacter(value) {
+
+    if (!value) {
+        return null;
+    }
+
+    const raw =
+        String(value)
+            .trim()
+            .toLowerCase();
+
+
+    return (
+        CHARACTER_DEFINITIONS.find(
+            character =>
+                character.key.toLowerCase() ===
+                raw
+        ) ||
+
+        CHARACTER_DEFINITIONS.find(
+            character =>
+                character.name.toLowerCase() ===
+                raw
+        ) ||
+
+        null
+    );
+
+}
+
+
+function getCharacterFromCardName(
+    cardName
+) {
+
+    if (!cardName) {
+        return null;
+    }
+
+
+    /*
+     * Your card names identify their character
+     * inside parentheses, e.g.:
+     *
+     * Card Name (Jo)
+     * Card Name (Edward Hart)
+     */
+
+    const matches =
+        String(cardName).match(
+            /\(([^()]*)\)/g
+        );
+
+
+    if (!matches) {
+        return null;
+    }
+
+
+    for (
+        const match
+        of matches
+    ) {
+
+        const inside =
+            match
+                .replace(
+                    /^\(/,
+                    ""
+                )
+                .replace(
+                    /\)$/,
+                    ""
+                )
+                .trim();
+
+
+        const character =
+            resolveCharacter(
+                inside
+            );
+
+
+        if (character) {
+            return character;
+        }
+
+    }
+
+
+    return null;
+
+}
+
+
+function parseRunDate(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return null;
+
+    }
+
+
+    const raw =
+        String(value).trim();
+
+
+    if (!raw) {
+        return null;
+    }
+
+
+    const match =
+        raw.match(
+            /^(\d{1,2})\/(\d{1,2})\/(\d{2}|\d{4})$/
+        );
+
+
+    if (!match) {
+        return null;
+    }
+
+
+    let year =
+        Number(
+            match[3]
+        );
+
+
+    if (year < 100) {
+        year += 2000;
+    }
+
+
+    const month =
+        Number(
+            match[1]
+        ) - 1;
+
+
+    const day =
+        Number(
+            match[2]
+        );
+
+
+    const date =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+
+    if (
+        date.getFullYear() !== year ||
+        date.getMonth() !== month ||
+        date.getDate() !== day
+    ) {
+
+        return null;
+
+    }
+
+
+    return date;
+
+}
+
+
+function extractRunDates(runs) {
+
+    if (
+        runs === null ||
+        runs === undefined
+    ) {
+
+        return [];
+
+    }
+
+
+    const matches =
+        String(runs).match(
+            /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g
+        );
+
+
+    if (!matches) {
+        return [];
+    }
+
+
+    const dates =
+        new Map();
+
+
+    for (
+        const match
+        of matches
+    ) {
+
+        const date =
+            parseRunDate(
+                match
+            );
+
+
+        if (!date) {
+            continue;
+        }
+
+
+        dates.set(
+            dateKey(date),
+            date
+        );
+
+    }
+
+
+    return Array.from(
+        dates.values()
+    )
+        .sort(
+            (
+                a,
+                b
+            ) =>
+                a.getTime() -
+                b.getTime()
+        );
+
+}
+
+
+function dateKey(date) {
+
+    return (
+        date.getFullYear() +
+        "-" +
+        String(
+            date.getMonth() + 1
+        ).padStart(
+            2,
+            "0"
+        ) +
+        "-" +
+        String(
+            date.getDate()
+        ).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+function daysBetween(
+    dateA,
+    dateB
+) {
+
+    const a =
+        new Date(
+            dateA.getFullYear(),
+            dateA.getMonth(),
+            dateA.getDate()
+        );
+
+
+    const b =
+        new Date(
+            dateB.getFullYear(),
+            dateB.getMonth(),
+            dateB.getDate()
+        );
+
+
+    return Math.round(
+        Math.abs(
+            b.getTime() -
+            a.getTime()
+        ) /
+        (
+            24 *
+            60 *
+            60 *
+            1000
+        )
+    );
+
+}
+
+
+function formatDate(date) {
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            month: "short",
+            day: "numeric",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+function makePairKey(
+    keyA,
+    keyB
+) {
+
+    const keys = [
+        keyA,
+        keyB
+    ].sort(
+        (
+            a,
+            b
+        ) =>
+            a.localeCompare(b)
+    );
+
+
+    return (
+        keys[0] +
+        "|" +
+        keys[1]
+    );
+
+}
+
+
+function naturalCardSort(
+    a,
+    b
+) {
+
+    const numberA =
+        String(a)
+            .match(
+                /^\s*(\d+)/
+            );
+
+
+    const numberB =
+        String(b)
+            .match(
+                /^\s*(\d+)/
+            );
+
+
+    if (
+        numberA &&
+        numberB
+    ) {
+
+        const valueA =
+            Number(
+                numberA[1]
+            );
+
+
+        const valueB =
+            Number(
+                numberB[1]
+            );
+
+
+        if (
+            valueA !==
+            valueB
+        ) {
+
+            return (
+                valueA -
+                valueB
+            );
+
+        }
+
+    }
+
+
+    return String(a).localeCompare(
+        String(b),
+        undefined,
+        {
+            numeric: true,
+            sensitivity: "base"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RECONSTRUCT BANNERS
+========================================================= */
+
+function buildBannerHistory() {
+
+    const bannerMap =
+        new Map();
+
+
+    /*
+     * IMPORTANT:
+     *
+     * data.cards is an object containing individual
+     * card objects.
+     *
+     * Each card has:
+     *
+     * card.name
+     * card.runs
+     */
+
+    for (
+        const cardKey
+        of Object.keys(
+            databaseCards || {}
+        )
+    ) {
+
+        const card =
+            databaseCards[
+                cardKey
+            ];
+
+
+        if (!card) {
+            continue;
+        }
+
+
+        const cardName =
+            card.name;
+
+
+        if (!cardName) {
+            continue;
+        }
+
+
+        const character =
+            getCharacterFromCardName(
+                cardName
+            );
+
+
+        /*
+         * Cards without a character in parentheses
+         * cannot be used for character pairings.
+         */
+
+        if (!character) {
+            continue;
+        }
+
+
+        const dates =
+            extractRunDates(
+                card.runs
+            );
+
+
+        for (
+            const date
+            of dates
+        ) {
+
+            const key =
+                dateKey(date);
+
+
+            if (
+                !bannerMap.has(key)
+            ) {
+
+                bannerMap.set(
+                    key,
+                    {
+                        key,
+
+                        date,
+
+                        cards: new Set(),
+
+                        characters:
+                            new Map()
+                    }
+                );
+
+            }
+
+
+            const banner =
+                bannerMap.get(
+                    key
+                );
+
+
+            banner.cards.add(
+                cardName
+            );
+
+
+            banner.characters.set(
+                character.key,
+                character
+            );
+
+        }
+
+    }
+
+
+    const banners =
+        Array.from(
+            bannerMap.values()
+        );
+
+
+    banners.sort(
+        (
+            a,
+            b
+        ) =>
+            b.date.getTime() -
+            a.date.getTime()
+    );
+
+
+    for (
+        const banner
+        of banners
+    ) {
+
+        banner.characters =
+            Array.from(
+                banner.characters.values()
+            );
+
+
+        banner.characters.sort(
+            (
+                a,
+                b
+            ) =>
+                a.name.localeCompare(
+                    b.name
+                )
+        );
+
+
+        banner.cards =
+            Array.from(
+                banner.cards
+            );
+
+
+        banner.cards.sort(
+            naturalCardSort
+        );
+
+    }
+
+
+    return banners;
+
+}
+
+
+/* =========================================================
+   CREATE ALL 300 UNIQUE PAIRS
+========================================================= */
+
+function createAllPairings() {
+
+    const pairings =
+        new Map();
+
+
+    for (
+        let i = 0;
+        i <
+        CHARACTER_DEFINITIONS.length;
+        i++
+    ) {
+
+        for (
+            let j = i + 1;
+            j <
+            CHARACTER_DEFINITIONS.length;
+            j++
+        ) {
+
+            const characterA =
+                CHARACTER_DEFINITIONS[i];
+
+
+            const characterB =
+                CHARACTER_DEFINITIONS[j];
+
+
+            const key =
+                makePairKey(
+                    characterA.key,
+                    characterB.key
+                );
+
+
+            pairings.set(
+                key,
+                {
+
+                    key,
+
+                    characterA,
+
+                    characterB,
+
+                    debutCount: 0,
+
+                    concurrentCount: 0,
+
+                    combinedCount: 0,
+
+                    debutOccurrences: [],
+
+                    concurrentOccurrences: []
+
+                }
+            );
+
+        }
+
+    }
+
+
+    return pairings;
+
+}
+
+
+/* =========================================================
+   DEBUT DUOS
+========================================================= */
+
+function calculateDebutDuos(
+    pairings
+) {
+
+    for (
+        const banner
+        of bannerHistory
+    ) {
+
+        const characters =
+            banner.characters;
+
+
+        for (
+            let i = 0;
+            i < characters.length;
+            i++
+        ) {
+
+            for (
+                let j = i + 1;
+                j < characters.length;
+                j++
+            ) {
+
+                const characterA =
+                    characters[i];
+
+
+                const characterB =
+                    characters[j];
+
+
+                const key =
+                    makePairKey(
+                        characterA.key,
+                        characterB.key
+                    );
+
+
+                const pairing =
+                    pairings.get(
+                        key
+                    );
+
+
+                if (!pairing) {
+                    continue;
+                }
+
+
+                pairing.debutCount++;
+
+
+                pairing.debutOccurrences.push(
+                    {
+                        date:
+                            banner.date
+                    }
+                );
+
+            }
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   CONCURRENT DUOS
+========================================================= */
+
+function calculateConcurrentDuos(
+    pairings
+) {
+
+    /*
+     * Banner history is newest → oldest.
+     *
+     * Only adjacent banners are compared.
+     *
+     * If the adjacent banners are 1–4 days apart,
+     * every character on one banner is paired with
+     * every different character on the other banner.
+     */
+
+    for (
+        let i = 0;
+        i <
+        bannerHistory.length - 1;
+        i++
+    ) {
+
+        const currentBanner =
+            bannerHistory[i];
+
+
+        const nextBanner =
+            bannerHistory[i + 1];
+
+
+        const gap =
+            daysBetween(
+                currentBanner.date,
+                nextBanner.date
+            );
+
+
+        if (
+            gap < 1 ||
+            gap > 4
+        ) {
+
+            continue;
+
+        }
+
+
+        const transitionPairs =
+            new Set();
+
+
+        for (
+            const characterA
+            of currentBanner.characters
+        ) {
+
+            for (
+                const characterB
+                of nextBanner.characters
+            ) {
+
+                if (
+                    characterA.key ===
+                    characterB.key
+                ) {
+
+                    continue;
+
+                }
+
+
+                transitionPairs.add(
+                    makePairKey(
+                        characterA.key,
+                        characterB.key
+                    )
+                );
+
+            }
+
+        }
+
+
+        for (
+            const key
+            of transitionPairs
+        ) {
+
+            const pairing =
+                pairings.get(
+                    key
+                );
+
+
+            if (!pairing) {
+                continue;
+            }
+
+
+            pairing.concurrentCount++;
+
+
+            pairing.concurrentOccurrences.push(
+                {
+
+                    newerBannerDate:
+                        currentBanner.date,
+
+                    olderBannerDate:
+                        nextBanner.date,
+
+                    gap
+
+                }
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   SORT PAIRINGS
+========================================================= */
+
+function sortPairings(
+    a,
+    b
+) {
+
+    if (
+        b.count !==
+        a.count
+    ) {
+
+        return (
+            b.count -
+            a.count
+        );
+
+    }
+
+
+    const nameA =
+        a.characterA.name +
+        " + " +
+        a.characterB.name;
+
+
+    const nameB =
+        b.characterA.name +
+        " + " +
+        b.characterB.name;
+
+
+    return nameA.localeCompare(
+        nameB
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE EVERYTHING
+========================================================= */
+
+function calculateAllPairings() {
+
+    const pairings =
+        createAllPairings();
+
+
+    calculateDebutDuos(
+        pairings
+    );
+
+
+    calculateConcurrentDuos(
+        pairings
+    );
+
+
+    const all =
+        Array.from(
+            pairings.values()
+        );
+
+
+    const debut =
+        all
+            .map(
+                pairing => ({
+                    ...pairing,
+
+                    count:
+                        pairing.debutCount
+                })
+            );
+
+
+    const concurrent =
+        all
+            .map(
+                pairing => ({
+                    ...pairing,
+
+                    count:
+                        pairing.concurrentCount
+                })
+            );
+
+
+    const combined =
+        all
+            .map(
+                pairing => ({
+
+                    ...pairing,
+
+                    count:
+                        pairing.debutCount +
+                        pairing.concurrentCount
+
+                })
+            );
+
+
+    debut.sort(
+        sortPairings
+    );
+
+
+    concurrent.sort(
+        sortPairings
+    );
+
+
+    combined.sort(
+        sortPairings
+    );
+
+
+    pairingData = {
+
+        debut,
+
+        concurrent,
+
+        combined
+
+    };
+
+}
+
+
+/* =========================================================
+   RENDER MAIN LIST
+========================================================= */
+
+function renderPairingList(
+    elementId,
+    pairings,
+    type
+) {
+
+    const container =
+        document.getElementById(
+            elementId
+        );
+
+
+    const usable =
+        pairings.filter(
+            pairing =>
+                pairing.count > 0
+        );
+
+
+    if (!usable.length) {
+
+        container.innerHTML = `
+            <div class="lookup-empty">
+                No pairing data found.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        usable
+            .map(
+                pairing => {
+
+                    let dates =
+                        "";
+
+
+                    if (
+                        type ===
+                        "debut"
+                    ) {
+
+                        dates =
+                            pairing.debutOccurrences
+                                .map(
+                                    occurrence =>
+                                        `
+                                        <div class="pairing-date-line">
+                                            ${formatDate(
+                                                occurrence.date
+                                            )}
+                                        </div>
+                                        `
+                                )
+                                .join("");
+
+                    }
+
+
+                    if (
+                        type ===
+                        "concurrent"
+                    ) {
+
+                        dates =
+                            pairing.concurrentOccurrences
+                                .map(
+                                    occurrence =>
+                                        `
+                                        <div class="pairing-date-line">
+
+                                            ${formatDate(
+                                                occurrence.newerBannerDate
+                                            )}
+
+                                            ↔
+
+                                            ${formatDate(
+                                                occurrence.olderBannerDate
+                                            )}
+
+                                            <span
+                                                class="pairing-date-type"
+                                            >
+                                                (${occurrence.gap}
+                                                day${occurrence.gap === 1 ? "" : "s"})
+                                            </span>
+
+                                        </div>
+                                        `
+                                )
+                                .join("");
+
+                    }
+
+
+                    if (
+                        type ===
+                        "combined"
+                    ) {
+
+                        const combinedDates =
+                            [];
+
+
+                        pairing.debutOccurrences
+                            .forEach(
+                                occurrence => {
+
+                                    combinedDates.push(
+                                        {
+
+                                            time:
+                                                occurrence
+                                                    .date
+                                                    .getTime(),
+
+                                            html:
+                                                `
+                                                <div class="pairing-date-line">
+                                                    ${formatDate(
+                                                        occurrence.date
+                                                    )}
+
+                                                    <span
+                                                        class="pairing-date-type"
+                                                    >
+                                                        · Debut
+                                                    </span>
+                                                </div>
+                                                `
+
+                                        }
+                                    );
+
+                                }
+                            );
+
+
+                        pairing.concurrentOccurrences
+                            .forEach(
+                                occurrence => {
+
+                                    combinedDates.push(
+                                        {
+
+                                            time:
+                                                occurrence
+                                                    .newerBannerDate
+                                                    .getTime(),
+
+                                            html:
+                                                `
+                                                <div class="pairing-date-line">
+                                                    ${formatDate(
+                                                        occurrence.newerBannerDate
+                                                    )}
+
+                                                    ↔
+
+                                                    ${formatDate(
+                                                        occurrence.olderBannerDate
+                                                    )}
+
+                                                    <span
+                                                        class="pairing-date-type"
+                                                    >
+                                                        · Concurrent
+                                                    </span>
+                                                </div>
+                                                `
+
+                                        }
+                                    );
+
+                                }
+                            );
+
+
+                        combinedDates.sort(
+                            (
+                                a,
+                                b
+                            ) =>
+                                a.time -
+                                b.time
+                        );
+
+
+                        dates =
+                            combinedDates
+                                .map(
+                                    item =>
+                                        item.html
+                                )
+                                .join("");
+
+                    }
+
+
+                    return `
+                        <div class="pairing-row">
+
+                            <div
+                                class="pairing-row-top"
+                            >
+
+                                <div
+                                    class="pairing-names"
+                                >
+
+                                    ${escapeHTML(
+                                        pairing
+                                            .characterA
+                                            .name
+                                    )}
+
+                                    <span>
+                                        ×
+                                    </span>
+
+                                    ${escapeHTML(
+                                        pairing
+                                            .characterB
+                                            .name
+                                    )}
+
+                                </div>
+
+                                <div
+                                    class="pairing-count"
+                                >
+                                    ${pairing.count}
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="pairing-dates"
+                            >
+                                ${dates}
+                            </div>
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   RENDER MAIN PAIRINGS
+========================================================= */
+
+function renderMainPairings() {
+
+    renderPairingList(
+        "debutPairings",
+        pairingData.debut,
+        "debut"
+    );
+
+
+    renderPairingList(
+        "concurrentPairings",
+        pairingData.concurrent,
+        "concurrent"
+    );
+
+
+    renderPairingList(
+        "combinedPairings",
+        pairingData.combined,
+        "combined"
+    );
+
+}
+
+
+/* =========================================================
+   CHARACTER SELECT
+========================================================= */
+
+function populateCharacterSelect() {
+
+    const select =
+        document.getElementById(
+            "characterSelect"
+        );
+
+
+    select.innerHTML = `
+        <option value="">
+            Select a character...
+        </option>
+    `;
+
+
+    CHARACTER_DEFINITIONS
+        .slice()
+        .sort(
+            (
+                a,
+                b
+            ) =>
+                a.name.localeCompare(
+                    b.name
+                )
+        )
+        .forEach(
+            character => {
+
+                const option =
+                    document.createElement(
+                        "option"
+                    );
+
+
+                option.value =
+                    character.key;
+
+
+                option.textContent =
+                    character.name;
+
+
+                select.appendChild(
+                    option
+                );
+
+            }
+        );
+
+}
+
+
+/* =========================================================
+   BANNER SELECT
+========================================================= */
+
+function populateBannerSelect() {
+
+    const select =
+        document.getElementById(
+            "bannerSelect"
+        );
+
+
+    select.innerHTML = `
+        <option value="">
+            Select a banner...
+        </option>
+    `;
+
+
+    bannerHistory.forEach(
+        banner => {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                banner.key;
+
+
+            option.textContent =
+                formatDate(
+                    banner.date
+                );
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GET OTHER CHARACTER
+========================================================= */
+
+function getOtherCharacter(
+    pairing,
+    selectedKey
+) {
+
+    return (
+        pairing.characterA.key ===
+        selectedKey
+
+            ? pairing.characterB
+
+            : pairing.characterA
+    );
+
+}
+
+
+/* =========================================================
+   RENDER COMBINED LOOKUP DATES
+========================================================= */
+
+function renderLookupCombinedDates(
+    pairing
+) {
+
+    const dates = [];
+
+
+    pairing.debutOccurrences
+        .forEach(
+            occurrence => {
+
+                dates.push(
+                    {
+
+                        time:
+                            occurrence
+                                .date
+                                .getTime(),
+
+                        html:
+                            `
+                            <div class="lookup-date">
+                                ${formatDate(
+                                    occurrence.date
+                                )}
+                                · D
+                            </div>
+                            `
+
+                    }
+                );
+
+            }
+        );
+
+
+    pairing.concurrentOccurrences
+        .forEach(
+            occurrence => {
+
+                dates.push(
+                    {
+
+                        time:
+                            occurrence
+                                .newerBannerDate
+                                .getTime(),
+
+                        html:
+                            `
+                            <div class="lookup-date">
+                                ${formatDate(
+                                    occurrence.newerBannerDate
+                                )}
+
+                                ↔
+
+                                ${formatDate(
+                                    occurrence.olderBannerDate
+                                )}
+
+                                · C
+                            </div>
+                            `
+
+                    }
+                );
+
+            }
+        );
+
+
+    dates.sort(
+        (
+            a,
+            b
+        ) =>
+            a.time -
+            b.time
+    );
+
+
+    return dates
+        .map(
+            item =>
+                item.html
+        )
+        .join("");
+
+}
+
+
+/* =========================================================
+   RENDER CHARACTER LOOKUP
+========================================================= */
+
+function renderCharacterLookup(
+    selectedKey
+) {
+
+    const combinedContainer =
+        document.getElementById(
+            "lookupCombined"
+        );
+
+
+    const debutContainer =
+        document.getElementById(
+            "lookupDebut"
+        );
+
+
+    const concurrentContainer =
+        document.getElementById(
+            "lookupConcurrent"
+        );
+
+
+    if (!selectedKey) {
+
+        const empty = `
+            <div class="lookup-empty">
+                Select a character above.
+            </div>
+        `;
+
+
+        combinedContainer.innerHTML =
+            empty;
+
+
+        debutContainer.innerHTML =
+            empty;
+
+
+        concurrentContainer.innerHTML =
+            empty;
+
+
+        return;
+
+    }
+
+
+    const combined =
+        pairingData.combined
+            .filter(
+                pairing =>
+                    pairing.characterA.key ===
+                        selectedKey ||
+                    pairing.characterB.key ===
+                        selectedKey
+            );
+
+
+    const debut =
+        pairingData.debut
+            .filter(
+                pairing =>
+                    pairing.characterA.key ===
+                        selectedKey ||
+                    pairing.characterB.key ===
+                        selectedKey
+            );
+
+
+    const concurrent =
+        pairingData.concurrent
+            .filter(
+                pairing =>
+                    pairing.characterA.key ===
+                        selectedKey ||
+                    pairing.characterB.key ===
+                        selectedKey
+            );
+
+
+    function sortLookup(
+        a,
+        b
+    ) {
+
+        if (
+            b.count !==
+            a.count
+        ) {
+
+            return (
+                b.count -
+                a.count
+            );
+
+        }
+
+
+        const otherA =
+            getOtherCharacter(
+                a,
+                selectedKey
+            );
+
+
+        const otherB =
+            getOtherCharacter(
+                b,
+                selectedKey
+            );
+
+
+        return otherA.name.localeCompare(
+            otherB.name
+        );
+
+    }
+
+
+    combined.sort(
+        sortLookup
+    );
+
+
+    debut.sort(
+        sortLookup
+    );
+
+
+    concurrent.sort(
+        sortLookup
+    );
+
+
+    /* =====================================================
+       DEBUT
+    ====================================================== */
+
+    if (!debut.length) {
+
+        debutContainer.innerHTML = `
+            <div class="lookup-empty">
+                No debut pairings found.
+            </div>
+        `;
+
+    } else {
+
+        debutContainer.innerHTML =
+            debut
+                .map(
+                    pairing => {
+
+                        const other =
+                            getOtherCharacter(
+                                pairing,
+                                selectedKey
+                            );
+
+
+                        return `
+                            <div class="lookup-row">
+
+                                <div
+                                    class="lookup-row-top"
+                                >
+
+                                    <div
+                                        class="lookup-duo"
+                                    >
+                                        ${escapeHTML(
+                                            other.name
+                                        )}
+                                    </div>
+
+                                    <div
+                                        class="lookup-count"
+                                    >
+                                        ${pairing.count}
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="lookup-dates"
+                                >
+
+                                    ${
+                                        pairing
+                                            .debutOccurrences
+                                            .map(
+                                                occurrence =>
+                                                    `
+                                                    <div class="lookup-date">
+                                                        ${formatDate(
+                                                            occurrence.date
+                                                        )}
+                                                    </div>
+                                                    `
+                                            )
+                                            .join("")
+                                    }
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =====================================================
+       CONCURRENT
+    ====================================================== */
+
+    if (!concurrent.length) {
+
+        concurrentContainer.innerHTML = `
+            <div class="lookup-empty">
+                No concurrent pairings found.
+            </div>
+        `;
+
+    } else {
+
+        concurrentContainer.innerHTML =
+            concurrent
+                .map(
+                    pairing => {
+
+                        const other =
+                            getOtherCharacter(
+                                pairing,
+                                selectedKey
+                            );
+
+
+                        return `
+                            <div class="lookup-row">
+
+                                <div
+                                    class="lookup-row-top"
+                                >
+
+                                    <div
+                                        class="lookup-duo"
+                                    >
+                                        ${escapeHTML(
+                                            other.name
+                                        )}
+                                    </div>
+
+                                    <div
+                                        class="lookup-count"
+                                    >
+                                        ${pairing.count}
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="lookup-dates"
+                                >
+
+                                    ${
+                                        pairing
+                                            .concurrentOccurrences
+                                            .map(
+                                                occurrence =>
+                                                    `
+                                                    <div class="lookup-date">
+                                                        ${formatDate(
+                                                            occurrence.newerBannerDate
+                                                        )}
+
+                                                        ↔
+
+                                                        ${formatDate(
+                                                            occurrence.olderBannerDate
+                                                        )}
+
+                                                        (${occurrence.gap}
+                                                        day${occurrence.gap === 1 ? "" : "s"})
+                                                    </div>
+                                                    `
+                                            )
+                                            .join("")
+                                    }
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+
+    /* =====================================================
+       COMBINED
+    ====================================================== */
+
+    if (!combined.length) {
+
+        combinedContainer.innerHTML = `
+            <div class="lookup-empty">
+                No combined pairings found.
+            </div>
+        `;
+
+    } else {
+
+        combinedContainer.innerHTML =
+            combined
+                .map(
+                    pairing => {
+
+                        const other =
+                            getOtherCharacter(
+                                pairing,
+                                selectedKey
+                            );
+
+
+                        return `
+                            <div class="lookup-row">
+
+                                <div
+                                    class="lookup-row-top"
+                                >
+
+                                    <div
+                                        class="lookup-duo"
+                                    >
+                                        ${escapeHTML(
+                                            other.name
+                                        )}
+                                    </div>
+
+                                    <div
+                                        class="lookup-count"
+                                    >
+                                        ${pairing.count}
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="lookup-dates"
+                                >
+
+                                    ${renderLookupCombinedDates(
+                                        pairing
+                                    )}
+
+                                </div>
+
+                            </div>
+                        `;
+
+                    }
+                )
+                .join("");
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER BANNER LOOKUP
+========================================================= */
+
+function renderBannerLookup(
+    selectedDateKey
+) {
+
+    const dateElement =
+        document.getElementById(
+            "bannerResultDate"
+        );
+
+
+    const countElement =
+        document.getElementById(
+            "bannerCardCount"
+        );
+
+
+    const listElement =
+        document.getElementById(
+            "bannerCardList"
+        );
+
+
+    if (!selectedDateKey) {
+
+        dateElement.textContent =
+            "Select a banner";
+
+
+        countElement.textContent =
+            "0 cards";
+
+
+        listElement.innerHTML = `
+            <div class="banner-empty">
+                Select a banner above to see the cards
+                that ran on that date.
+            </div>
+        `;
+
+
+        return;
+
+    }
+
+
+    const banner =
+        bannerHistory.find(
+            item =>
+                item.key ===
+                selectedDateKey
+        );
+
+
+    if (!banner) {
+
+        dateElement.textContent =
+            "Banner not found";
+
+
+        countElement.textContent =
+            "0 cards";
+
+
+        listElement.innerHTML = `
+            <div class="banner-empty">
+                No banner data was found for this date.
+            </div>
+        `;
+
+
+        return;
+
+    }
+
+
+    dateElement.textContent =
+        formatDate(
+            banner.date
+        );
+
+
+    const cards =
+        banner.cards || [];
+
+
+    countElement.textContent =
+        `${cards.length} ${
+            cards.length === 1
+                ? "card"
+                : "cards"
+        }`;
+
+
+    listElement.innerHTML =
+        cards
+            .map(
+                cardName => {
+
+                    const character =
+                        getCharacterFromCardName(
+                            cardName
+                        );
+
+
+                    return `
+                        <div
+                            class="banner-card-row"
+                        >
+
+                            <div
+                                class="banner-card-name"
+                            >
+                                ${escapeHTML(
+                                    cardName
+                                )}
+                            </div>
+
+                            ${
+                                character
+                                    ? `
+                                    <div
+                                        class="banner-card-character"
+                                    >
+                                        ${escapeHTML(
+                                            character.name
+                                        )}
+                                    </div>
+                                    `
+                                    : ""
+                            }
+
+                        </div>
+                    `;
+
+                }
+            )
+            .join("");
+
+}
+
+
+/* =========================================================
+   APPLY DATABASE
+========================================================= */
+
+function applyDatabase(
+    data
+) {
+
+    if (!data) {
+        return;
+    }
+
+
+    /*
+     * THIS is the important part.
+     *
+     * The shared database-loader returns:
+     *
+     * {
+     *     characters: ...,
+     *     cards: ...
+     * }
+     *
+     * And each card inside data.cards is an object
+     * containing card.name and card.runs.
+     */
+
+    databaseCards =
+        data.cards || {};
+
+
+    bannerHistory =
+        buildBannerHistory();
+
+
+    calculateAllPairings();
+
+
+    renderMainPairings();
+
+
+    populateCharacterSelect();
+
+
+    populateBannerSelect();
+
+
+    const historyInfo =
+        document.getElementById(
+            "bannerHistoryInfo"
+        );
+
+
+    historyInfo.textContent =
+        `${bannerHistory.length} banners reconstructed from card rerun history.`;
+
+
+    const status =
+        document.getElementById(
+            "statusMessage"
+        );
+
+
+    status.style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   INITIALIZE DATABASE
+========================================================= */
+
+async function initialize() {
+
+    const status =
+        document.getElementById(
+            "statusMessage"
+        );
+
+
+    try {
+
+        const data =
+            await window.loadDatabase({
+
+                onUpdate:
+                    freshData => {
+
+                        try {
+
+                            applyDatabase(
+                                freshData
+                            );
+
+
+                            console.log(
+                                "Tokyo Debunker database refreshed."
+                            );
+
+                        } catch (
+                            renderError
+                        ) {
+
+                            console.error(
+                                "Error rendering refreshed database:",
+                                renderError
+                            );
+
+                        }
+
+                    },
+
+
+                onError:
+                    error => {
+
+                        console.warn(
+                            "Tokyo Debunker database background refresh failed:",
+                            error
+                        );
+
+                    }
+
+            });
+
+
+        applyDatabase(
+            data
+        );
+
+
+        console.log(
+            "Tokyo Debunker database loaded."
+        );
+
+
+    } catch (error) {
+
+        console.error(
+            "Banner pairings error:",
+            error
+        );
+
+
+        status.textContent =
+            "Unable to load banner data.";
+
+
+        status.classList.add(
+            "error"
+        );
+
+
+        status.style.display =
+            "block";
+
+    }
+
+}
+
+
+/* =========================================================
+   CHARACTER LOOKUP EVENT
+========================================================= */
+
+document
+    .getElementById(
+        "characterSelect"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            renderCharacterLookup(
+                event.target.value
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   BANNER LOOKUP EVENT
+========================================================= */
+
+document
+    .getElementById(
+        "bannerSelect"
+    )
+    .addEventListener(
+        "change",
+        event => {
+
+            renderBannerLookup(
+                event.target.value
+            );
+
+        }
+    );
+
+
+/* =========================================================
+   START
+========================================================= */
+
+initialize();
+
+</script>
+
+</body>
+</html>
