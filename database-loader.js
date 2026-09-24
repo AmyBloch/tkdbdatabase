@@ -9,7 +9,7 @@
 ========================================================= */
 
 const SHEET_API =
-    "https://script.google.com/macros/s/AKfycbymbEARugjpkjD-NMolneRJ4CkZjUlV8sIfE2K1YoyFTZ11JiK-CEpunHpOMzzJRhRm1nw/exec";
+    "https://script.google.com/macros/s/AKfycbymbEARugjpkD-NMolneRJ4CkZjUlV8sIfE2K1YoyFTZ11JiK-CEpunHpOMzzJRhRm1nw/exec";
 
 
 /* =========================================================
