@@ -116,7 +116,7 @@
         ========================================================= */
 
         .selected-card {
-            max-width: 700px;
+            max-width: 1100px;
             margin: 0 auto 45px;
 
             padding: 22px;
@@ -153,6 +153,193 @@
 
 
         /* =========================================================
+           CARD KIT INFORMATION
+        ========================================================= */
+
+        .card-kit-info {
+            margin-top: 20px;
+            text-align: left;
+
+            border: 1px solid rgba(180, 120, 255, 0.28);
+            border-radius: 10px;
+
+            background: rgba(22, 14, 34, 0.8);
+
+            overflow: hidden;
+        }
+
+        .card-kit-title {
+            padding: 12px 14px;
+
+            text-align: center;
+
+            font-size: 0.86rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+
+            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
+
+            background: rgba(120, 70, 180, 0.1);
+        }
+
+        .card-kit-stats {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, minmax(0, 1fr));
+
+            gap: 10px;
+
+            padding: 14px;
+        }
+
+        .card-kit-stat {
+            min-width: 0;
+
+            padding: 10px 8px;
+
+            border: 1px solid rgba(180, 120, 255, 0.2);
+            border-radius: 7px;
+
+            background: rgba(35, 23, 51, 0.75);
+
+            text-align: center;
+        }
+
+        .card-kit-stat-label {
+            font-size: 0.7rem;
+
+            letter-spacing: 0.8px;
+
+            opacity: 0.65;
+
+            margin-bottom: 5px;
+        }
+
+        .card-kit-stat-value {
+            font-size: 0.92rem;
+
+            font-weight: 600;
+
+            overflow-wrap: anywhere;
+        }
+
+        .card-kit-abilities {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 10px;
+
+            padding: 0 14px 14px;
+        }
+
+        .card-kit-ability {
+            min-width: 0;
+
+            padding: 12px 13px;
+
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+
+            background: rgba(18, 11, 29, 0.45);
+        }
+
+        .card-kit-ability-name {
+            font-size: 0.9rem;
+
+            font-weight: 600;
+
+            margin-bottom: 8px;
+        }
+
+        .card-kit-ability-description {
+            font-size: 0.8rem;
+
+            line-height: 1.5;
+
+            opacity: 0.82;
+
+            white-space: pre-line;
+
+            overflow-wrap: anywhere;
+        }
+
+        .card-kit-empty {
+            padding: 18px;
+
+            text-align: center;
+
+            opacity: 0.6;
+
+            font-style: italic;
+        }
+
+
+        /* =========================================================
+           SELECTED CARD DETAILS
+        ========================================================= */
+
+        .selected-card-details {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 16px;
+
+            margin-top: 20px;
+
+            text-align: left;
+        }
+
+        .selected-detail-box {
+            min-width: 0;
+
+            border: 1px solid rgba(180, 120, 255, 0.28);
+            border-radius: 10px;
+
+            background: rgba(22, 14, 34, 0.8);
+
+            overflow: hidden;
+        }
+
+        .selected-detail-title {
+            padding: 12px 14px;
+
+            text-align: center;
+
+            font-size: 0.86rem;
+
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+
+            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
+
+            background: rgba(120, 70, 180, 0.1);
+        }
+
+        .selected-detail-content {
+            padding: 15px 16px;
+
+            font-size: 0.84rem;
+
+            line-height: 1.55;
+
+            white-space: pre-line;
+
+            overflow-wrap: anywhere;
+        }
+
+        .selected-detail-empty {
+            opacity: 0.6;
+
+            font-style: italic;
+        }
+
+
+        /* =========================================================
            RECOMMENDATION GRID
         ========================================================= */
 
@@ -174,6 +361,7 @@
             min-width: 0;
 
             border: 1px solid rgba(180, 120, 255, 0.28);
+
             border-radius: 10px;
 
             background: rgba(22, 14, 34, 0.8);
@@ -187,6 +375,7 @@
             text-align: center;
 
             font-size: 0.9rem;
+
             font-weight: 600;
 
             letter-spacing: 0.5px;
@@ -207,12 +396,15 @@
 
         .recommendation-card {
             display: flex;
+
             align-items: center;
+
             gap: 8px;
 
             padding: 9px 7px;
 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom:
+                1px solid rgba(255, 255, 255, 0.06);
 
             font-size: 0.82rem;
 
@@ -234,6 +426,7 @@
 
         .recommendation-name {
             min-width: 0;
+
             overflow-wrap: anywhere;
         }
 
@@ -261,19 +454,23 @@
 
         .team-status {
             text-align: center;
+
             margin: 20px 0;
+
             opacity: 0.65;
+
             font-size: 0.85rem;
         }
 
         .team-status.error {
             color: #ff8f8f;
+
             opacity: 1;
         }
 
 
         /* =========================================================
-           MOBILE
+           TABLET
         ========================================================= */
 
         @media (max-width: 1100px) {
@@ -286,10 +483,25 @@
         }
 
 
+        @media (max-width: 800px) {
+
+            .card-kit-abilities {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+        }
+
+
+        /* =========================================================
+           MOBILE
+        ========================================================= */
+
         @media (max-width: 650px) {
 
             .teams-page {
                 width: 94%;
+
                 padding-bottom: 60px;
             }
 
@@ -297,8 +509,22 @@
                 grid-template-columns: 1fr;
             }
 
+            .selected-card-details {
+                grid-template-columns: 1fr;
+            }
+
+            .card-kit-stats {
+                grid-template-columns:
+                    repeat(2, minmax(0, 1fr));
+            }
+
+            .card-kit-abilities {
+                grid-template-columns: 1fr;
+            }
+
             #cardSelect {
                 height: 50px;
+
                 font-size: 0.92rem;
             }
 
@@ -417,6 +643,66 @@
                 <span>—</span>
             </div>
 
+
+            <!-- =================================================
+                 CARD KIT
+            ================================================== -->
+
+            <div class="card-kit-info">
+
+                <div class="card-kit-title">
+                    DETAILS
+                </div>
+
+                <div
+                    id="selectedCardKitInfo"
+                    class="card-kit-empty"
+                >
+                    Select a card above.
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 NOTES + TEAM GUIDE
+            ================================================== -->
+
+            <div class="selected-card-details">
+
+                <article class="selected-detail-box">
+
+                    <div class="selected-detail-title">
+                        THOUGHTS &amp; NOTES
+                    </div>
+
+                    <div
+                        id="selectedCardNotes"
+                        class="selected-detail-content selected-detail-empty"
+                    >
+                        Select a card above.
+                    </div>
+
+                </article>
+
+
+                <article class="selected-detail-box">
+
+                    <div class="selected-detail-title">
+                        TEAM BUILDING GUIDE
+                    </div>
+
+                    <div
+                        id="selectedCardGuide"
+                        class="selected-detail-content selected-detail-empty"
+                    >
+                        Select a card above.
+                    </div>
+
+                </article>
+
+            </div>
+
         </section>
 
 
@@ -440,9 +726,11 @@
                     id="subMain1"
                     class="recommendation-list"
                 >
+
                     <div class="recommendation-empty">
                         Select a card above.
                     </div>
+
                 </div>
 
             </article>
@@ -458,9 +746,11 @@
                     id="subMain2"
                     class="recommendation-list"
                 >
+
                     <div class="recommendation-empty">
                         Select a card above.
                     </div>
+
                 </div>
 
             </article>
@@ -476,9 +766,11 @@
                     id="guard"
                     class="recommendation-list"
                 >
+
                     <div class="recommendation-empty">
                         Select a card above.
                     </div>
+
                 </div>
 
             </article>
@@ -494,9 +786,11 @@
                     id="sweepers"
                     class="recommendation-list"
                 >
+
                     <div class="recommendation-empty">
                         Select a card above.
                     </div>
+
                 </div>
 
             </article>
@@ -512,9 +806,11 @@
                     id="supports"
                     class="recommendation-list"
                 >
+
                     <div class="recommendation-empty">
                         Select a card above.
                     </div>
+
                 </div>
 
             </article>
@@ -536,6 +832,7 @@
     <script>
 
         let database = null;
+
         let cardList = [];
 
 
@@ -548,17 +845,21 @@
             const elementNumber =
                 Number(card.elementNumber);
 
+
             if (elementNumber === 1) {
                 return "elements/leaf.png";
             }
+
 
             if (elementNumber === 2) {
                 return "elements/water.png";
             }
 
+
             if (elementNumber === 3) {
                 return "elements/fire.png";
             }
+
 
             return "";
 
@@ -574,10 +875,12 @@
             const div =
                 document.createElement("div");
 
+
             div.textContent =
                 value == null
                     ? ""
                     : String(value);
+
 
             return div.innerHTML;
 
@@ -593,6 +896,7 @@
             if (!database || !database.cards) {
                 return [];
             }
+
 
             return Object.values(
                 database.cards
@@ -627,6 +931,7 @@
                     )
                     .filter(Boolean);
 
+
             return tags.includes(tag);
 
         }
@@ -640,6 +945,7 @@
 
             const tags =
                 String(card.tags || "");
+
 
             return new RegExp(
                 "(^|, )(" +
@@ -690,12 +996,15 @@
 
             let tierWanted = "";
 
+
             if (tier === 1) {
                 tierWanted = 2;
             }
+
             else if (tier === 2) {
                 tierWanted = 3;
             }
+
             else if (tier === 3) {
                 tierWanted = 1;
             }
@@ -727,12 +1036,14 @@
 
 
             if (tags.includes("Fury")) {
+
                 wanted.push(
                     "STRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
                 );
+
             }
 
 
@@ -740,39 +1051,47 @@
                 tags.includes("Curse1") ||
                 tags.includes("Curse2")
             ) {
+
                 wanted.push(
                     "CRev",
                     "Curse2"
                 );
+
             }
 
 
             if (tags.includes("TS")) {
+
                 wanted.push(
                     "STRev",
                     "SHEnt",
                     "TS",
                     "SWRev"
                 );
+
             }
 
 
             if (tags.includes("Charge")) {
+
                 wanted.push(
                     "STRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
                 );
+
             }
 
 
             if (tags.includes("DH")) {
+
                 wanted.push(
                     "SLRev",
                     "SLHEnt",
                     "DH"
                 );
+
             }
 
 
@@ -799,7 +1118,9 @@
                 tags.includes("SREnt") ||
                 tags.includes("SHEnt")
             ) {
+
                 fallback.push("TS");
+
             }
 
 
@@ -807,7 +1128,9 @@
                 tags.includes("SLHEnt") ||
                 tags.includes("SLREnt")
             ) {
+
                 fallback.push("DH");
+
             }
 
 
@@ -817,6 +1140,7 @@
 
 
             const specialTags = [
+
                 "Fury",
                 "Curse1",
                 "Curse2",
@@ -833,6 +1157,7 @@
                 "SLHEnt",
                 "SLREnt",
                 "Sweep2"
+
             ];
 
 
@@ -857,8 +1182,10 @@
 
 
             const wantedTags = [
+
                 ...wanted,
                 ...fallback
+
             ];
 
 
@@ -881,11 +1208,13 @@
                         return false;
                     }
 
+
                     if (
                         Number(card.mr) === -2
                     ) {
                         return false;
                     }
+
 
                     if (
                         getTier(card) !==
@@ -893,6 +1222,7 @@
                     ) {
                         return false;
                     }
+
 
                     if (
                         !wantedTags.some(
@@ -903,6 +1233,7 @@
                         return false;
                     }
 
+
                     if (
                         hasTag(
                             selected,
@@ -911,6 +1242,7 @@
                     ) {
                         return true;
                     }
+
 
                     return true;
 
@@ -923,7 +1255,9 @@
                     "SLRev"
                 )
             ) {
+
                 return candidates;
+
             }
 
 
@@ -979,22 +1313,26 @@
 
 
             if (onlyPureAtk) {
+
                 baseWanted.push(
                     "STRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
                 );
+
             }
 
 
             if (tags.includes("Fury")) {
+
                 baseWanted.push(
                     "STRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
                 );
+
             }
 
 
@@ -1002,14 +1340,17 @@
                 tags.includes("Curse1") ||
                 tags.includes("Curse2")
             ) {
+
                 baseWanted.push(
                     "CRev",
                     "Curse2"
                 );
+
             }
 
 
             if (tags.includes("TS")) {
+
                 baseWanted.push(
                     "STRev",
                     "SHEnt",
@@ -1018,24 +1359,29 @@
                     "TS",
                     "SWRev"
                 );
+
             }
 
 
             if (tags.includes("Charge")) {
+
                 baseWanted.push(
                     "STRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
                 );
+
             }
 
 
             if (tags.includes("DH")) {
+
                 baseWanted.push(
                     "SLRev",
                     "SLHEnt"
                 );
+
             }
 
 
@@ -1064,7 +1410,9 @@
                 tags.includes("SREnt") ||
                 tags.includes("SHEnt")
             ) {
+
                 baseWanted.push("TS");
+
             }
 
 
@@ -1073,7 +1421,9 @@
                 tags.includes("SLREnt") ||
                 tags.includes("SLLEnt")
             ) {
+
                 baseWanted.push("DH");
+
             }
 
 
@@ -1105,30 +1455,37 @@
                     uniqueBase;
 
             }
+
             else if (
                 uniqueBase.length
             ) {
 
                 wanted = [
+
                     ...uniqueBase,
+
                     "Veng",
                     "STRev",
                     "SWRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
+
                 ];
 
             }
+
             else {
 
                 wanted = [
+
                     "Veng",
                     "STRev",
                     "SWRev",
                     "SLRev",
                     "SHEnt",
                     "SLHEnt"
+
                 ];
 
             }
@@ -1169,8 +1526,10 @@
                     return false;
                 }
 
+
                 const mr =
                     Number(card.mr);
+
 
                 if (
                     mr === -1 ||
@@ -1179,12 +1538,14 @@
                     return false;
                 }
 
+
                 if (
                     getTier(card) !==
                     neededTier
                 ) {
                     return false;
                 }
+
 
                 return wanted.some(
                     tag =>
@@ -1224,11 +1585,14 @@
             if (tags.includes("TS")) {
 
                 wantedTags = [
+
                     "STRev",
                     "SWRev"
+
                 ];
 
             }
+
             else if (
                 tags.includes("DH")
             ) {
@@ -1238,6 +1602,7 @@
                 ];
 
             }
+
             else if (
                 tags.includes("Curse1") ||
                 tags.includes("Curse2")
@@ -1248,6 +1613,7 @@
                 ];
 
             }
+
             else {
 
                 return cardList.filter(
@@ -1268,6 +1634,7 @@
                 ) {
                     return false;
                 }
+
 
                 return wantedTags.some(
                     tag =>
@@ -1322,15 +1689,19 @@
                     return false;
                 }
 
+
                 return (
+
                     hasTag(
                         card,
                         atkTag
                     ) &&
+
                     hasTag(
                         card,
                         "Sweep2"
                     )
+
                 );
 
             });
@@ -1368,11 +1739,14 @@
             ) {
 
                 wanted = [
+
                     "STRev",
                     "SWRev"
+
                 ];
 
             }
+
             else if (
                 tags.includes("Curse1") ||
                 tags.includes("Curse2")
@@ -1383,6 +1757,7 @@
                 ];
 
             }
+
             else if (
                 tags.includes("DH")
             ) {
@@ -1392,12 +1767,15 @@
                 ];
 
             }
+
             else {
 
                 wanted = [
+
                     "STRev",
                     "SLRev",
                     "SWRev"
+
                 ];
 
             }
@@ -1411,12 +1789,452 @@
                     return false;
                 }
 
+
                 return wanted.some(
                     tag =>
                         hasTag(card, tag)
                 );
 
             });
+
+        }
+
+
+        /* =========================================================
+           TEAM BUILDING GUIDE
+           Hard-coded version of the Google Sheets TEXTJOIN logic.
+        ========================================================= */
+
+        function getTeamBuildingGuide(card) {
+
+            const messages = [];
+
+            const hasDH =
+                hasTag(card, "DH");
+
+            const hasTS =
+                hasTag(card, "TS");
+
+            const hasCurse1 =
+                hasTag(card, "Curse1");
+
+            const hasCurse2 =
+                hasTag(card, "Curse2");
+
+
+            /*
+             * General text appears when the card does NOT have
+             * DH, TS, Curse1, or Curse2.
+             */
+
+            if (
+                !hasDH &&
+                !hasTS &&
+                !hasCurse1 &&
+                !hasCurse2
+            ) {
+
+                messages.push(
+                    "General damage cards will just need general supports like sweepers and stun/sleep revenges that are universally good."
+                );
+
+            }
+
+
+            if (hasTag(card, "Fury")) {
+
+                messages.push(
+                    "Fury units do not require any specific support cards, so it's best to aim for teams that have general benefits, like stun revenge, sleep revenge, and general damage dealers / sweepers to give your main space to use fury."
+                );
+
+            }
+
+
+            if (hasCurse1) {
+
+                messages.push(
+                    "Curse cards with curse attack or elemental curse are often difficult to control due to the random application of curse that cannot be avoided. However, curse revenge cards are still useful, as are sweepers to help clear cursed fodder."
+                );
+
+            }
+
+
+            if (hasCurse2) {
+
+                messages.push(
+                    "Curse cards that don't have curse attack are much better than those with curse attack, and can provide much better targeted damage. Curse revenge guards and support cards will be the best way to keep your damage focused."
+                );
+
+            }
+
+
+            if (hasTS) {
+
+                messages.push(
+                    "Time Strike cards will always need Stun Revenge supports and guards to provide enough Stun to proc Time Strike and deal damage. In addition, sweepers are greatly needed to keep the pace of the battle in your favor, and clear stunned/useless fodder."
+                );
+
+            }
+
+
+            if (hasTag(card, "Charge")) {
+
+                messages.push(
+                    "Charge cards are very TU intensive and need a lot of space to charge up and buff themselves, so stun and sleep revenge cards are the best way to give them space."
+                );
+
+            }
+
+
+            if (hasTag(card, "Guard")) {
+
+                messages.push(
+                    "Guards are useful to use for your mains but pls don't main them..."
+                );
+
+            }
+
+
+            if (hasDH) {
+
+                messages.push(
+                    "Dream Hunt cards need sleep revenge supports and guards to focus and target damage and teams should center around this."
+                );
+
+            }
+
+
+            return messages;
+
+        }
+
+
+        /* =========================================================
+           RENDER CARD KIT INFORMATION
+        ========================================================= */
+
+        function renderCardKitInfo(card) {
+
+            const container =
+                document.getElementById(
+                    "selectedCardKitInfo"
+                );
+
+
+            if (!container) {
+                return;
+            }
+
+
+            const atkType =
+                String(
+                    card.atkType || ""
+                ).trim();
+
+
+            const speed =
+                String(
+                    card.speed ?? ""
+                ).trim();
+
+
+            const mr =
+                String(
+                    card.mr ?? ""
+                ).trim();
+
+
+            const elementName =
+                String(
+                    card.element || ""
+                ).trim();
+
+
+            const elementImage =
+                getElementImage(card);
+
+
+            const passive =
+                String(
+                    card.passive || ""
+                ).trim();
+
+
+            const skills =
+                Array.isArray(card.skills)
+                    ? card.skills
+                    : [];
+
+
+            const ultimate =
+                card.ultimate || {};
+
+
+            const abilities = [];
+
+
+            if (passive) {
+
+                abilities.push({
+
+                    name:
+                        "PASSIVE",
+
+                    description:
+                        passive
+
+                });
+
+            }
+
+
+            skills.forEach(
+                (skill, index) => {
+
+                    const name =
+                        String(
+                            skill?.name || ""
+                        ).trim();
+
+
+                    const description =
+                        String(
+                            skill?.description || ""
+                        ).trim();
+
+
+                    if (
+                        name ||
+                        description
+                    ) {
+
+                        abilities.push({
+
+                            name:
+                                name ||
+                                `SKILL ${index + 1}`,
+
+                            description:
+                                description ||
+                                "—"
+
+                        });
+
+                    }
+
+                }
+            );
+
+
+            const ultimateName =
+                String(
+                    ultimate.name || ""
+                ).trim();
+
+
+            const ultimateDescription =
+                String(
+                    ultimate.description || ""
+                ).trim();
+
+
+            if (
+                ultimateName ||
+                ultimateDescription
+            ) {
+
+                abilities.push({
+
+                    name:
+                        ultimateName ||
+                        "UNIQUE",
+
+                    description:
+                        ultimateDescription ||
+                        "—"
+
+                });
+
+            }
+
+
+            const elementMarkup =
+                elementImage
+
+                    ? `
+
+                        <img
+                            src="${elementImage}"
+                            alt=""
+                            style="
+                                width:20px;
+                                height:20px;
+                                vertical-align:middle;
+                                object-fit:contain;
+                                margin-right:5px;
+                            "
+                        >
+
+                        ${escapeHTML(
+                            elementName || "—"
+                        )}
+
+                    `
+
+                    : escapeHTML(
+                        elementName || "—"
+                    );
+
+
+            const stats = `
+
+                <div class="card-kit-stats">
+
+
+                    <div class="card-kit-stat">
+
+                        <div class="card-kit-stat-label">
+                            ATK
+                        </div>
+
+                        <div class="card-kit-stat-value">
+
+                            ${escapeHTML(
+                                atkType || "—"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-kit-stat">
+
+                        <div class="card-kit-stat-label">
+                            SPD
+                        </div>
+
+                        <div class="card-kit-stat-value">
+
+                            ${escapeHTML(
+                                speed || "—"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-kit-stat">
+
+                        <div class="card-kit-stat-label">
+                            MR
+                        </div>
+
+                        <div class="card-kit-stat-value">
+
+                            ${escapeHTML(
+                                mr || "—"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="card-kit-stat">
+
+                        <div class="card-kit-stat-label">
+                            EL
+                        </div>
+
+                        <div class="card-kit-stat-value">
+
+                            ${elementMarkup}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            `;
+
+
+            const abilitiesMarkup =
+
+                abilities.length
+
+                    ? `
+
+                        <div class="card-kit-abilities">
+
+                            ${abilities
+                                .map(
+                                    ability => `
+
+                                    <div class="card-kit-ability">
+
+
+                                        <div class="card-kit-ability-name">
+
+                                            ${escapeHTML(
+                                                ability.name
+                                            )}
+
+                                        </div>
+
+
+                                        <div class="card-kit-ability-description">
+
+                                            ${escapeHTML(
+                                                ability.description
+                                            )}
+
+                                        </div>
+
+
+                                    </div>
+
+                                `
+                                )
+                                .join("")}
+
+                        </div>
+
+                    `
+
+                    : `
+
+                        <div class="card-kit-empty">
+
+                            No card kit information available.
+
+                        </div>
+
+                    `;
+
+
+            container.className =
+                "card-kit-info";
+
+
+            container.innerHTML =
+
+                `
+
+                    <div class="card-kit-title">
+
+                        CARD KIT
+
+                    </div>
+
+                    ${stats}
+
+                    ${abilitiesMarkup}
+
+                `;
 
         }
 
@@ -1431,6 +2249,7 @@
                 document.getElementById(
                     "selectedCardName"
                 );
+
 
             const element =
                 document.getElementById(
@@ -1449,22 +2268,112 @@
             if (image) {
 
                 element.innerHTML = `
+
                     <img
                         src="${image}"
                         alt=""
                     >
+
                     <span>
+
                         ${escapeHTML(
                             card.element || ""
                         )}
+
                     </span>
+
                 `;
 
             }
+
             else {
 
                 element.innerHTML =
                     `<span>—</span>`;
+
+            }
+
+
+            renderCardKitInfo(card);
+
+
+            const notes =
+                document.getElementById(
+                    "selectedCardNotes"
+                );
+
+
+            const guide =
+                document.getElementById(
+                    "selectedCardGuide"
+                );
+
+
+            const notesText =
+                card.thoughtsNotes ??
+                card.thoughtsAndNotes ??
+                card.notes ??
+                "";
+
+
+            if (
+                String(notesText).trim()
+            ) {
+
+                notes.textContent =
+                    String(
+                        notesText
+                    ).trim();
+
+
+                notes.classList.remove(
+                    "selected-detail-empty"
+                );
+
+            }
+
+            else {
+
+                notes.textContent =
+                    "No thoughts or notes for this card.";
+
+
+                notes.classList.add(
+                    "selected-detail-empty"
+                );
+
+            }
+
+
+            const guideMessages =
+                getTeamBuildingGuide(card);
+
+
+            if (
+                guideMessages.length
+            ) {
+
+                guide.textContent =
+                    guideMessages.join(
+                        "\n\n"
+                    );
+
+
+                guide.classList.remove(
+                    "selected-detail-empty"
+                );
+
+            }
+
+            else {
+
+                guide.textContent =
+                    "No team building guide available for this card.";
+
+
+                guide.classList.add(
+                    "selected-detail-empty"
+                );
 
             }
 
@@ -1492,11 +2401,15 @@
             ) {
 
                 container.innerHTML = `
+
                     <div class="recommendation-empty">
+
                         ${escapeHTML(
                             results.message
                         )}
+
                     </div>
+
                 `;
 
                 return;
@@ -1510,9 +2423,13 @@
             ) {
 
                 container.innerHTML = `
+
                     <div class="recommendation-empty">
+
                         No good matches
+
                     </div>
+
                 `;
 
                 return;
@@ -1521,7 +2438,9 @@
 
 
             container.innerHTML =
+
                 results
+
                     .map(card => {
 
                         const image =
@@ -1531,34 +2450,45 @@
 
 
                         return `
+
                             <div
                                 class="recommendation-card"
                             >
 
                                 ${
                                     image
+
                                         ? `
+
                                         <img
                                             class="recommendation-element"
                                             src="${image}"
                                             alt=""
                                         >
+
                                         `
+
                                         : ""
                                 }
+
 
                                 <div
                                     class="recommendation-name"
                                 >
+
                                     ${escapeHTML(
                                         card.name
                                     )}
+
                                 </div>
 
+
                             </div>
+
                         `;
 
                     })
+
                     .join("");
 
         }
@@ -1617,9 +2547,11 @@
 
 
             select.innerHTML = `
+
                 <option value="">
                     Select a card...
                 </option>
+
             `;
 
 
@@ -1636,6 +2568,7 @@
 
                 option.value =
                     card.name;
+
 
                 option.textContent =
                     card.name;
@@ -1657,6 +2590,7 @@
         function applyDatabase(data) {
 
             database = data;
+
 
             cardList =
                 getAllCards();
@@ -1777,11 +2711,13 @@
                                         freshData
                                     );
 
+
                                     console.log(
                                         "Tokyo Debunker Teams database refreshed."
                                     );
 
                                 }
+
                                 catch (error) {
 
                                     console.error(
@@ -1817,6 +2753,7 @@
                 );
 
             }
+
             catch (error) {
 
                 console.error(
