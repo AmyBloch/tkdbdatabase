@@ -2247,23 +2247,16 @@
                     }
 
 
-                    /* PASSIVE */
+                    /* PASSIVE: match when the card's passive contains the selected words */
 
                     if (passive) {
+                        const cardPassive = String(card.passive || "")
+                            .trim()
+                            .toLowerCase();
 
-                        if (
-                            String(
-                                card.passive ||
-                                ""
-                            )
-                            .trim() !==
-                            passive
-                        ) {
-
+                        if (!cardPassive.includes(passive.trim().toLowerCase())) {
                             return;
-
                         }
-
                     }
 
 
