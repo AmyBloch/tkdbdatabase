@@ -1,5611 +1,3398 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
-
 
 <head>
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
+    <title>
+        Advanced Search | Tokyo Debunker Database
+    </title>
 
-
-    <title>Teams — Tokyo Debunker Database</title>
-
-
-
-    <link rel="stylesheet" href="style.css">
-
-
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
 
     <style>
 
+        /* ========================================
+           PAGE
+        ======================================== */
 
-
-        /* =========================================================
-
-           TEAMS PAGE
-
-        ========================================================= */
-
-
-
-        .teams-page {
-
-            width: min(1400px, 92%);
-
+        .advanced-page {
+            width: 100%;
+            max-width: 1500px;
             margin: 0 auto;
-
-            padding: 20px 0 80px;
-
+            padding: 40px 20px 80px;
+            box-sizing: border-box;
         }
 
-
-
-
-
-        /* =========================================================
-
-           HEADER
-
-        ========================================================= */
-
-
-
-        .teams-header {
-
+        .advanced-header {
             text-align: center;
-
             margin-bottom: 35px;
-
         }
 
-
-
-        .teams-header h1 {
-
-            margin: 0;
-
-        }
-
-
-
-        .teams-header p {
-
-            margin-top: 10px;
-
-            opacity: 0.75;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           CARD SELECTOR
-
-        ========================================================= */
-
-
-
-        .team-selector {
-
-            width: 100%;
-
-            max-width: 700px;
-
-            margin: 0 auto 35px;
-
-        }
-
-
-
-        .team-selector-label {
-
-            display: block;
-
-            text-align: center;
-
-            margin-bottom: 10px;
-
-            font-size: 0.9rem;
-
-            letter-spacing: 1px;
-
-            opacity: 0.8;
-
-        }
-
-
-
-        /*
-
-         \* IMPORTANT:
-
-         \* This is deliberately a completely normal native select.
-
-         \* No custom dropdown JavaScript.
-
-         \* No absolute positioning.
-
-         \* No pointer-event tricks.
-
-         */
-
-
-
-        #cardSelect {
-
-            display: block;
-
-            width: 100%;
-
-            height: 52px;
-
-
-
-            padding: 0 45px 0 16px;
-
-
-
-            border: 1px solid rgba(180, 120, 255, 0.45);
-
-            border-radius: 8px;
-
-
-
-            background: #171021;
-
-            color: #ffffff;
-
-
-
-            font-family: inherit;
-
-            font-size: 1rem;
-
-
-
-            cursor: pointer;
-
-
-
-            appearance: auto;
-
-            -webkit-appearance: auto;
-
-
-
-            pointer-events: auto;
-
-
-
-            position: relative;
-
-            z-index: 50;
-
-        }
-
-
-
-        #cardSelect:hover {
-
-            border-color: rgba(200, 145, 255, 0.8);
-
-        }
-
-
-
-        #cardSelect:focus {
-
-            outline: none;
-
-            border-color: rgba(210, 160, 255, 0.95);
-
-            box-shadow: 0 0 0 2px rgba(170, 100, 255, 0.15);
-
-        }
-
-
-
-        #cardSelect option {
-
-            background: #171021;
-
-            color: #ffffff;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           SELECTED CARD
-
-        ========================================================= */
-
-
-
-        .selected-card {
-
-            max-width: 1100px;
-
-            margin: 0 auto 45px;
-
-
-
-            padding: 22px;
-
-
-
-            border: 1px solid rgba(180, 120, 255, 0.3);
-
-            border-radius: 10px;
-
-
-
-            background: rgba(25, 16, 38, 0.75);
-
-
-
-            text-align: center;
-
-        }
-
-
-
-        .selected-card-name {
-
-            font-size: 1.3rem;
-
-            font-weight: 600;
-
+        .advanced-header h1 {
+            font-size: 38px;
+            letter-spacing: 5px;
             margin-bottom: 12px;
+        }
 
+        .advanced-header p {
+            color: #b9abc9;
+            font-size: 15px;
         }
 
 
+        /* ========================================
+           BACK BUTTON
+        ======================================== */
 
-        .selected-card-element {
+        .back-button {
+            display: inline-block;
 
-            display: flex;
+            margin-bottom: 25px;
+            padding: 9px 18px;
 
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 8px;
-
-
-
-            font-size: 0.9rem;
-
-            opacity: 0.8;
-
-        }
-
-
-
-        .selected-card-element img {
-
-            width: 25px;
-
-            height: 25px;
-
-            object-fit: contain;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           CARD KIT INFORMATION
-
-        ========================================================= */
-
-
-
-        .card-kit-info {
-
-            margin-top: 20px;
-
-            text-align: left;
-
-
-
-            border: 1px solid rgba(180, 120, 255, 0.28);
-
-            border-radius: 10px;
-
-
-
-            background: rgba(22, 14, 34, 0.8);
-
-
-
-            overflow: hidden;
-
-        }
-
-
-
-        .card-kit-title {
-
-            padding: 12px 14px;
-
-
-
-            text-align: center;
-
-
-
-            font-size: 0.86rem;
-
-            font-weight: 600;
-
-            letter-spacing: 0.5px;
-
-
-
-            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
-
-
-
-            background: rgba(120, 70, 180, 0.1);
-
-        }
-
-
-
-        .card-kit-stats {
-
-            display: grid;
-
-
-
-            grid-template-columns:
-
-                repeat(4, minmax(0, 1fr));
-
-
-
-            gap: 10px;
-
-
-
-            padding: 14px;
-
-        }
-
-
-
-        .card-kit-stat {
-
-            min-width: 0;
-
-
-
-            padding: 10px 8px;
-
-
-
-            border: 1px solid rgba(180, 120, 255, 0.2);
+            border: 1px solid
+                rgba(170, 110, 220, 0.4);
 
             border-radius: 7px;
 
+            background:
+                rgba(45, 22, 65, 0.5);
 
+            color: #d9cde2;
 
-            background: rgba(35, 23, 51, 0.75);
+            text-decoration: none;
 
+            font-size: 13px;
 
+            transition: 0.2s;
+        }
 
-            text-align: center;
+        .back-button:hover {
+            border-color:
+                rgba(200, 150, 255, 0.7);
 
+            background:
+                rgba(70, 35, 95, 0.6);
+
+            color: white;
         }
 
 
+        /* ========================================
+           FILTER PANEL
+        ======================================== */
 
-        .card-kit-stat-label {
+        .filter-panel {
+            padding: 22px;
 
-            font-size: 0.7rem;
+            border: 1px solid
+                rgba(170, 110, 220, 0.3);
 
+            border-radius: 10px;
 
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(35, 18, 50, 0.8),
+                    rgba(12, 8, 18, 0.9)
+                );
 
-            letter-spacing: 0.8px;
+            margin-bottom: 30px;
 
-
-
-            opacity: 0.65;
-
-
-
-            margin-bottom: 5px;
-
+            box-sizing: border-box;
         }
 
+        .filter-title {
+            margin-bottom: 18px;
 
+            color: #e1c9ef;
 
-        .card-kit-stat-value {
-
-            font-size: 0.92rem;
-
-
-
+            font-size: 15px;
             font-weight: 600;
 
+            letter-spacing: 2px;
 
+            text-transform: uppercase;
+        }
 
-            overflow-wrap: anywhere;
+        .filter-grid {
+            display: grid;
 
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 15px;
+        }
+
+        .filter-group {
+            min-width: 0;
+        }
+
+        .filter-group.full {
+            grid-column: 1 / -1;
+        }
+
+        .filter-label {
+            display: block;
+
+            margin-bottom: 6px;
+
+            color: #b9abc9;
+
+            font-size: 11px;
+            font-weight: 600;
+
+            letter-spacing: 1px;
+
+            text-transform: uppercase;
+        }
+
+        .filter-input,
+        .filter-select {
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 11px 12px;
+
+            border: 1px solid
+                rgba(170, 110, 220, 0.35);
+
+            border-radius: 6px;
+
+            background:
+                rgba(10, 7, 18, 0.85);
+
+            color: white;
+
+            font-size: 13px;
+
+            outline: none;
+        }
+
+        .filter-input:focus,
+        .filter-select:focus {
+            border-color:
+                rgba(200, 150, 255, 0.75);
+
+            box-shadow:
+                0 0 12px
+                rgba(130, 70, 180, 0.15);
+        }
+
+        .filter-select option {
+            background: #171020;
+            color: white;
         }
 
 
+        /* ========================================
+           RANGE
+        ======================================== */
 
-        .card-kit-abilities {
-
+        .range-row {
             display: grid;
 
-
-
             grid-template-columns:
+                1fr 1fr;
 
-                repeat(3, minmax(0, 1fr));
+            gap: 8px;
+        }
 
 
+        /* ========================================
+           BUTTONS
+        ======================================== */
+
+        .filter-buttons {
+            display: flex;
 
             gap: 10px;
 
-
-
-            padding: 0 14px 14px;
-
+            margin-top: 18px;
         }
 
+        .filter-button {
+            padding:
+                10px 20px;
 
+            border: 1px solid
+                rgba(180, 130, 255, 0.5);
 
-        .card-kit-ability {
+            border-radius: 7px;
 
-            min-width: 0;
+            background:
+                rgba(90, 45, 130, 0.4);
 
+            color: white;
 
+            cursor: pointer;
 
-            padding: 12px 13px;
-
-
-
-            border-top: 1px solid rgba(255, 255, 255, 0.07);
-
-
-
-            background: rgba(18, 11, 29, 0.45);
-
-        }
-
-
-
-        .card-kit-ability-name {
-
-            font-size: 0.9rem;
-
-
-
+            font-size: 13px;
             font-weight: 600;
 
+            transition: 0.2s;
+        }
 
+        .filter-button:hover {
+            background:
+                rgba(120, 70, 180, 0.55);
 
-            margin-bottom: 8px;
+            border-color:
+                rgba(210, 170, 255, 0.8);
+        }
 
+        .clear-button {
+            background:
+                rgba(40, 25, 50, 0.7);
+
+            border-color:
+                rgba(150, 120, 170, 0.3);
+
+            color: #c0b5c8;
+        }
+
+        .clear-button:hover {
+            background:
+                rgba(65, 40, 80, 0.8);
         }
 
 
+        /* ========================================
+           RESULT COUNT
+        ======================================== */
 
-        .card-kit-ability-description {
+        .result-count {
+            margin-bottom: 15px;
 
-            font-size: 0.8rem;
+            color: #a99ab3;
 
-
-
-            line-height: 1.5;
-
-
-
-            opacity: 0.82;
-
-
-
-            white-space: pre-line;
-
-
-
-            overflow-wrap: anywhere;
-
+            font-size: 13px;
         }
 
 
+        /* ========================================
+           TABLE WRAPPER
+        ======================================== */
 
-        .card-kit-empty {
+        .results-container {
+            width: 100%;
+            max-width: 100%;
+        }
 
-            padding: 18px;
+        .results-table-wrapper {
+            width: 100%;
+            max-width: 100%;
 
+            overflow-x: auto;
+            overflow-y: hidden;
 
+            -webkit-overflow-scrolling:
+                touch;
 
-            text-align: center;
-
-
-
-            opacity: 0.6;
-
-
-
-            font-style: italic;
-
+            box-sizing: border-box;
         }
 
 
+        /* ========================================
+           TABLE
+        ======================================== */
 
+        .results-table {
+            width: 1350px;
+            min-width: 1350px;
+            max-width: none;
 
+            table-layout: fixed;
 
-        /* =========================================================
+            border-collapse: separate;
+            border-spacing: 0;
 
-           SELECTED CARD DETAILS
+            margin: 0;
+        }
 
-        ========================================================= */
+        .results-table th:nth-child(1),
+        .results-table td:nth-child(1) {
+            width: 16%;
+        }
 
+        .results-table th:nth-child(2),
+        .results-table td:nth-child(2) {
+            width: 3%;
+        }
 
+        .results-table th:nth-child(3),
+        .results-table td:nth-child(3) {
+            width: 4%;
+        }
 
-        .selected-card-details {
+        .results-table th:nth-child(4),
+        .results-table td:nth-child(4) {
+            width: 11%;
+        }
 
-            display: grid;
+        .results-table th:nth-child(5),
+        .results-table td:nth-child(5),
+        .results-table th:nth-child(6),
+        .results-table td:nth-child(6),
+        .results-table th:nth-child(7),
+        .results-table td:nth-child(7),
+        .results-table th:nth-child(8),
+        .results-table td:nth-child(8) {
+            width: 10.5%;
+        }
 
+        .results-table th:nth-child(9),
+        .results-table td:nth-child(9) {
+            width: 14%;
+        }
 
-
-            grid-template-columns:
-
-                repeat(2, minmax(0, 1fr));
-
-
-
-            gap: 16px;
-
-
-
-            margin-top: 20px;
-
-
-
-            text-align: left;
-
+        .results-table th:nth-child(10),
+        .results-table td:nth-child(10) {
+            width: 6%;
         }
 
 
+        /* ========================================
+           TABLE HEADER
+        ======================================== */
 
-        .selected-detail-box {
+        .results-table thead th {
+            box-sizing: border-box;
 
-            min-width: 0;
+            padding:
+                9px 10px;
 
+            background:
+                rgba(55, 31, 70, 0.95);
 
-
-            border: 1px solid rgba(180, 120, 255, 0.28);
-
-            border-radius: 10px;
-
-
-
-            background: rgba(22, 14, 34, 0.8);
-
-
-
-            overflow: hidden;
-
-        }
-
-
-
-        .selected-detail-title {
-
-            padding: 12px 14px;
-
-
-
-            text-align: center;
-
-
-
-            font-size: 0.86rem;
-
-
-
-            font-weight: 600;
-
-
-
-            letter-spacing: 0.5px;
-
-
-
-            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
-
-
-
-            background: rgba(120, 70, 180, 0.1);
-
-        }
-
-
-
-        .selected-detail-content {
-
-            padding: 15px 16px;
-
-
-
-            font-size: 0.84rem;
-
-
-
-            line-height: 1.55;
-
-
-
-            white-space: pre-line;
-
-
-
-            overflow-wrap: anywhere;
-
-        }
-
-
-
-        .selected-detail-empty {
-
-            opacity: 0.6;
-
-
-
-            font-style: italic;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RECOMMENDATION GRID
-
-        ========================================================= */
-
-
-
-        .recommendation-grid {
-
-            display: grid;
-
-
-
-            grid-template-columns:
-
-                repeat(5, minmax(0, 1fr));
-
-
-
-            gap: 16px;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RECOMMENDATION BOX
-
-        ========================================================= */
-
-
-
-        .recommendation-box {
-
-            min-width: 0;
-
-
-
-            border: 1px solid rgba(180, 120, 255, 0.28);
-
-
-
-            border-radius: 10px;
-
-
-
-            background: rgba(22, 14, 34, 0.8);
-
-
-
-            overflow: hidden;
-
-        }
-
-
-
-        .recommendation-title {
-
-            padding: 15px 12px;
-
-
-
-            text-align: center;
-
-
-
-            font-size: 0.9rem;
-
-
-
-            font-weight: 600;
-
-
-
-            letter-spacing: 0.5px;
-
-
-
-            border-bottom: 1px solid rgba(180, 120, 255, 0.2);
-
-
-
-            background: rgba(120, 70, 180, 0.1);
-
-        }
-
-
-
-        .recommendation-list {
-
-            padding: 10px;
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RECOMMENDATION CARD
-
-        ========================================================= */
-
-
-
-        .recommendation-card {
-
-            display: flex;
-
-
-
-            align-items: center;
-
-
-
-            gap: 8px;
-
-
-
-            padding: 9px 7px;
-
-
+            border-right:
+                1px solid
+                rgba(170, 110, 220, 0.2);
 
             border-bottom:
+                1px solid
+                rgba(170, 110, 220, 0.3);
 
-                1px solid rgba(255, 255, 255, 0.06);
+            color: #e5d8ec;
 
+            font-size: 10px;
+            font-weight: 600;
 
+            letter-spacing: 1px;
 
-            font-size: 0.82rem;
+            line-height: 1.2;
 
+            text-align: center;
+            vertical-align: middle;
 
+            white-space: nowrap;
+        }
 
-            line-height: 1.25;
+        .results-table thead th:first-child {
+            border-top-left-radius: 8px;
+        }
 
+        .results-table thead th:last-child {
+            border-top-right-radius: 8px;
+            border-right: none;
         }
 
 
+        /* ========================================
+           TABLE BODY
+        ======================================== */
 
-        .recommendation-card:last-child {
+        .results-table tbody td {
+            box-sizing: border-box;
 
+            padding:
+                9px 10px;
+
+            vertical-align: top;
+
+            border-right:
+                1px solid
+                rgba(36, 25, 43, 0.18);
+
+            border-bottom:
+                1px solid
+                rgba(36, 25, 43, 0.18);
+
+            font-size: 11px;
+
+            line-height: 1.35;
+
+            overflow-wrap: anywhere;
+        }
+
+        .results-table tbody tr:last-child td {
             border-bottom: none;
+        }
 
+        .results-table tbody td:last-child {
+            border-right: none;
         }
 
 
+        /* ========================================
+           CARD NAME
+        ======================================== */
 
-        .recommendation-element {
-
-            width: 22px;
-
-            height: 22px;
-
-
-
-            flex: 0 0 22px;
-
-
-
-            object-fit: contain;
-
+        .results-table tbody td:nth-child(1) {
+            text-align: center;
+            vertical-align: middle;
         }
 
+        .table-card-name {
+            color: #e8ddea;
 
+            font-weight: 600;
 
-        .recommendation-name {
-
-            min-width: 0;
-
-
+            line-height: 1.35;
 
             overflow-wrap: anywhere;
 
+            text-align: center;
         }
 
 
+        /* ========================================
+           AT
+        ======================================== */
 
+        .results-table tbody td:nth-child(2) {
+            text-align: center;
+            vertical-align: middle;
 
+            white-space: nowrap;
+        }
 
-        /* =========================================================
+        .table-atk-type {
+            color: #e0d2e8;
 
-           EMPTY / SPECIAL MESSAGE
-
-        ========================================================= */
-
-
-
-        .recommendation-empty {
-
-            padding: 18px 8px;
-
-
+            font-weight: 700;
 
             text-align: center;
 
-
-
-            font-size: 0.8rem;
-
-
-
-            line-height: 1.4;
-
-
-
-            opacity: 0.65;
-
+            line-height: 1.35;
         }
 
 
+        /* ========================================
+           SPEED
+        ======================================== */
 
+        .results-table tbody td:nth-child(3) {
+            text-align: center;
+            vertical-align: middle;
 
+            white-space: nowrap;
+        }
 
-        /* =========================================================
+        .table-speed {
+            color: #ddd0e4;
 
-           STATUS
-
-        ========================================================= */
-
-
-
-        .team-status {
+            font-weight: 600;
 
             text-align: center;
 
-
-
-            margin: 20px 0;
-
-
-
-            opacity: 0.65;
-
-
-
-            font-size: 0.85rem;
-
+            line-height: 1.35;
         }
 
 
+        /* ========================================
+           PASSIVE
+        ======================================== */
 
-        .team-status.error {
+        .results-table tbody td:nth-child(4) {
+            text-align: center;
+            vertical-align: middle;
+        }
 
-            color: #ff8f8f;
+        .table-passive {
+            color: #cfc1d7;
 
+            line-height: 1.35;
 
+            overflow-wrap: anywhere;
 
-            opacity: 1;
-
+            text-align: center;
         }
 
 
+        /* ========================================
+           SKILLS
+        ======================================== */
 
+        .table-skill-name {
+            display: block;
 
+            margin-bottom: 3px;
 
-        /* =========================================================
+            color: #e3d5ea;
 
-           TABLET
+            font-weight: 600;
 
-        ========================================================= */
+            line-height: 1.3;
 
+            overflow-wrap: anywhere;
+        }
 
+        .table-skill-description {
+            display: block;
 
-        @media (max-width: 1100px) {
+            color: #c0b5c7;
 
+            line-height: 1.35;
 
-
-            .recommendation-grid {
-
-                grid-template-columns:
-
-                    repeat(2, minmax(0, 1fr));
-
-            }
-
-
-
+            overflow-wrap: anywhere;
         }
 
 
+        /* ========================================
+           RERUN
+        ======================================== */
 
+        .results-table tbody td:nth-child(10) {
+            text-align: center;
+            vertical-align: middle;
 
+            white-space: nowrap;
+        }
 
-        @media (max-width: 800px) {
+        .table-rerun-time {
+            color: #cfc4d5;
 
+            line-height: 1.35;
 
+            text-align: center;
 
-            .card-kit-abilities {
-
-                grid-template-columns:
-
-                    repeat(2, minmax(0, 1fr));
-
-            }
-
-
-
+            white-space: nowrap;
         }
 
 
+        /* ========================================
+           ELEMENT COLORS
+        ======================================== */
+
+        .results-table tbody tr.element-leaf {
+            background:
+                rgba(113, 155, 112, 0.90);
+        }
+
+        .results-table tbody tr.element-fire {
+            background:
+                rgba(184, 115, 115, 0.90);
+        }
+
+        .results-table tbody tr.element-water {
+            background:
+                rgba(110, 145, 176, 0.90);
+        }
 
 
+        .results-table tbody tr.element-leaf td,
+        .results-table tbody tr.element-fire td,
+        .results-table tbody tr.element-water td {
+            color: #24192b;
+        }
 
-        /* =========================================================
+        .results-table tbody tr.element-leaf .table-card-name,
+        .results-table tbody tr.element-fire .table-card-name,
+        .results-table tbody tr.element-water .table-card-name,
+        .results-table tbody tr.element-leaf .table-atk-type,
+        .results-table tbody tr.element-fire .table-atk-type,
+        .results-table tbody tr.element-water .table-atk-type,
+        .results-table tbody tr.element-leaf .table-speed,
+        .results-table tbody tr.element-fire .table-speed,
+        .results-table tbody tr.element-water .table-speed,
+        .results-table tbody tr.element-leaf .table-passive,
+        .results-table tbody tr.element-fire .table-passive,
+        .results-table tbody tr.element-water .table-passive,
+        .results-table tbody tr.element-leaf .table-rerun-time,
+        .results-table tbody tr.element-fire .table-rerun-time,
+        .results-table tbody tr.element-water .table-rerun-time,
+        .results-table tbody tr.element-leaf .table-skill-name,
+        .results-table tbody tr.element-fire .table-skill-name,
+        .results-table tbody tr.element-water .table-skill-name {
+            color: #24192b;
+        }
 
+        .results-table tbody tr.element-leaf
+        .table-skill-description,
+        .results-table tbody tr.element-fire
+        .table-skill-description,
+        .results-table tbody tr.element-water
+        .table-skill-description {
+            color:
+                rgba(36, 25, 43, 0.78);
+        }
+
+        .results-table tbody tr.element-leaf:hover {
+            background:
+                rgba(125, 168, 124, 0.95);
+        }
+
+        .results-table tbody tr.element-fire:hover {
+            background:
+                rgba(198, 126, 126, 0.95);
+        }
+
+        .results-table tbody tr.element-water:hover {
+            background:
+                rgba(123, 159, 191, 0.95);
+        }
+
+
+        /* ========================================
+           FLOATING SCROLLBAR
+        ======================================== */
+
+        .floating-horizontal-scroll {
+            position: fixed;
+
+            left: 20px;
+            right: 20px;
+            bottom: 12px;
+
+            height: 14px;
+
+            z-index: 9999;
+
+            overflow-x: auto;
+            overflow-y: hidden;
+
+            background:
+                rgba(20, 12, 28, 0.96);
+
+            border:
+                1px solid
+                rgba(150, 100, 190, 0.45);
+
+            border-radius: 8px;
+
+            box-shadow:
+                0 4px 20px
+                rgba(0, 0, 0, 0.45);
+
+            box-sizing: border-box;
+        }
+
+        .floating-horizontal-scroll-inner {
+            height: 1px;
+
+            width: 1350px;
+
+            min-width: 1350px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar {
+            height: 12px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar-track {
+            background:
+                rgba(20, 12, 28, 0.96);
+
+            border-radius: 8px;
+        }
+
+        .floating-horizontal-scroll::-webkit-scrollbar-thumb {
+            background:
+                rgba(130, 85, 160, 0.9);
+
+            border-radius: 8px;
+
+            border:
+                2px solid
+                rgba(20, 12, 28, 0.96);
+        }
+
+
+        /* ========================================
+           NO RESULTS
+        ======================================== */
+
+        .no-results,
+        .loading {
+            padding:
+                35px 20px;
+
+            text-align: center;
+
+            color: #95869f;
+
+            background: transparent;
+        }
+
+
+        /* ========================================
            MOBILE
+        ======================================== */
 
-        ========================================================= */
+        @media (max-width: 700px) {
 
-
-
-        @media (max-width: 650px) {
-
-
-
-            .teams-page {
-
-                width: 94%;
-
-
-
-                padding-bottom: 60px;
-
+            .advanced-page {
+                padding:
+                    25px 12px 60px;
             }
 
+            .advanced-header h1 {
+                font-size: 28px;
+                letter-spacing: 3px;
+            }
 
+            .advanced-header p {
+                font-size: 13px;
+            }
 
-            .recommendation-grid {
+            .filter-panel {
+                padding: 15px;
+            }
 
+            .filter-grid {
                 grid-template-columns: 1fr;
-
             }
 
-
-
-            .selected-card-details {
-
-                grid-template-columns: 1fr;
-
+            .filter-group.full {
+                grid-column: auto;
             }
 
-
-
-            .card-kit-stats {
-
-                grid-template-columns:
-
-                    repeat(2, minmax(0, 1fr));
-
+            .range-row {
+                grid-template-columns: 1fr 1fr;
             }
 
-
-
-            .card-kit-abilities {
-
-                grid-template-columns: 1fr;
-
+            .filter-buttons {
+                flex-direction: column;
             }
 
-
-
-            #cardSelect {
-
-                height: 50px;
-
-
-
-                font-size: 0.92rem;
-
+            .filter-button {
+                width: 100%;
             }
 
+            .results-table-wrapper {
+                width: 100%;
 
+                overflow-x: auto;
+                overflow-y: hidden;
 
-            .selected-card {
-
-                padding: 18px;
-
+                touch-action:
+                    pan-x pan-y;
             }
 
+            .results-table {
+                width: 1350px;
+                min-width: 1350px;
+            }
 
+            .floating-horizontal-scroll {
+                left: 8px;
+                right: 8px;
+                bottom: 8px;
+            }
 
+            .results-table thead th {
+                padding:
+                    8px;
+
+                font-size: 9px;
+            }
+
+            .results-table tbody td {
+                padding:
+                    8px;
+
+                font-size: 10px;
+            }
         }
 
-
-
-    
-/* MANUAL TEAM PLANNER */
-.manual-team-planner{width:100%;margin:0 auto 48px;padding:24px;box-sizing:border-box;border:1px solid rgba(180,120,255,.32);border-radius:12px;background:rgba(18,11,29,.68)}
-.planner-heading{margin:0 0 22px;text-align:center;font-size:1.65rem;letter-spacing:.06em}
-.planner-main-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:start}
-.planner-slot{min-width:0;border:1px solid rgba(180,120,255,.3);border-radius:9px;background:rgba(25,16,38,.78);overflow:hidden}
-.planner-slot-title{padding:12px 10px;text-align:center;font-size:.9rem;font-weight:700;letter-spacing:.06em;border-bottom:1px solid rgba(180,120,255,.22);background:rgba(120,70,180,.12)}
-.planner-select-wrap{padding:12px 12px 0}.planner-select{display:block;width:100%;min-width:0;height:42px;padding:0 10px;color:#fff;background:#171021;border:1px solid rgba(180,120,255,.45);border-radius:6px;font:inherit}.planner-select option{background:#171021;color:#fff}
-.planner-kit{padding:12px;min-width:0}.planner-kit .card-kit-info{margin:0;width:100%}.planner-kit .card-kit-title{padding:10px}.planner-kit .card-kit-stats{grid-template-columns:repeat(2,minmax(0,1fr));padding:10px;gap:7px}.planner-kit .card-kit-stat{padding:8px 5px}.planner-kit .card-kit-stat-value{font-size:.82rem}.planner-kit .card-kit-abilities{grid-template-columns:1fr;padding:0 10px 10px;gap:6px}.planner-kit .card-kit-ability{padding:10px}.planner-kit .card-kit-ability-name{font-size:.82rem}.planner-kit .card-kit-ability-description{font-size:.76rem}
-.planner-empty{padding:18px 8px;text-align:center;opacity:.62;font-size:.84rem;line-height:1.45}.planner-supports{margin-top:24px}.planner-supports-heading{margin:0 0 12px;padding:10px 12px;border:1px solid rgba(180,120,255,.3);border-radius:7px;background:rgba(120,70,180,.1);text-align:center;letter-spacing:.08em;font-size:1rem}.planner-support-grid{display:grid;grid-template-columns:1fr;gap:9px}.planner-support-slot{display:grid;grid-template-columns:145px minmax(190px,260px) minmax(0,1fr);align-items:center;gap:12px;padding:0 12px;min-height:62px}.planner-support-slot .planner-slot-title{border:0;background:transparent;text-align:left;padding:10px 0}.planner-support-slot .planner-select-wrap{padding:8px 0}.planner-support-summary{min-width:0;padding:9px 0;font-size:.84rem;line-height:1.45;overflow-wrap:anywhere}.planner-support-summary:not(.is-empty){display:flex;align-items:center;gap:12px}.planner-support-summary img{width:26px;height:26px;object-fit:contain;flex:0 0 26px}.support-card-name{font-weight:700;min-width:130px}.support-card-meta{opacity:.75}.planner-support-summary.is-empty{opacity:.55}.planner-actions{display:flex;justify-content:flex-end;margin-top:16px}.planner-clear{padding:9px 16px;border:1px solid rgba(180,120,255,.4);border-radius:6px;background:rgba(120,70,180,.15);color:inherit;font:inherit;cursor:pointer}.planner-clear:hover{background:rgba(120,70,180,.28)}
-@media(max-width:900px){.planner-main-grid{grid-template-columns:1fr}.planner-kit .card-kit-abilities{grid-template-columns:repeat(2,minmax(0,1fr))}.planner-support-slot{grid-template-columns:115px minmax(160px,220px) minmax(0,1fr)}}
-@media(max-width:600px){.manual-team-planner{padding:13px}.planner-support-slot{grid-template-columns:1fr;gap:0;padding:0 10px 10px}.planner-support-slot .planner-slot-title{padding:12px 0 2px}.planner-support-slot .planner-select-wrap{padding:5px 0}.planner-support-summary{padding:4px 0}.planner-support-summary:not(.is-empty){flex-wrap:wrap;gap:7px}.planner-kit .card-kit-abilities{grid-template-columns:1fr}}
-
-
-
-        /* Compact planner card kits: preserve all information without tall empty panels. */
-        .planner-heading { margin-bottom: 14px; }
-        .planner-main-grid { gap: 12px; }
-        .planner-slot-title { padding: 8px 7px; font-size: .8rem; }
-        .planner-select-wrap { padding: 8px 8px 0; }
-        .planner-select { height: 36px; padding: 0 7px; font-size: .82rem; }
-        .planner-kit { padding: 8px; }
-        .planner-kit .card-kit-title { padding: 7px 5px; font-size: .76rem; }
-        .planner-kit .card-kit-stats { padding: 7px; gap: 5px; }
-        .planner-kit .card-kit-stat { padding: 6px 4px; }
-        .planner-kit .card-kit-stat-label { margin-bottom: 2px; font-size: .62rem; }
-        .planner-kit .card-kit-stat-value { font-size: .76rem; }
-        .planner-kit .card-kit-abilities {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            align-content: start;
-            grid-auto-rows: min-content;
-            padding: 0 7px 7px;
-            gap: 5px;
-        }
-        .planner-kit .card-kit-ability {
-            align-self: start;
-            padding: 7px;
-            min-height: 0;
-            height: auto;
-        }
-        .planner-kit .card-kit-ability-name { margin-bottom: 4px; font-size: .74rem; }
-        .planner-kit .card-kit-ability-description { font-size: .68rem; line-height: 1.35; }
-        .planner-empty { padding: 12px 6px; font-size: .76rem; }
-
-        @media (max-width: 900px) {
-            .planner-main-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
-            .planner-kit .card-kit-abilities { grid-template-columns: 1fr; }
-        }
-
-        @media (max-width: 600px) {
-            .manual-team-planner { padding: 10px; }
-            .planner-main-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 5px; }
-            .planner-slot-title { font-size: .66rem; letter-spacing: 0; padding: 7px 3px; }
-            .planner-select-wrap { padding: 6px 4px 0; }
-            .planner-select { height: 34px; font-size: .7rem; padding: 0 3px; }
-            .planner-kit { padding: 4px; }
-            .planner-kit .card-kit-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); padding: 4px; gap: 3px; }
-            .planner-kit .card-kit-stat { padding: 5px 2px; }
-            .planner-kit .card-kit-stat-label { font-size: .55rem; letter-spacing: 0; }
-            .planner-kit .card-kit-stat-value { font-size: .65rem; }
-            .planner-kit .card-kit-abilities { grid-template-columns: 1fr; padding: 0 4px 4px; gap: 3px; }
-            .planner-kit .card-kit-ability { padding: 5px; }
-            .planner-kit .card-kit-ability-name { font-size: .66rem; margin-bottom: 3px; }
-            .planner-kit .card-kit-ability-description { font-size: .61rem; line-height: 1.25; }
-            .planner-support-slot { grid-template-columns: 90px minmax(130px, 200px) minmax(0, 1fr); }
-        }
-
-
-/* Support selection sits above the full-width horizontal card summary. */
-.planner-support-slot {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0;
-    align-items: start;
-    padding: 10px 12px 12px;
-}
-.planner-support-slot .planner-slot-title {
-    padding: 2px 0 6px;
-    border: 0;
-    background: transparent;
-    text-align: left;
-}
-.planner-support-slot .planner-select-wrap {
-    padding: 0 0 10px;
-    max-width: 320px;
-    width: 100%;
-}
-.planner-support-summary {
-    min-width: 0;
-    width: 100%;
-    padding: 0;
-    overflow: visible;
-}
-.support-card-row {
-    display: grid;
-    grid-template-columns: minmax(105px, 1.15fr) minmax(38px, .42fr) minmax(38px, .42fr) minmax(65px, .72fr) repeat(5, minmax(0, 1fr));
-    width: 100%;
-    min-width: 0;
-    border-top: 1px solid rgba(255,255,255,.08);
-    border-left: 1px solid rgba(255,255,255,.08);
-}
-.support-card-row.element-leaf { background: rgba(113, 155, 112, 0.90); }
-.support-card-row.element-fire { background: rgba(184, 115, 115, 0.90); }
-.support-card-row.element-water { background: rgba(110, 145, 176, 0.90); }
-.support-card-row.element-leaf:hover { background: rgba(125, 168, 124, 0.95); }
-.support-card-row.element-fire:hover { background: rgba(198, 126, 126, 0.95); }
-.support-card-row.element-water:hover { background: rgba(123, 159, 191, 0.95); }
-.support-table-cell {
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    gap: 4px;
-    min-width: 0;
-    max-width: none;
-    padding: 8px;
-    border-right: 1px solid rgba(255,255,255,.09);
-    border-bottom: 1px solid rgba(255,255,255,.09);
-    background: transparent;
-    color: #24192b;
-    font-size: .7rem;
-    line-height: 1.35;
-    overflow-wrap: anywhere;
-    word-break: normal;
-}
-.support-table-cell strong { font-size: .66rem; font-weight: 700; color: #24192b; }
-.support-table-cell span { color: rgba(36, 25, 43, 0.9); }
-.support-name-cell { justify-content: center; flex-direction: row; align-items: center; gap: 7px; font-weight: 700; }
-.support-ability-cell { min-width: 0; overflow-wrap: anywhere; }
-.support-card-row > .support-table-cell { grid-row: 1; }
-.planner-support-summary.is-empty { padding: 8px 0 2px; }
-@media(max-width:900px) {
-    .support-card-row { grid-template-columns: minmax(90px, 1.05fr) minmax(34px, .4fr) minmax(34px, .4fr) minmax(58px, .65fr) repeat(5, minmax(0, 1fr)); }
-    .support-table-cell { padding: 6px; font-size: .65rem; }
-}
-@media(max-width:600px) {
-    .planner-support-slot { grid-template-columns: minmax(0, 1fr); gap: 0; padding: 9px 8px 10px; }
-    .planner-support-slot .planner-slot-title { padding: 3px 0 5px; }
-    .planner-support-slot .planner-select-wrap { padding: 0 0 8px; max-width: none; }
-    .support-card-row { grid-template-columns: minmax(78px, 1fr) minmax(30px, .35fr) minmax(30px, .35fr) minmax(48px, .6fr) repeat(5, minmax(0, 1fr)); }
-    .support-table-cell { padding: 5px; font-size: .6rem; }
-    .support-table-cell strong { font-size: .58rem; }
-}
-
-</style>
-
-
+    </style>
 
 </head>
-
-
-
 
 
 <body>
 
 
-
-
-
-    <!-- =========================================================
-
-         HEADER
-
-    ========================================================= -->
-
-
+    <!-- ========================================
+         NAVIGATION
+    ======================================== -->
 
     <nav class="navbar">
 
-
-
         <div class="nav-logo">
-
-
 
             <a href="index.html">
 
-
-
                 <img
-
                     src="logo.png"
-
                     alt="Tokyo Debunker"
-
                 >
-
-
 
             </a>
 
-
-
         </div>
-
-
 
     </nav>
 
 
+    <main class="advanced-page">
 
 
-
-    <!-- =========================================================
-
-         MAIN
-
-    ========================================================= -->
-
-
-
-    <main class="teams-page">
+        <a
+            href="characters.html"
+            class="back-button"
+        >
+            ← Back to Characters
+        </a>
 
 
+        <div class="advanced-header">
 
-
-
-
-        <!-- =====================================================
-             MANUAL TEAM PLANNER
-        ====================================================== -->
-        <section class="manual-team-planner" aria-labelledby="plannerHeading">
-            <h2 id="plannerHeading" class="planner-heading">TEAM PLANNER</h2>
-            <div class="planner-main-grid">
-                <article class="planner-slot">
-                    <div class="planner-slot-title">MAIN</div>
-                    <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="main"><option value="">Choose a card...</option></select></div>
-                    <div class="planner-kit" id="plannerKit-main"><div class="planner-empty">Choose a card to view its full kit.</div></div>
-                </article>
-                <article class="planner-slot">
-                    <div class="planner-slot-title">SUB MAIN 1</div>
-                    <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="sub1"><option value="">Choose a card...</option></select></div>
-                    <div class="planner-kit" id="plannerKit-sub1"><div class="planner-empty">Choose a card to view its full kit.</div></div>
-                </article>
-                <article class="planner-slot">
-                    <div class="planner-slot-title">SUB MAIN 2</div>
-                    <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="sub2"><option value="">Choose a card...</option></select></div>
-                    <div class="planner-kit" id="plannerKit-sub2"><div class="planner-empty">Choose a card to view its full kit.</div></div>
-                </article>
-            </div>
-            <div class="planner-supports">
-                <h3 class="planner-supports-heading">SUPPORTS</h3>
-                <div class="planner-support-grid">
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 1</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support1"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support1">Empty</div>
-                    </article>
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 2</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support2"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support2">Empty</div>
-                    </article>
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 3</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support3"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support3">Empty</div>
-                    </article>
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 4</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support4"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support4">Empty</div>
-                    </article>
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 5</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support5"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support5">Empty</div>
-                    </article>
-                    <article class="planner-slot planner-support-slot">
-                        <div class="planner-slot-title">SUPPORT 6</div>
-                        <div class="planner-select-wrap"><select class="planner-select" data-planner-slot="support6"><option value="">Choose a card...</option></select></div>
-                        <div class="planner-support-summary is-empty" id="plannerSummary-support6">Empty</div>
-                    </article>
-                </div>
-            </div>
-            <div class="planner-actions"><button type="button" class="planner-clear" id="clearTeamPlanner">Clear team</button></div>
-        </section>
-
-        <header class="teams-header">
-
-
-
-            <h1>TEAMS</h1>
-
-
+            <h1>
+                ADVANCED SEARCH
+            </h1>
 
             <p>
-
-                Build a team based on your selected card's tags.
-
+                Search and filter cards across the database
             </p>
-
-
-
-        </header>
-
-
-
-
-
-        <!-- =====================================================
-
-             SELECTOR
-
-        ====================================================== -->
-
-
-
-        <section class="team-selector">
-
-
-
-            <label
-
-                class="team-selector-label"
-
-                for="cardSelect"
-
-            >
-
-                SELECT CARD
-
-            </label>
-
-
-
-
-
-            <select id="cardSelect">
-
-
-
-                <option value="">
-
-                    Loading cards...
-
-                </option>
-
-
-
-            </select>
-
-
-
-        </section>
-
-
-
-
-
-        <!-- =====================================================
-
-             STATUS
-
-        ====================================================== -->
-
-
-
-        <div
-
-            id="teamStatus"
-
-            class="team-status"
-
-        >
-
-            Loading card database...
 
         </div>
 
 
+        <!-- ========================================
+             FILTER PANEL
+        ======================================== -->
 
+        <section class="filter-panel">
 
-
-        <!-- =====================================================
-
-             SELECTED CARD
-
-        ====================================================== -->
-
-
-
-        <section
-
-            id="selectedCard"
-
-            class="selected-card"
-
-        >
-
-
-
-            <div
-
-                id="selectedCardName"
-
-                class="selected-card-name"
-
-            >
-
-                Select a card
-
+            <div class="filter-title">
+                Card Filters
             </div>
 
 
+            <div class="filter-grid">
 
 
+                <div class="filter-group full">
 
-            <div
+                    <label
+                        class="filter-label"
+                        for="searchInput"
+                    >
+                        Card Name
+                    </label>
 
-                id="selectedCardElement"
-
-                class="selected-card-element"
-
-            >
-
-                <span>—</span>
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-
-                 CARD KIT
-
-            ================================================== -->
-
-
-
-            <div class="card-kit-info">
-
-
-
-                <div class="card-kit-title">
-
-                    DETAILS
+                    <input
+                        type="text"
+                        id="searchInput"
+                        class="filter-input"
+                        placeholder="Search card name..."
+                    >
 
                 </div>
 
 
+                <div class="filter-group">
 
-                <div
+                    <label
+                        class="filter-label"
+                        for="houseFilter"
+                    >
+                        House
+                    </label>
 
-                    id="selectedCardKitInfo"
+                    <select
+                        id="houseFilter"
+                        class="filter-select"
+                    >
 
-                    class="card-kit-empty"
+                        <option value="">
+                            All Houses
+                        </option>
 
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="characterFilter"
+                    >
+                        Character Name
+                    </label>
+
+                    <select
+                        id="characterFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Characters
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="elementFilter"
+                    >
+                        Element
+                    </label>
+
+                    <select
+                        id="elementFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Elements
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="tagsFilter"
+                    >
+                        Tags
+                    </label>
+
+                    <select
+                        id="tagsFilter"
+                        class="filter-select"
+                    >
+                        <option value="">All Tags</option>
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="atkTypeFilter"
+                    >
+                        ATK Type
+                    </label>
+
+                    <select
+                        id="atkTypeFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All ATK Types
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="passiveFilter"
+                    >
+                        Passive
+                    </label>
+
+                    <select
+                        id="passiveFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Passives
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="skill1Filter"
+                    >
+                        Skill 1
+                    </label>
+
+                    <select
+                        id="skill1Filter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Skills
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="skill2Filter"
+                    >
+                        Skill 2
+                    </label>
+
+                    <select
+                        id="skill2Filter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            All Skills
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        MR Range
+                    </label>
+
+                    <div class="range-row">
+
+                        <input
+                            type="number"
+                            id="minMr"
+                            class="filter-input"
+                            placeholder="Min MR"
+                        >
+
+                        <input
+                            type="number"
+                            id="maxMr"
+                            class="filter-input"
+                            placeholder="Max MR"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="omitSkillFilter"
+                    >
+                        Omit Skill
+                    </label>
+
+                    <select
+                        id="omitSkillFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="">
+                            No Omit Skill
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label class="filter-label">
+                        Speed Range
+                    </label>
+
+                    <div class="range-row">
+
+                        <input
+                            type="number"
+                            id="minSpeed"
+                            class="filter-input"
+                            placeholder="Min Speed"
+                        >
+
+                        <input
+                            type="number"
+                            id="maxSpeed"
+                            class="filter-input"
+                            placeholder="Max Speed"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div class="filter-group">
+
+                    <label
+                        class="filter-label"
+                        for="sortFilter"
+                    >
+                        Sort Results
+                    </label>
+
+                    <select
+                        id="sortFilter"
+                        class="filter-select"
+                    >
+
+                        <option value="default">
+                            Default
+                        </option>
+
+                        <option value="rerun-desc">
+                            Rerun Time: Longest → Shortest
+                        </option>
+
+                        <option value="rerun-asc">
+                            Rerun Time: Shortest → Longest
+                        </option>
+
+                        <option value="mr-desc">
+                            MR: Highest → Lowest
+                        </option>
+
+                        <option value="mr-asc">
+                            MR: Lowest → Highest
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div class="filter-buttons">
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    id="searchButton"
                 >
+                    Search
+                </button>
 
-                    Select a card above.
-
-                </div>
-
-
-
-            </div>
-
-
-
-
-
-            <!-- =================================================
-
-                 NOTES + TEAM GUIDE
-
-            ================================================== -->
-
-
-
-            <div class="selected-card-details">
-
-
-
-                <article class="selected-detail-box">
-
-
-
-                    <div class="selected-detail-title">
-
-                        THOUGHTS &amp; NOTES
-
-                    </div>
-
-
-
-                    <div
-
-                        id="selectedCardNotes"
-
-                        class="selected-detail-content selected-detail-empty"
-
-                    >
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </article>
-
-
-
-
-
-                <article class="selected-detail-box">
-
-
-
-                    <div class="selected-detail-title">
-
-                        TEAM BUILDING GUIDE
-
-                    </div>
-
-
-
-                    <div
-
-                        id="selectedCardGuide"
-
-                        class="selected-detail-content selected-detail-empty"
-
-                    >
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </article>
-
-
+                <button
+                    type="button"
+                    class="filter-button clear-button"
+                    id="clearButton"
+                >
+                    Clear Filters
+                </button>
 
             </div>
-
-
 
         </section>
 
 
+        <div
+            class="result-count"
+            id="resultCount"
+        >
+            Loading cards...
+        </div>
 
 
-
-        <!-- =====================================================
-
-             RECOMMENDATIONS
-
-        ====================================================== -->
-
-
-
-        <section
-
-            id="recommendationGrid"
-
-            class="recommendation-grid"
-
+        <div
+            class="results-container"
+            id="results"
         >
 
-
-
-
-
-            <article class="recommendation-box">
-
-
-
-                <div class="recommendation-title">
-
-                    SUB MAIN 1
-
-                </div>
-
-
-
-                <div
-
-                    id="subMain1"
-
-                    class="recommendation-list"
-
-                >
-
-
-
-                    <div class="recommendation-empty">
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </article>
-
-
-
-
-
-            <article class="recommendation-box">
-
-
-
-                <div class="recommendation-title">
-
-                    SUB MAIN 2
-
-                </div>
-
-
-
-                <div
-
-                    id="subMain2"
-
-                    class="recommendation-list"
-
-                >
-
-
-
-                    <div class="recommendation-empty">
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </article>
-
-
-
-
-
-            <article class="recommendation-box">
-
-
-
-                <div class="recommendation-title">
-
-                    GUARD
-
-                </div>
-
-
-
-                <div
-
-                    id="guard"
-
-                    class="recommendation-list"
-
-                >
-
-
-
-                    <div class="recommendation-empty">
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </article>
-
-
-
-
-
-            <article class="recommendation-box">
-
-
-
-                <div class="recommendation-title">
-
-                    SWEEPERS
-
-                </div>
-
-
-
-                <div
-
-                    id="sweepers"
-
-                    class="recommendation-list"
-
-                >
-
-
-
-                    <div class="recommendation-empty">
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </article>
-
-
-
-
-
-            <article class="recommendation-box">
-
-
-
-                <div class="recommendation-title">
-
-                    SUPPORTS
-
-                </div>
-
-
-
-                <div
-
-                    id="supports"
-
-                    class="recommendation-list"
-
-                >
-
-
-
-                    <div class="recommendation-empty">
-
-                        Select a card above.
-
-                    </div>
-
-
-
-                </div>
-
-
-
-            </article>
-
-
-
-
-
-        </section>
-
-
-
+            <div class="loading">
+                Loading database...
+            </div>
+
+        </div>
 
 
     </main>
 
 
+    <!-- ========================================
+         FLOATING TABLE SCROLLBAR
+    ======================================== -->
 
+    <div
+        class="floating-horizontal-scroll"
+        id="floatingHorizontalScroll"
+        style="display: none;"
+    >
 
+        <div
+            class="floating-horizontal-scroll-inner"
+            id="floatingHorizontalScrollInner"
+        ></div>
 
-    <!-- =========================================================
-
-         DATABASE LOADER
-
-    ========================================================= -->
-
+    </div>
 
 
     <script src="database-loader.js"></script>
 
-
-
-
-
     <script>
 
+        /* ========================================
+           HOUSE / CHARACTER DATA
+        ======================================== */
+
+        const houses = [
+
+            {
+                name: "Dionysia",
+
+                characters: [
+                    "Jo",
+                    "Mio",
+                    "Elias",
+                    "Shion"
+                ]
+            },
+
+            {
+                name: "Frostheim",
+
+                characters: [
+                    "Jin",
+                    "Tohma",
+                    "Luca",
+                    "Kaito"
+                ]
+            },
+
+            {
+                name: "Sinostra",
+
+                characters: [
+                    "Taiga",
+                    "Ritsu",
+                    "Romeo"
+                ]
+            },
+
+            {
+                name: "Obscuary",
+
+                characters: [
+                    "Ed",
+                    "Lyca",
+                    "Rui"
+                ]
+            },
+
+            {
+                name: "Jabberwock",
+
+                characters: [
+                    "Haru",
+                    "Towa",
+                    "Ren"
+                ]
+            },
+
+            {
+                name: "Mortkranken",
+
+                characters: [
+                    "Yuri",
+                    "Jiro"
+                ]
+            },
+
+            {
+                name: "Hotarubi",
+
+                characters: [
+                    "Haku",
+                    "Subaru",
+                    "Zenji"
+                ]
+            },
+
+            {
+                name: "Vagastrom",
+
+                characters: [
+                    "Alan",
+                    "Sho",
+                    "Leo"
+                ]
+            }
+
+        ];
+
+
+        /* ========================================
+           CHARACTER DISPLAY NAMES
+
+           IMPORTANT:
+           These keys match the Google Sheet.
+        ======================================== */
+
+        const characterNames = {
+
+            Jo: "Jo Kongoza",
+            Mio: "Mio Susuhara",
+            Elias: "Elias Pratt",
+            Shion: "Shion Genkai",
+
+            Jin: "Jin Kamurai",
+            Tohma: "Tohma Ishibashi",
+            Luca: "Lucas Errant",
+            Kaito: "Kaito Fuji",
+
+            Taiga: "Taiga Hoshibami",
+            Ritsu: "Ritsu Shinjo",
+            Romeo: "Romeo Lucci",
+
+            Ed: "Edward Hart",
+            Lyca: "Lyca Colt",
+            Rui: "Rui Mizuki",
+
+            Haru: "Haru Sagara",
+            Towa: "Towa Otonashi",
+            Ren: "Ren Shiranami",
+
+            Yuri: "Yuri Isami",
+            Jiro: "Jiro Kirisaki",
+
+            Haku: "Haku Kusanagi",
+            Subaru: "Subaru Kagami",
+            Zenji: "Zenji Kotodama",
+
+            Alan: "Alan Mido",
+            Sho: "Shohei Haizono",
+            Leo: "Leo Kurosagi"
+
+        };
 
 
         let database = null;
 
 
-
-        let cardList = [];
-
-
-
-
-
-        /* =========================================================
-
-           ELEMENT IMAGE
-
-        ========================================================= */
-
-
-
-        function getElementImage(card) {
-
-
-
-            const elementNumber =
-
-                Number(card.elementNumber);
-
-
-
-
-
-            if (elementNumber === 1) {
-
-                return "elements/leaf.png";
-
-            }
-
-
-
-
-
-            if (elementNumber === 2) {
-
-                return "elements/water.png";
-
-            }
-
-
-
-
-
-            if (elementNumber === 3) {
-
-                return "elements/fire.png";
-
-            }
-
-
-
-
-
-            return "";
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
+        /* ========================================
            ESCAPE HTML
-
-        ========================================================= */
-
-
+        ======================================== */
 
         function escapeHTML(value) {
 
-
-
             const div =
-
-                document.createElement("div");
-
-
-
-
+                document.createElement(
+                    "div"
+                );
 
             div.textContent =
-
                 value == null
-
                     ? ""
-
                     : String(value);
-
-
-
-
 
             return div.innerHTML;
 
-
-
         }
 
 
-
-
-
-        /* =========================================================
-
-           GET ALL CARDS
-
-        ========================================================= */
-
-
-
-        function getAllCards() {
-
-
-
-            if (!database || !database.cards) {
-
-                return [];
-
-            }
-
-
-
-
-
-            return Object.values(
-
-                database.cards
-
-            )
-
-            .filter(card => card && card.name)
-
-            .sort((a, b) =>
-
-                String(a.name)
-
-                    .localeCompare(
-
-                        String(b.name),
-
-                        undefined,
-
-                        {
-
-                            numeric: true,
-
-                            sensitivity: "base"
-
-                        }
-
-                    )
-
-            );
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           TAG CHECK
-
-        ========================================================= */
-
-
-
-        function hasTag(card, tag) {
-
-
-
-            const tags =
-
-                String(card.tags || "")
-
-                    .split(",")
-
-                    .map(tag =>
-
-                        tag.trim()
-
-                    )
-
-                    .filter(Boolean);
-
-
-
-
-
-            return tags.includes(tag);
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           TAG REGEX CHECK
-
-        ========================================================= */
-
-
-
-        function tagMatches(card, pattern) {
-
-
-
-            const tags =
-
-                String(card.tags || "");
-
-
-
-
-
-            return new RegExp(
-
-                "(^|, )(" +
-
-                pattern +
-
-                ")(,|$)"
-
-            ).test(tags);
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           SELECTED CARD TAGS
-
-        ========================================================= */
-
-
-
-        function getTags(card) {
-
-
+        /* ========================================
+           NORMALIZE CARD NAME
+        ======================================== */
+
+        function normalizeCardName(name) {
 
             return String(
-
-                card.tags || ""
-
-            );
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           TIER
-
-        ========================================================= */
-
-
-
-        function getTier(card) {
-
-
-
-            return Number(
-
-                card.elementNumber
-
-            );
-
-
+                name || ""
+            )
+            .replace(
+                /\s*\([^)]*\)/g,
+                ""
+            )
+            .replace(
+                /\s+/g,
+                " "
+            )
+            .trim();
 
         }
 
 
-
-
-
-        /* =========================================================
-
-           SUB MAIN 1
-
-        ========================================================= */
-
-
-
-        function getSubMain1(selected) {
-
-
-
-            const tags =
-
-                getTags(selected);
-
-
-
-            const tier =
-
-                getTier(selected);
-
-
-
-            let tierWanted = "";
-
-
-
-
-
-            if (tier === 1) {
-
-                tierWanted = 2;
-
-            }
-
-
-
-            else if (tier === 2) {
-
-                tierWanted = 3;
-
-            }
-
-
-
-            else if (tier === 3) {
-
-                tierWanted = 1;
-
-            }
-
-
-
-
-
-            const atk =
-
-                String(
-
-                    selected.atkType || ""
-
-                ).toUpperCase();
-
-
-
-
-
-            const primaryAtkWanted =
-
-                atk === "P"
-
-                    ? "SATK"
-
-                    : atk === "S"
-
-                        ? "PATK"
-
-                        : "";
-
-
-
-
-
-            const fallbackAtkWanted =
-
-                atk === "P"
-
-                    ? "PATK"
-
-                    : atk === "S"
-
-                        ? "SATK"
-
-                        : "";
-
-
-
-
-
-            const wanted = [];
-
-
-
-
-
-            if (tags.includes("Fury")) {
-
-
-
-                wanted.push(
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
+        /* ========================================
+           NUMBER VALUE
+        ======================================== */
+
+        function numberValue(value) {
 
             if (
-
-                tags.includes("Curse1") ||
-
-                tags.includes("Curse2")
-
+                value === null ||
+                value === undefined ||
+                value === ""
             ) {
 
-
-
-                wanted.push(
-
-                    "CRev",
-
-                    "Curse2"
-
-                );
-
-
+                return null;
 
             }
 
-
-
-
-
-            if (tags.includes("TS")) {
-
-
-
-                wanted.push(
-
-                    "STRev",
-
-                    "SHEnt",
-
-                    "TS",
-
-                    "SWRev"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("Charge")) {
-
-
-
-                wanted.push(
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("DH")) {
-
-
-
-                wanted.push(
-
-                    "SLRev",
-
-                    "SLHEnt",
-
-                    "DH"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            const fallback = [];
-
-
-
-
-
-            if (tags.includes("SLRev")) {
-
-                fallback.push("DH");
-
-            }
-
-
-
-
-
-            if (tags.includes("CRev")) {
-
-                fallback.push("Curse2");
-
-            }
-
-
-
-
-
-            if (tags.includes("SWRev")) {
-
-                fallback.push("TS");
-
-            }
-
-
-
-
-
-            if (
-
-                tags.includes("STRev") ||
-
-                tags.includes("SREnt") ||
-
-                tags.includes("SHEnt")
-
-            ) {
-
-
-
-                fallback.push("TS");
-
-
-
-            }
-
-
-
-
-
-            if (
-
-                tags.includes("SLHEnt") ||
-
-                tags.includes("SLREnt")
-
-            ) {
-
-
-
-                fallback.push("DH");
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("Sweep2")) {
-
-                fallback.push("Veng");
-
-            }
-
-
-
-
-
-            const specialTags = [
-
-
-
-                "Fury",
-
-                "Curse1",
-
-                "Curse2",
-
-                "TS",
-
-                "Charge",
-
-                "DH",
-
-                "Guard",
-
-                "SLRev",
-
-                "CRev",
-
-                "SWRev",
-
-                "STRev",
-
-                "SREnt",
-
-                "SHEnt",
-
-                "SLHEnt",
-
-                "SLREnt",
-
-                "Sweep2"
-
-
-
-            ];
-
-
-
-
-
-            const hasSpecial =
-
-                specialTags.some(
-
-                    tag => tags.includes(tag)
-
-                );
-
-
-
-
-
-            if (!hasSpecial) {
-
-
-
-                fallback.push(
-
-                    "Veng",
-
-                    "STRev",
-
-                    "SWRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            const wantedTags = [
-
-
-
-                ...wanted,
-
-                ...fallback
-
-
-
-            ];
-
-
-
-
-
-            if (hasTag(selected, "Guard")) {
-
-
-
-                return {
-
-                    message:
-
-                        "DONT MAIN THIS PLEASE"
-
-                };
-
-
-
-            }
-
-
-
-
-
-            const candidates =
-
-                cardList.filter(card => {
-
-
-
-                    if (
-
-                        hasTag(card, "Guard")
-
-                    ) {
-
-                        return false;
-
-                    }
-
-
-
-
-
-                    if (
-
-                        Number(card.mr) === -2
-
-                    ) {
-
-                        return false;
-
-                    }
-
-
-
-
-
-                    if (
-
-                        getTier(card) !==
-
-                        tierWanted
-
-                    ) {
-
-                        return false;
-
-                    }
-
-
-
-
-
-                    if (
-
-                        !wantedTags.some(
-
-                            tag =>
-
-                                hasTag(card, tag)
-
-                        )
-
-                    ) {
-
-                        return false;
-
-                    }
-
-
-
-
-
-                    if (
-
-                        hasTag(
-
-                            selected,
-
-                            "SLRev"
-
-                        )
-
-                    ) {
-
-                        return true;
-
-                    }
-
-
-
-
-
-                    return true;
-
-
-
-                });
-
-
-
-
-
-            if (
-
-                hasTag(
-
-                    selected,
-
-                    "SLRev"
-
-                )
-
-            ) {
-
-
-
-                return candidates;
-
-
-
-            }
-
-
-
-
-
-            const primary =
-
-                candidates.filter(
-
-                    card =>
-
-                        primaryAtkWanted &&
-
-                        hasTag(
-
-                            card,
-
-                            primaryAtkWanted
-
-                        )
-
-                );
-
-
-
-
-
-            if (primary.length) {
-
-                return primary;
-
-            }
-
-
-
-
-
-            return candidates.filter(
-
-                card =>
-
-                    fallbackAtkWanted &&
-
-                    hasTag(
-
-                        card,
-
-                        fallbackAtkWanted
-
-                    )
-
-            );
-
-
+            const cleaned =
+                String(value)
+                    .replace(/,/g, "")
+                    .replace(/[^\d.-]/g, "");
+
+            const number =
+                parseFloat(cleaned);
+
+            return Number.isNaN(number)
+                ? null
+                : number;
 
         }
 
 
-
-
-
-        /* =========================================================
-
-           SUB MAIN 2
-
-        ========================================================= */
-
-
-
-        function getSubMain2(selected) {
-
-
-
-            const tags =
-
-                getTags(selected);
-
-
-
-            const tier =
-
-                getTier(selected);
-
-
-
-
-
-            const onlyPureAtk =
-
-                /^PATK(, Sweep1)?$/.test(tags) ||
-
-                /^SATK(, Sweep1)?$/.test(tags) ||
-
-                /^PATK, PRev$/.test(tags) ||
-
-                /^SATK, PRev$/.test(tags);
-
-
-
-
-
-            const baseWanted = [];
-
-
-
-
-
-            if (onlyPureAtk) {
-
-
-
-                baseWanted.push(
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("Fury")) {
-
-
-
-                baseWanted.push(
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
+        /* ========================================
+           ADD DROPDOWN OPTION
+        ======================================== */
+
+        function addOption(
+            select,
+            value,
+            text
+        ) {
 
             if (
-
-                tags.includes("Curse1") ||
-
-                tags.includes("Curse2")
-
+                value === null ||
+                value === undefined ||
+                value === ""
             ) {
-
-
-
-                baseWanted.push(
-
-                    "CRev",
-
-                    "Curse2"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("TS")) {
-
-
-
-                baseWanted.push(
-
-                    "STRev",
-
-                    "SHEnt",
-
-                    "SLEnt",
-
-                    "SREnt",
-
-                    "TS",
-
-                    "SWRev"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("Charge")) {
-
-
-
-                baseWanted.push(
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("DH")) {
-
-
-
-                baseWanted.push(
-
-                    "SLRev",
-
-                    "SLHEnt"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("SLRev")) {
-
-                baseWanted.push("DH");
-
-            }
-
-
-
-
-
-            if (tags.includes("CRev")) {
-
-                baseWanted.push("Curse2");
-
-            }
-
-
-
-
-
-            if (tags.includes("SWRev")) {
-
-                baseWanted.push("TS");
-
-            }
-
-
-
-
-
-            if (tags.includes("SWEnt")) {
-
-                baseWanted.push("TS");
-
-            }
-
-
-
-
-
-            if (
-
-                tags.includes("STRev") ||
-
-                tags.includes("SREnt") ||
-
-                tags.includes("SHEnt")
-
-            ) {
-
-
-
-                baseWanted.push("TS");
-
-
-
-            }
-
-
-
-
-
-            if (
-
-                tags.includes("SLHEnt") ||
-
-                tags.includes("SLREnt") ||
-
-                tags.includes("SLLEnt")
-
-            ) {
-
-
-
-                baseWanted.push("DH");
-
-
-
-            }
-
-
-
-
-
-            if (tags.includes("Sweep2")) {
-
-                baseWanted.push("Veng");
-
-            }
-
-
-
-
-
-            if (tags.includes("Veng")) {
-
-                baseWanted.push("Veng");
-
-            }
-
-
-
-
-
-            const uniqueBase =
-
-                [...new Set(baseWanted)];
-
-
-
-
-
-            let wanted;
-
-
-
-
-
-            if (
-
-                tags.includes("TS") ||
-
-                tags.includes("Curse1") ||
-
-                tags.includes("Curse2") ||
-
-                tags.includes("DH")
-
-            ) {
-
-
-
-                wanted =
-
-                    uniqueBase;
-
-
-
-            }
-
-
-
-            else if (
-
-                uniqueBase.length
-
-            ) {
-
-
-
-                wanted = [
-
-
-
-                    ...uniqueBase,
-
-
-
-                    "Veng",
-
-                    "STRev",
-
-                    "SWRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-
-
-                ];
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                wanted = [
-
-
-
-                    "Veng",
-
-                    "STRev",
-
-                    "SWRev",
-
-                    "SLRev",
-
-                    "SHEnt",
-
-                    "SLHEnt"
-
-
-
-                ];
-
-
-
-            }
-
-
-
-
-
-            const neededTier =
-
-                tier === 1
-
-                    ? 3
-
-                    : tier === 2
-
-                        ? 1
-
-                        : tier === 3
-
-                            ? 2
-
-                            : null;
-
-
-
-
-
-            if (
-
-                hasTag(selected, "Guard")
-
-            ) {
-
-
-
-                return {
-
-                    message:
-
-                        "DONT MAIN THIS PLEASE"
-
-                };
-
-
-
-            }
-
-
-
-
-
-            if (!wanted.length) {
-
-                return [];
-
-            }
-
-
-
-
-
-            return cardList.filter(card => {
-
-
-
-                if (
-
-                    hasTag(card, "Guard")
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                const mr =
-
-                    Number(card.mr);
-
-
-
-
-
-                if (
-
-                    mr === -1 ||
-
-                    mr === -2
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                if (
-
-                    getTier(card) !==
-
-                    neededTier
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                return wanted.some(
-
-                    tag =>
-
-                        hasTag(card, tag)
-
-                );
-
-
-
-            });
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           GUARD
-
-        ========================================================= */
-
-
-
-        function getGuard(selected) {
-
-
-
-            const tags =
-
-                getTags(selected);
-
-
-
-
-
-            if (
-
-                hasTag(selected, "Guard")
-
-            ) {
-
-
-
-                return {
-
-                    message:
-
-                        "DONT MAIN THIS PLEASE"
-
-                };
-
-
-
-            }
-
-
-
-
-
-            let wantedTags = [];
-
-
-
-
-
-            if (tags.includes("TS")) {
-
-
-
-                wantedTags = [
-
-
-
-                    "STRev",
-
-                    "SWRev"
-
-
-
-                ];
-
-
-
-            }
-
-
-
-            else if (
-
-                tags.includes("DH")
-
-            ) {
-
-
-
-                wantedTags = [
-
-                    "SLRev"
-
-                ];
-
-
-
-            }
-
-
-
-            else if (
-
-                tags.includes("Curse1") ||
-
-                tags.includes("Curse2")
-
-            ) {
-
-
-
-                wantedTags = [
-
-                    "CRev"
-
-                ];
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                return cardList.filter(
-
-                    card =>
-
-                        hasTag(
-
-                            card,
-
-                            "Guard"
-
-                        )
-
-                );
-
-
-
-            }
-
-
-
-
-
-            return cardList.filter(card => {
-
-
-
-                if (
-
-                    !hasTag(card, "Guard")
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                return wantedTags.some(
-
-                    tag =>
-
-                        hasTag(card, tag)
-
-                );
-
-
-
-            });
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           SWEEPERS
-
-        ========================================================= */
-
-
-
-        function getSweepers(selected) {
-
-
-
-            if (
-
-                hasTag(selected, "Guard")
-
-            ) {
-
-
-
-                return {
-
-                    message:
-
-                        "DONT MAIN THIS PLEASE"
-
-                };
-
-
-
-            }
-
-
-
-
-
-            /*
-
-             \* This intentionally follows the
-
-             \* Google Sheets formula:
-
-             \*
-
-             \* PATK -> SATK
-
-             \* everything else -> PATK
-
-             */
-
-
-
-            const atkTag =
-
-                hasTag(
-
-                    selected,
-
-                    "PATK"
-
-                )
-
-                    ? "SATK"
-
-                    : "PATK";
-
-
-
-
-
-            return cardList.filter(card => {
-
-
-
-                if (
-
-                    hasTag(card, "Guard")
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                return (
-
-
-
-                    hasTag(
-
-                        card,
-
-                        atkTag
-
-                    ) &&
-
-
-
-                    hasTag(
-
-                        card,
-
-                        "Sweep2"
-
-                    )
-
-
-
-                );
-
-
-
-            });
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           SUPPORTS
-
-        ========================================================= */
-
-
-
-        function getSupports(selected) {
-
-
-
-            const tags =
-
-                getTags(selected);
-
-
-
-
-
-            if (
-
-                hasTag(selected, "Guard")
-
-            ) {
-
-
-
-                return {
-
-                    message:
-
-                        "DONT MAIN THIS PLEASE"
-
-                };
-
-
-
-            }
-
-
-
-
-
-            let wanted;
-
-
-
-
-
-            if (
-
-                tags.includes("TS")
-
-            ) {
-
-
-
-                wanted = [
-
-
-
-                    "STRev",
-
-                    "SWRev"
-
-
-
-                ];
-
-
-
-            }
-
-
-
-            else if (
-
-                tags.includes("Curse1") ||
-
-                tags.includes("Curse2")
-
-            ) {
-
-
-
-                wanted = [
-
-                    "CRev"
-
-                ];
-
-
-
-            }
-
-
-
-            else if (
-
-                tags.includes("DH")
-
-            ) {
-
-
-
-                wanted = [
-
-                    "SLRev"
-
-                ];
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                wanted = [
-
-
-
-                    "STRev",
-
-                    "SLRev",
-
-                    "SWRev"
-
-
-
-                ];
-
-
-
-            }
-
-
-
-
-
-            return cardList.filter(card => {
-
-
-
-                if (
-
-                    hasTag(card, "Guard")
-
-                ) {
-
-                    return false;
-
-                }
-
-
-
-
-
-                return wanted.some(
-
-                    tag =>
-
-                        hasTag(card, tag)
-
-                );
-
-
-
-            });
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           TEAM BUILDING GUIDE
-
-           Hard-coded version of the Google Sheets TEXTJOIN logic.
-
-        ========================================================= */
-
-
-
-        function getTeamBuildingGuide(card) {
-
-
-
-            const messages = [];
-
-
-
-            const hasDH =
-
-                hasTag(card, "DH");
-
-
-
-            const hasTS =
-
-                hasTag(card, "TS");
-
-
-
-            const hasCurse1 =
-
-                hasTag(card, "Curse1");
-
-
-
-            const hasCurse2 =
-
-                hasTag(card, "Curse2");
-
-
-
-
-
-            /*
-
-             \* General text appears when the card does NOT have
-
-             \* DH, TS, Curse1, or Curse2.
-
-             */
-
-
-
-            if (
-
-                !hasDH &&
-
-                !hasTS &&
-
-                !hasCurse1 &&
-
-                !hasCurse2
-
-            ) {
-
-
-
-                messages.push(
-
-                    "General damage cards will just need general supports like sweepers and stun/sleep revenges that are universally good."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasTag(card, "Fury")) {
-
-
-
-                messages.push(
-
-                    "Fury units do not require any specific support cards, so it's best to aim for teams that have general benefits, like stun revenge, sleep revenge, and general damage dealers / sweepers to give your main space to use fury."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasCurse1) {
-
-
-
-                messages.push(
-
-                    "Curse cards with curse attack or elemental curse are often difficult to control due to the random application of curse that cannot be avoided. However, curse revenge cards are still useful, as are sweepers to help clear cursed fodder."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasCurse2) {
-
-
-
-                messages.push(
-
-                    "Curse cards that don't have curse attack are much better than those with curse attack, and can provide much better targeted damage. Curse revenge guards and support cards will be the best way to keep your damage focused."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasTS) {
-
-
-
-                messages.push(
-
-                    "Time Strike cards will always need Stun Revenge supports and guards to provide enough Stun to proc Time Strike and deal damage. In addition, sweepers are greatly needed to keep the pace of the battle in your favor, and clear stunned/useless fodder."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasTag(card, "Charge")) {
-
-
-
-                messages.push(
-
-                    "Charge cards are very TU intensive and need a lot of space to charge up and buff themselves, so stun and sleep revenge cards are the best way to give them space."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasTag(card, "Guard")) {
-
-
-
-                messages.push(
-
-                    "Guards are useful to use for your mains but pls don't main them..."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            if (hasDH) {
-
-
-
-                messages.push(
-
-                    "Dream Hunt cards need sleep revenge supports and guards to focus and target damage and teams should center around this."
-
-                );
-
-
-
-            }
-
-
-
-
-
-            return messages;
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RENDER CARD KIT INFORMATION
-
-        ========================================================= */
-
-
-
-        function renderCardKitInfo(card, targetId = "selectedCardKitInfo") {
-
-
-
-            const container =
-
-                document.getElementById(targetId);
-
-
-
-
-
-            if (!container) {
 
                 return;
 
             }
 
+            const option =
+                document.createElement(
+                    "option"
+                );
 
+            option.value =
+                value;
 
+            option.textContent =
+                text || value;
 
+            select.appendChild(
+                option
+            );
+
+        }
 
-            const atkType =
 
-                String(
+        /* ========================================
+           CHARACTER DROPDOWN
+        ======================================== */
 
-                    card.atkType || ""
+        function buildDropdownFromLookup(elementId, values, defaultLabel, displayMap) {
 
-                ).trim();
+            const select = document.getElementById(elementId);
+            select.innerHTML = "";
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = defaultLabel;
+            select.appendChild(defaultOption);
 
+            (Array.isArray(values) ? values : []).forEach(value => {
+                const key = String(value).trim();
+                if (!key) return;
+                addOption(select, key, displayMap && displayMap[key] ? displayMap[key] : key);
+            });
 
+        }
 
 
+        function buildCharacterDropdown() {
+            const lookup = (database && database.cardLookup) || {};
+            buildDropdownFromLookup(
+                "characterFilter",
+                lookup.characters,
+                "All Characters",
+                characterNames
+            );
+        }
 
-            const speed =
 
-                String(
+        function buildStaticFilterDropdowns() {
+            const lookup = (database && database.cardLookup) || {};
+            buildDropdownFromLookup("houseFilter", lookup.houses, "All Houses");
+            buildDropdownFromLookup("elementFilter", lookup.elements, "All Elements");
+            buildDropdownFromLookup("atkTypeFilter", lookup.atkTypes, "All ATK Types");
+            buildDropdownFromLookup("tagsFilter", lookup.tags, "All Tags");
+        }
 
-                    card.speed ?? ""
 
-                ).trim();
+        /* ========================================
+           FILTER DROPDOWNS
+        ======================================== */
 
+        function buildFilterDropdowns() {
 
+            const lookup =
+                database.cardLookup ||
+                {};
 
 
+            const passiveSelect =
+                document.getElementById(
+                    "passiveFilter"
+                );
 
-            const mr =
+            const skill1Select =
+                document.getElementById(
+                    "skill1Filter"
+                );
 
-                String(
+            const skill2Select =
+                document.getElementById(
+                    "skill2Filter"
+                );
 
-                    card.mr ?? ""
+            const omitSkillSelect =
+                document.getElementById(
+                    "omitSkillFilter"
+                );
 
-                ).trim();
 
+            passiveSelect.innerHTML = `
+                <option value="">
+                    All Passives
+                </option>
+            `;
 
+            skill1Select.innerHTML = `
+                <option value="">
+                    All Skills
+                </option>
+            `;
 
+            skill2Select.innerHTML = `
+                <option value="">
+                    All Skills
+                </option>
+            `;
 
+            omitSkillSelect.innerHTML = `
+                <option value="">
+                    No Omit Skill
+                </option>
+            `;
 
-            const elementName =
 
-                String(
+            const passives = Array.isArray(lookup.passives) ? lookup.passives : [];
 
-                    card.element || ""
 
-                ).trim();
+            passives.forEach(
+                passive => {
 
-
-
-
-
-            const elementImage =
-
-                getElementImage(card);
-
-
-
-
-
-            const passive =
-
-                String(
-
-                    card.passive || ""
-
-                ).trim();
-
-
-
-
-
-            const skills =
-
-                Array.isArray(card.skills)
-
-                    ? card.skills
-
-                    : [];
-
-
-
-
-
-            const ultimate =
-
-                card.ultimate || {};
-
-
-
-
-
-            const abilities = [];
-
-
-
-
-
-            if (passive) {
-
-
-
-                abilities.push({
-
-
-
-                    name:
-
-                        "PASSIVE",
-
-
-
-                    description:
-
+                    addOption(
+                        passiveSelect,
+                        passive,
                         passive
+                    );
+
+                }
+            );
 
 
-
-                });
-
-
-
-            }
-
-
-
+            const skills = Array.isArray(lookup.skill1) ? lookup.skill1 : [];
 
 
             skills.forEach(
+                skill => {
 
-                (skill, index) => {
+                    addOption(
+                        skill1Select,
+                        skill,
+                        skill
+                    );
 
-
-
-                    const name =
-
-                        String(
-
-                            skill?.name || ""
-
-                        ).trim();
-
-
-
-
-
-                    const description =
-
-                        String(
-
-                            skill?.description || ""
-
-                        ).trim();
-
-
-
-
-
-                    if (
-
-                        name ||
-
-                        description
-
-                    ) {
-
-
-
-                        abilities.push({
-
-
-
-                            name:
-
-                                name ||
-
-                                `SKILL ${index + 1}`,
-
-
-
-                            description:
-
-                                description ||
-
-                                "—"
-
-
-
-                        });
-
-
-
-                    }
-
-
+                    addOption(
+                        skill2Select,
+                        skill,
+                        skill
+                    );
 
                 }
-
             );
 
 
+            const omitSkills =
+                Array.isArray(
+                    lookup.omitSkill
+                )
+                    ? lookup.omitSkill
+                    : skills;
 
 
+            omitSkills.forEach(
+                skill => {
 
-            const ultimateName =
+                    addOption(
+                        omitSkillSelect,
+                        skill,
+                        skill
+                    );
 
-                String(
+                }
+            );
 
-                    ultimate.name || ""
+        }
 
-                ).trim();
 
+        /* ========================================
+           GET CARD OWNERS
+        ======================================== */
 
+        function getCardOwners(cardKey) {
 
+            const owners = [];
 
+            const characters =
+                database.characters ||
+                {};
 
-            const ultimateDescription =
 
-                String(
+            Object.keys(
+                characters
+            )
+            .forEach(
+                characterKey => {
 
-                    ultimate.description || ""
+                    const characterCards =
+                        characters[
+                            characterKey
+                        ] || [];
 
-                ).trim();
 
-
-
-
-
-            if (
-
-                ultimateName ||
-
-                ultimateDescription
-
-            ) {
-
-
-
-                abilities.push({
-
-
-
-                    name:
-
-                        ultimateName ||
-
-                        "UNIQUE",
-
-
-
-                    description:
-
-                        ultimateDescription ||
-
-                        "—"
-
-
-
-                });
-
-
-
-            }
-
-
-
-
-
-            const elementMarkup = elementImage
-                ? `<img src="${elementImage}" alt="${escapeHTML(elementName || "Element")}" title="${escapeHTML(elementName)}" style="width:20px;height:20px;vertical-align:middle;object-fit:contain;">`
-                : "—";
-
-
-            const stats = `
-
-
-
-                <div class="card-kit-stats">
-
-
-
-
-
-                    <div class="card-kit-stat">
-
-
-
-                        <div class="card-kit-stat-label">
-
-                            ATK
-
-                        </div>
-
-
-
-                        <div class="card-kit-stat-value">
-
-
-
-                            ${escapeHTML(
-
-                                atkType || "—"
-
-                            )}
-
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-
-                    <div class="card-kit-stat">
-
-
-
-                        <div class="card-kit-stat-label">
-
-                            SPD
-
-                        </div>
-
-
-
-                        <div class="card-kit-stat-value">
-
-
-
-                            ${escapeHTML(
-
-                                speed || "—"
-
-                            )}
-
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-
-                    <div class="card-kit-stat">
-
-
-
-                        <div class="card-kit-stat-label">
-
-                            MR
-
-                        </div>
-
-
-
-                        <div class="card-kit-stat-value">
-
-
-
-                            ${escapeHTML(
-
-                                mr || "—"
-
-                            )}
-
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-
-                    <div class="card-kit-stat">
-
-
-
-                        <div class="card-kit-stat-label">
-
-                            EL
-
-                        </div>
-
-
-
-                        <div class="card-kit-stat-value">
-
-
-
-                            ${elementMarkup}
-
-
-
-                        </div>
-
-
-
-                    </div>
-
-
-
-
-
-                </div>
-
-
-
-            `;
-
-
-
-
-
-            const abilitiesMarkup =
-
-
-
-                abilities.length
-
-
-
-                    ? `
-
-
-
-                        <div class="card-kit-abilities">
-
-
-
-                            ${abilities
-
-                                .map(
-
-                                    ability => `
-
-
-
-                                    <div class="card-kit-ability">
-
-
-
-
-
-                                        <div class="card-kit-ability-name">
-
-
-
-                                            ${escapeHTML(
-
-                                                ability.name
-
-                                            )}
-
-
-
-                                        </div>
-
-
-
-
-
-                                        <div class="card-kit-ability-description">
-
-
-
-                                            ${escapeHTML(
-
-                                                ability.description
-
-                                            )}
-
-
-
-                                        </div>
-
-
-
-
-
-                                    </div>
-
-
-
-                                `
-
+                    const hasCard =
+                        characterCards.some(
+                            cardName =>
+                                normalizeCardName(
+                                    cardName
+                                ) ===
+                                normalizeCardName(
+                                    cardKey
                                 )
-
-                                .join("")}
-
-
-
-                        </div>
-
-
-
-                    `
-
-
-
-                    : `
-
-
-
-                        <div class="card-kit-empty">
-
-
-
-                            No card kit information available.
-
-
-
-                        </div>
-
-
-
-                    `;
-
-
-
-
-
-            if (targetId === "selectedCardKitInfo") container.className = "card-kit-info";
-
-
-
-
-
-            container.innerHTML =
-
-
-
-                `
-
-
-
-                    <div class="card-kit-title">
-
-
-
-                        CARD KIT
-
-
-
-                    </div>
-
-
-
-                    ${stats}
-
-
-
-                    ${abilitiesMarkup}
-
-
-
-                `;
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RENDER SELECTED CARD
-
-        ========================================================= */
-
-
-
-        function renderSelectedCardInfo(card) {
-
-
-
-            const name =
-
-                document.getElementById(
-
-                    "selectedCardName"
-
-                );
-
-
-
-
-
-            const element =
-
-                document.getElementById(
-
-                    "selectedCardElement"
-
-                );
-
-
-
-
-
-            name.textContent =
-
-                card.name;
-
-
-
-
-
-            const image =
-
-                getElementImage(card);
-
-
-
-
-
-            if (image) {
-
-
-
-                element.innerHTML = `
-                    <img
-                        src="${image}"
-                        alt="${escapeHTML(card.element || "Element") }"
-                        title="${escapeHTML(card.element || "") }"
-                    >
-                `;
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                element.innerHTML =
-
-                    `<span>—</span>`;
-
-
-
-            }
-
-
-
-
-
-            renderCardKitInfo(card);
-
-
-
-
-
-            const notes =
-
-                document.getElementById(
-
-                    "selectedCardNotes"
-
-                );
-
-
-
-
-
-            const guide =
-
-                document.getElementById(
-
-                    "selectedCardGuide"
-
-                );
-
-
-
-
-
-            const notesText =
-
-                card.thoughtsNotes ??
-
-                card.thoughtsAndNotes ??
-
-                card.notes ??
-
-                "";
-
-
-
-
-
-            if (
-
-                String(notesText).trim()
-
-            ) {
-
-
-
-                notes.textContent =
-
-                    String(
-
-                        notesText
-
-                    ).trim();
-
-
-
-
-
-                notes.classList.remove(
-
-                    "selected-detail-empty"
-
-                );
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                notes.textContent =
-
-                    "No thoughts or notes for this card.";
-
-
-
-
-
-                notes.classList.add(
-
-                    "selected-detail-empty"
-
-                );
-
-
-
-            }
-
-
-
-
-
-            const guideMessages =
-
-                getTeamBuildingGuide(card);
-
-
-
-
-
-            if (
-
-                guideMessages.length
-
-            ) {
-
-
-
-                guide.textContent =
-
-                    guideMessages.join(
-
-                        "\n\n"
-
-                    );
-
-
-
-
-
-                guide.classList.remove(
-
-                    "selected-detail-empty"
-
-                );
-
-
-
-            }
-
-
-
-            else {
-
-
-
-                guide.textContent =
-
-                    "No team building guide available for this card.";
-
-
-
-
-
-                guide.classList.add(
-
-                    "selected-detail-empty"
-
-                );
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RENDER RECOMMENDATION LIST
-
-        ========================================================= */
-
-
-
-        function renderRecommendationList(
-
-            elementId,
-
-            results
-
-        ) {
-
-
-
-            const container =
-
-                document.getElementById(
-
-                    elementId
-
-                );
-
-
-
-
-
-            if (
-
-                results &&
-
-                results.message
-
-            ) {
-
-
-
-                container.innerHTML = `
-
-
-
-                    <div class="recommendation-empty">
-
-
-
-                        ${escapeHTML(
-
-                            results.message
-
-                        )}
-
-
-
-                    </div>
-
-
-
-                `;
-
-
-
-                return;
-
-
-
-            }
-
-
-
-
-
-            if (
-
-                !results ||
-
-                !results.length
-
-            ) {
-
-
-
-                container.innerHTML = `
-
-
-
-                    <div class="recommendation-empty">
-
-
-
-                        No good matches
-
-
-
-                    </div>
-
-
-
-                `;
-
-
-
-                return;
-
-
-
-            }
-
-
-
-
-
-            container.innerHTML =
-
-
-
-                results
-
-
-
-                    .map(card => {
-
-
-
-                        const image =
-
-                            getElementImage(
-
-                                card
-
-                            );
-
-
-
-
-
-                        return `
-
-
-
-                            <div
-
-                                class="recommendation-card"
-
-                            >
-
-
-
-                                ${
-
-                                    image
-
-
-
-                                        ? `
-
-
-
-                                        <img
-
-                                            class="recommendation-element"
-
-                                            src="${image}"
-
-                                            alt=""
-
-                                        >
-
-
-
-                                        `
-
-
-
-                                        : ""
-
-                                }
-
-
-
-
-
-                                <div
-
-                                    class="recommendation-name"
-
-                                >
-
-
-
-                                    ${escapeHTML(
-
-                                        card.name
-
-                                    )}
-
-
-
-                                </div>
-
-
-
-
-
-                            </div>
-
-
-
-                        `;
-
-
-
-                    })
-
-
-
-                    .join("");
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           RENDER ALL RECOMMENDATIONS
-
-        ========================================================= */
-
-
-
-        function renderAllRecommendations(
-
-            selected
-
-        ) {
-
-
-
-            renderRecommendationList(
-
-                "subMain1",
-
-                getSubMain1(selected)
-
-            );
-
-
-
-
-
-            renderRecommendationList(
-
-                "subMain2",
-
-                getSubMain2(selected)
-
-            );
-
-
-
-
-
-            renderRecommendationList(
-
-                "guard",
-
-                getGuard(selected)
-
-            );
-
-
-
-
-
-            renderRecommendationList(
-
-                "sweepers",
-
-                getSweepers(selected)
-
-            );
-
-
-
-
-
-            renderRecommendationList(
-
-                "supports",
-
-                getSupports(selected)
-
-            );
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           POPULATE CARD DROPDOWN
-
-        ========================================================= */
-
-
-
-        function populateCardSelect() {
-
-
-
-            const select =
-
-                document.getElementById(
-
-                    "cardSelect"
-
-                );
-
-
-
-
-
-            select.innerHTML = `
-
-
-
-                <option value="">
-
-                    Select a card...
-
-                </option>
-
-
-
-            `;
-
-
-
-
-
-            for (
-
-                const card
-
-                of cardList
-
-            ) {
-
-
-
-                const option =
-
-                    document.createElement(
-
-                        "option"
-
-                    );
-
-
-
-
-
-                option.value =
-
-                    card.name;
-
-
-
-
-
-                option.textContent =
-
-                    card.name;
-
-
-
-
-
-                select.appendChild(
-
-                    option
-
-                );
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           APPLY DATABASE
-
-        ========================================================= */
-
-
-
-
-        function populatePlannerSelects() {
-            document.querySelectorAll('.planner-select').forEach(select => {
-                const current = select.value;
-                select.innerHTML = '<option value="">Choose a card...</option>' + cardList.map(card => `<option value="${escapeHTML(card.name)}">${escapeHTML(card.name)}</option>`).join('');
-                if (current && cardList.some(card => card.name === current)) select.value = current;
-            });
-        }
-
-        function getPlannerCard(name) {
-            return cardList.find(card => String(card.name) === String(name)) || null;
-        }
-
-        function renderPlannerSlot(slot, card) {
-            const kit = document.getElementById(`plannerKit-${slot}`);
-            if (kit) {
-                if (card) renderCardKitInfo(card, `plannerKit-${slot}`);
-                else kit.innerHTML = '<div class="planner-empty">Choose a card to view its full kit.</div>';
-            }
-            const summary = document.getElementById(`plannerSummary-${slot}`);
-            if (summary) {
-                if (!card) {
-                    summary.className = 'planner-support-summary is-empty';
-                    summary.textContent = 'Empty';
-                } else {
-                    const skills = Array.isArray(card.skills) ? card.skills : [];
-                    const ultimate = card.ultimate || {};
-                    const elementClass = Number(card.elementNumber) === 1 ? 'element-leaf' : Number(card.elementNumber) === 2 ? 'element-water' : Number(card.elementNumber) === 3 ? 'element-fire' : '';
-                    const cell = (heading, value, extraClass = '') =>
-                        `<div class="support-table-cell ${extraClass}"><strong>${escapeHTML(heading)}</strong><span>${escapeHTML(value || '—')}</span></div>`;
-                    const abilityCell = (ability, fallback) => {
-                        const name = String(ability?.name || fallback || '').trim();
-                        const description = String(ability?.description || '').trim();
-                        return `<div class="support-table-cell support-ability-cell"><strong>${escapeHTML(name || '—')}</strong><span>${escapeHTML(description || '—').replace(/\n/g, '<br>')}</span></div>`;
-                    };
-                    summary.className = 'planner-support-summary';
-                    summary.innerHTML = `<div class="support-card-row ${elementClass}">` +
-                        `<div class="support-table-cell support-name-cell"><span>${escapeHTML(card.name)}</span></div>` +
-                        cell('ATK', String(card.atkType || '—')) +
-                        cell('SPD', String(card.speed ?? '—')) +
-                        cell('PASSIVE', String(card.passive || '—')) +
-                        skills.map((skill, i) => abilityCell(skill, `SKILL ${i + 1}`)).join('') +
-                        abilityCell(ultimate, 'ULTIMATE') +
-                        `</div>`;
-                }
-            }
-        }
-
-        document.querySelectorAll('.planner-select').forEach(select => {
-            select.addEventListener('change', event => {
-                const slot = event.currentTarget.dataset.plannerSlot;
-                renderPlannerSlot(slot, getPlannerCard(event.currentTarget.value));
-            });
-        });
-        document.getElementById('clearTeamPlanner').addEventListener('click', () => {
-            document.querySelectorAll('.planner-select').forEach(select => {
-                select.value = '';
-                renderPlannerSlot(select.dataset.plannerSlot, null);
-            });
-        });
-
-        function applyDatabase(data) {
-
-
-
-            database = data;
-
-
-
-
-
-            cardList =
-
-                getAllCards();
-
-
-
-
-
-            populateCardSelect();
-            populatePlannerSelects();
-
-
-
-
-
-            const status =
-
-                document.getElementById(
-
-                    "teamStatus"
-
-                );
-
-
-
-
-
-            status.textContent =
-
-                `${cardList.length} cards loaded.`;
-
-
-
-
-
-            status.classList.remove(
-
-                "error"
-
-            );
-
-
-
-
-
-            const select =
-
-                document.getElementById(
-
-                    "cardSelect"
-
-                );
-
-
-
-
-
-            /*
-
-             \* Automatically select the first card
-
-             \* so the page is immediately populated.
-
-             */
-
-
-
-            if (cardList.length) {
-
-
-
-                select.value =
-
-                    cardList[0].name;
-
-
-
-
-
-                renderSelectedCardInfo(
-
-                    cardList[0]
-
-                );
-
-
-
-
-
-                renderAllRecommendations(
-
-                    cardList[0]
-
-                );
-
-
-
-            }
-
-
-
-        }
-
-
-
-
-
-        /* =========================================================
-
-           DROPDOWN CHANGE
-
-        ========================================================= */
-
-
-
-        document
-
-            .getElementById("cardSelect")
-
-            .addEventListener(
-
-                "change",
-
-                event => {
-
-
-
-                    const selectedName =
-
-                        event.target.value;
-
-
-
-
-
-                    const selected =
-
-                        cardList.find(
-
-                            card =>
-
-                                card.name ===
-
-                                selectedName
-
                         );
 
 
+                    if (hasCard) {
+
+                        owners.push(
+                            characterKey
+                        );
+
+                    }
+
+                }
+            );
 
 
+            return owners;
 
-                    if (!selected) {
+        }
+
+
+        /* ========================================
+           GET CARD SKILL NAMES
+        ======================================== */
+
+        function getCardSkillNames(card) {
+
+            if (
+                !Array.isArray(
+                    card.skills
+                )
+            ) {
+
+                return [];
+
+            }
+
+
+            return card.skills
+                .map(
+                    skill =>
+                        String(
+                            skill.name || ""
+                        )
+                        .trim()
+                        .toLowerCase()
+                )
+                .filter(Boolean);
+
+        }
+
+
+        /* ========================================
+           ELEMENT CLASS
+        ======================================== */
+
+        function getElementClass(element) {
+
+            const value =
+                String(
+                    element || ""
+                )
+                .trim()
+                .toLowerCase();
+
+
+            if (value === "leaf") {
+                return "element-leaf";
+            }
+
+            if (value === "fire") {
+                return "element-fire";
+            }
+
+            if (value === "water") {
+                return "element-water";
+            }
+
+            return "";
+
+        }
+
+
+        /* ========================================
+           RERUN DATE
+        ======================================== */
+
+        function getRerunDate(card) {
+
+            if (
+                !card ||
+                !card.lastRerunDate
+            ) {
+
+                return null;
+
+            }
+
+
+            const parts =
+                String(
+                    card.lastRerunDate
+                )
+                .split("-")
+                .map(Number);
+
+
+            if (
+                parts.length !== 3 ||
+                parts.some(
+                    value =>
+                        Number.isNaN(value)
+                )
+            ) {
+
+                return null;
+
+            }
+
+
+            const date =
+                new Date(
+                    parts[0],
+                    parts[1] - 1,
+                    parts[2]
+                );
+
+
+            if (
+                Number.isNaN(
+                    date.getTime()
+                )
+            ) {
+
+                return null;
+
+            }
+
+
+            return date;
+
+        }
+
+
+        /* ========================================
+           RERUN AGE
+        ======================================== */
+
+        function getRerunAgeMs(card) {
+
+            const rerunDate =
+                getRerunDate(
+                    card
+                );
+
+
+            if (!rerunDate) {
+                return null;
+            }
+
+
+            return Math.max(
+                0,
+                Date.now() -
+                rerunDate.getTime()
+            );
+
+        }
+
+
+        /* ========================================
+           RERUN DISPLAY
+        ======================================== */
+
+        function formatRerunTime(card) {
+
+            const rerunDate =
+                getRerunDate(
+                    card
+                );
+
+
+            if (!rerunDate) {
+                return "—";
+            }
+
+
+            const now =
+                new Date();
+
+
+            let years =
+                now.getFullYear() -
+                rerunDate.getFullYear();
+
+
+            let months =
+                now.getMonth() -
+                rerunDate.getMonth();
+
+
+            let days =
+                now.getDate() -
+                rerunDate.getDate();
+
+
+            if (days < 0) {
+
+                months--;
+
+                const previousMonth =
+                    new Date(
+                        now.getFullYear(),
+                        now.getMonth(),
+                        0
+                    );
+
+                days +=
+                    previousMonth.getDate();
+
+            }
+
+
+            if (months < 0) {
+
+                years--;
+
+                months += 12;
+
+            }
+
+
+            const parts = [];
+
+
+            if (years > 0) {
+                parts.push(
+                    `${years}Y`
+                );
+            }
+
+            if (months > 0) {
+                parts.push(
+                    `${months}M`
+                );
+            }
+
+            if (days > 0) {
+                parts.push(
+                    `${days}D`
+                );
+            }
+
+
+            if (
+                parts.length === 0
+            ) {
+
+                return "<1D";
+
+            }
+
+
+            return parts.join(" ");
+
+        }
+
+
+        /* ========================================
+           FILTER CARDS
+        ======================================== */
+
+        function filterCards() {
+
+            if (!database) {
+                return [];
+            }
+
+
+            const cards =
+                database.cards ||
+                {};
+
+
+            const search =
+                document.getElementById(
+                    "searchInput"
+                )
+                .value
+                .toLowerCase()
+                .trim();
+
+
+            const house =
+                document.getElementById(
+                    "houseFilter"
+                ).value;
+
+
+            const character =
+                document.getElementById(
+                    "characterFilter"
+                ).value;
+
+
+            const element =
+                document.getElementById(
+                    "elementFilter"
+                ).value;
+
+
+            const atkType =
+                document.getElementById(
+                    "atkTypeFilter"
+                ).value;
+
+            const selectedTag =
+                document.getElementById("tagsFilter").value;
+
+
+            const passive =
+                document.getElementById(
+                    "passiveFilter"
+                ).value;
+
+
+            const skill1 =
+                document.getElementById(
+                    "skill1Filter"
+                ).value;
+
+
+            const skill2 =
+                document.getElementById(
+                    "skill2Filter"
+                ).value;
+
+
+            const omitSkill =
+                document.getElementById(
+                    "omitSkillFilter"
+                ).value;
+
+
+            const minMr =
+                numberValue(
+                    document.getElementById(
+                        "minMr"
+                    ).value
+                );
+
+
+            const maxMr =
+                numberValue(
+                    document.getElementById(
+                        "maxMr"
+                    ).value
+                );
+
+
+            const minSpeed =
+                numberValue(
+                    document.getElementById(
+                        "minSpeed"
+                    ).value
+                );
+
+
+            const maxSpeed =
+                numberValue(
+                    document.getElementById(
+                        "maxSpeed"
+                    ).value
+                );
+
+
+            const sortType =
+                document.getElementById(
+                    "sortFilter"
+                ).value;
+
+
+            const results = [];
+
+
+            Object.keys(
+                cards
+            )
+            .forEach(
+                cardKey => {
+
+                    const card =
+                        cards[cardKey];
+
+
+                    const displayName =
+                        String(
+                            card.name ||
+                            cardKey
+                        );
+
+
+                    const owners =
+                        getCardOwners(
+                            cardKey
+                        );
+
+
+                    /* CARD NAME */
+
+                    if (
+                        search &&
+                        !displayName
+                            .toLowerCase()
+                            .includes(search)
+                    ) {
 
                         return;
 
                     }
 
 
+                    /* HOUSE */
+
+                    if (house) {
+
+                        const houseData =
+                            houses.find(
+                                houseInfo =>
+                                    houseInfo.name ===
+                                    house
+                            );
 
 
-
-                    renderSelectedCardInfo(
-
-                        selected
-
-                    );
+                        if (!houseData) {
+                            return;
+                        }
 
 
+                        const belongsToHouse =
+                            owners.some(
+                                owner =>
+                                    houseData
+                                        .characters
+                                        .includes(
+                                            owner
+                                        )
+                            );
 
 
+                        if (
+                            !belongsToHouse
+                        ) {
 
-                    renderAllRecommendations(
+                            return;
 
-                        selected
+                        }
 
-                    );
+                    }
 
 
+                    /* CHARACTER */
+
+                    if (character) {
+
+                        if (
+                            !owners.includes(
+                                character
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* ELEMENT */
+
+                    if (element) {
+
+                        if (
+                            String(
+                                card.element ||
+                                ""
+                            )
+                            .trim()
+                            .toLowerCase() !==
+                            element.toLowerCase()
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* ATK TYPE */
+
+                    if (atkType) {
+
+                        if (
+                            String(
+                                card.atkType ||
+                                ""
+                            )
+                            .trim()
+                            .toUpperCase() !==
+                            atkType
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* TAGS: match an individual comma-separated tag */
+
+                    if (selectedTag) {
+                        const cardTags = String(card.tags || "")
+                            .split(",")
+                            .map(tag => tag.trim().toLowerCase())
+                            .filter(Boolean);
+
+                        if (!cardTags.includes(selectedTag.trim().toLowerCase())) {
+                            return;
+                        }
+                    }
+
+
+                    /* PASSIVE */
+
+                    if (passive) {
+
+                        if (
+                            String(
+                                card.passive ||
+                                ""
+                            )
+                            .trim() !==
+                            passive
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* SKILLS */
+
+                    const skillNames =
+                        getCardSkillNames(
+                            card
+                        );
+
+
+                    /* SKILL 1 */
+
+                    if (skill1) {
+
+                        if (
+                            !skillNames.includes(
+                                skill1
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* SKILL 2 */
+
+                    if (skill2) {
+
+                        if (
+                            !skillNames.includes(
+                                skill2
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* OMIT SKILL */
+
+                    if (omitSkill) {
+
+                        if (
+                            skillNames.includes(
+                                omitSkill
+                                    .trim()
+                                    .toLowerCase()
+                            )
+                        ) {
+
+                            return;
+
+                        }
+
+                    }
+
+
+                    /* MR */
+
+                    const mr =
+                        numberValue(
+                            card.mr
+                        );
+
+
+                    if (
+                        minMr !== null &&
+                        (
+                            mr === null ||
+                            mr < minMr
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        maxMr !== null &&
+                        (
+                            mr === null ||
+                            mr > maxMr
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    /* SPEED */
+
+                    const speed =
+                        numberValue(
+                            card.speed
+                        );
+
+
+                    if (
+                        minSpeed !== null &&
+                        (
+                            speed === null ||
+                            speed < minSpeed
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    if (
+                        maxSpeed !== null &&
+                        (
+                            speed === null ||
+                            speed > maxSpeed
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    results.push({
+
+                        key:
+                            cardKey,
+
+                        card:
+                            card,
+
+                        name:
+                            displayName,
+
+                        owners:
+                            owners
+
+                    });
 
                 }
-
             );
 
 
+            /* ========================================
+               SORT
+            ======================================== */
+
+            if (
+                sortType ===
+                "rerun-desc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aTime =
+                            getRerunAgeMs(
+                                a.card
+                            );
+
+                        const bTime =
+                            getRerunAgeMs(
+                                b.card
+                            );
 
 
+                        if (
+                            aTime === null &&
+                            bTime === null
+                        ) {
 
-        /* =========================================================
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
 
-           LOAD DATABASE
+                        }
 
-        ========================================================= */
+                        if (aTime === null) {
+                            return 1;
+                        }
 
+                        if (bTime === null) {
+                            return -1;
+                        }
 
+                        return bTime - aTime;
 
-        async function initializeDatabase() {
-            const status = document.getElementById('teamStatus');
-            try {
-                let data = null;
-                if (typeof window.loadDatabase === 'function') {
-                    data = await window.loadDatabase({
-                        onUpdate: freshData => { try { applyDatabase(freshData); } catch (error) { console.error('Could not render refreshed database:', error); } },
-                        onError: error => console.warn('Background database refresh failed:', error)
-                    });
-                } else {
-                    const cached = typeof window.getCachedDatabase === 'function' ? window.getCachedDatabase() : null;
-                    const fresh = typeof window.isDatabaseCacheFresh === 'function' && window.isDatabaseCacheFresh();
-                    if (cached && fresh) data = cached;
-                    else if (typeof window.fetchLiveDatabase === 'function') {
-                        data = await window.fetchLiveDatabase();
-                        if (typeof window.saveDatabaseCache === 'function') window.saveDatabaseCache(data);
-                    } else throw new Error('database-loader.js did not expose loadDatabase() or fetchLiveDatabase().');
-                }
-                if (!data || !data.cards) throw new Error('The database response did not contain card data.');
-                applyDatabase(data);
-            } catch (error) {
-                console.error('Teams database error:', error);
-                status.textContent = 'Unable to load the card database. Check the browser console for details.';
-                status.classList.add('error');
+                    }
+                );
+
             }
+
+
+            else if (
+                sortType ===
+                "rerun-asc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aTime =
+                            getRerunAgeMs(
+                                a.card
+                            );
+
+                        const bTime =
+                            getRerunAgeMs(
+                                b.card
+                            );
+
+
+                        if (
+                            aTime === null &&
+                            bTime === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aTime === null) {
+                            return 1;
+                        }
+
+                        if (bTime === null) {
+                            return -1;
+                        }
+
+                        return aTime - bTime;
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sortType ===
+                "mr-desc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aMr =
+                            numberValue(
+                                a.card.mr
+                            );
+
+                        const bMr =
+                            numberValue(
+                                b.card.mr
+                            );
+
+
+                        if (
+                            aMr === null &&
+                            bMr === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aMr === null) {
+                            return 1;
+                        }
+
+                        if (bMr === null) {
+                            return -1;
+                        }
+
+                        return bMr - aMr;
+
+                    }
+                );
+
+            }
+
+
+            else if (
+                sortType ===
+                "mr-asc"
+            ) {
+
+                results.sort(
+                    (a, b) => {
+
+                        const aMr =
+                            numberValue(
+                                a.card.mr
+                            );
+
+                        const bMr =
+                            numberValue(
+                                b.card.mr
+                            );
+
+
+                        if (
+                            aMr === null &&
+                            bMr === null
+                        ) {
+
+                            return a.name.localeCompare(
+                                b.name,
+                                undefined,
+                                {
+                                    numeric: true
+                                }
+                            );
+
+                        }
+
+                        if (aMr === null) {
+                            return 1;
+                        }
+
+                        if (bMr === null) {
+                            return -1;
+                        }
+
+                        return aMr - bMr;
+
+                    }
+                );
+
+            }
+
+
+            else {
+
+                results.sort(
+                    (a, b) =>
+                        a.name.localeCompare(
+                            b.name,
+                            undefined,
+                            {
+                                numeric: true
+                            }
+                        )
+                );
+
+            }
+
+
+            return results;
+
         }
 
 
+        /* ========================================
+           FORMAT SKILL CELL
+        ======================================== */
+
+        function formatSkillCell(skill) {
+
+            if (!skill) {
+                return "—";
+            }
+
+
+            const name =
+                skill.name || "";
+
+            const description =
+                skill.description || "";
+
+
+            if (
+                !name &&
+                !description
+            ) {
+
+                return "—";
+
+            }
+
+
+            return `
+
+                ${
+                    name
+                        ? `
+                            <span
+                                class="table-skill-name"
+                            >
+                                ${escapeHTML(
+                                    name
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <span
+                                class="table-skill-description"
+                            >
+                                ${escapeHTML(
+                                    description
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+            `;
+
+        }
+
+
+        /* ========================================
+           FORMAT UNIQUE
+        ======================================== */
+
+        function formatUniqueCell(unique) {
+
+            if (!unique) {
+                return "—";
+            }
+
+
+            const name =
+                unique.name || "";
+
+            const description =
+                unique.description || "";
+
+
+            if (
+                !name &&
+                !description
+            ) {
+
+                return "—";
+
+            }
+
+
+            return `
+
+                ${
+                    name
+                        ? `
+                            <span
+                                class="table-skill-name"
+                            >
+                                ${escapeHTML(
+                                    name
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+                ${
+                    description
+                        ? `
+                            <span
+                                class="table-skill-description"
+                            >
+                                ${escapeHTML(
+                                    description
+                                )}
+                            </span>
+                          `
+                        : ""
+                }
+
+            `;
+
+        }
+
+
+        /* ========================================
+           FLOATING SCROLLBAR
+        ======================================== */
+
+        function setupFloatingScrollbar() {
+
+            const tableWrapper =
+                document.querySelector(
+                    ".results-table-wrapper"
+                );
+
+            const floatingScrollbar =
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                );
+
+            const floatingInner =
+                document.getElementById(
+                    "floatingHorizontalScrollInner"
+                );
+
+
+            if (
+                !tableWrapper ||
+                !floatingScrollbar ||
+                !floatingInner
+            ) {
+
+                return;
+
+            }
+
+
+            const table =
+                tableWrapper.querySelector(
+                    ".results-table"
+                );
+
+
+            if (!table) {
+                return;
+            }
+
+
+            floatingInner.style.width =
+                table.scrollWidth + "px";
+
+
+            let syncing = false;
+
+
+            floatingScrollbar.onscroll =
+                function () {
+
+                    if (syncing) {
+                        return;
+                    }
+
+
+                    syncing = true;
+
+
+                    tableWrapper.scrollLeft =
+                        floatingScrollbar.scrollLeft;
+
+
+                    requestAnimationFrame(
+                        () => {
+                            syncing = false;
+                        }
+                    );
+
+                };
+
+
+            tableWrapper.onscroll =
+                function () {
+
+                    if (syncing) {
+                        return;
+                    }
+
+
+                    syncing = true;
+
+
+                    floatingScrollbar.scrollLeft =
+                        tableWrapper.scrollLeft;
+
+
+                    requestAnimationFrame(
+                        () => {
+                            syncing = false;
+                        }
+                    );
+
+                };
+
+
+            floatingScrollbar.scrollLeft =
+                tableWrapper.scrollLeft;
+
+        }
+
+
+        /* ========================================
+           RENDER RESULTS
+        ======================================== */
+
+        function renderResults() {
+
+            const results =
+                filterCards();
+
+
+            const container =
+                document.getElementById(
+                    "results"
+                );
+
+
+            const count =
+                document.getElementById(
+                    "resultCount"
+                );
+
+
+            count.textContent =
+                `${results.length} card${
+                    results.length === 1
+                        ? ""
+                        : "s"
+                } found`;
+
+
+            if (
+                results.length === 0
+            ) {
+
+                container.innerHTML = `
+
+                    <div class="no-results">
+
+                        No cards match
+                        your selected filters.
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                ).style.display =
+                    "none";
+
+
+                return;
+
+            }
+
+
+            let html = `
+
+                <div
+                    class="results-table-wrapper"
+                >
+
+                    <table
+                        class="results-table"
+                    >
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Card Name
+                                </th>
+
+                                <th>
+                                    AT
+                                </th>
+
+                                <th>
+                                    SPD
+                                </th>
+
+                                <th>
+                                    Passive
+                                </th>
+
+                                <th>
+                                    S1
+                                </th>
+
+                                <th>
+                                    S2
+                                </th>
+
+                                <th>
+                                    S3
+                                </th>
+
+                                <th>
+                                    S4
+                                </th>
+
+                                <th>
+                                    Unique
+                                </th>
+
+                                <th>
+                                    Rerun Time
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+            `;
+
+
+            results.forEach(
+                result => {
+
+                    const card =
+                        result.card;
+
+
+                    const elementClass =
+                        getElementClass(
+                            card.element
+                        );
+
+
+                    const skills =
+                        Array.isArray(
+                            card.skills
+                        )
+                            ? card.skills
+                            : [];
+
+
+                    html += `
+
+                        <tr
+                            class="${elementClass}"
+                        >
+
+                            <td>
+
+                                <div
+                                    class="table-card-name"
+                                >
+                                    ${escapeHTML(
+                                        result.name
+                                        
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-atk-type"
+                                >
+                                    ${escapeHTML(
+                                        card.atkType ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-speed"
+                                >
+                                    ${escapeHTML(
+                                        card.speed ??
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-passive"
+                                >
+                                    ${escapeHTML(
+                                        card.passive ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[0]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[1]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[2]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatSkillCell(
+                                    skills[3]
+                                )}
+                            </td>
+
+
+                            <td>
+                                ${formatUniqueCell(
+                                    card.ultimate
+                                )}
+                            </td>
+
+
+                            <td>
+
+                                <div
+                                    class="table-rerun-time"
+                                >
+                                    ${escapeHTML(
+                                        formatRerunTime(
+                                            card
+                                        )
+                                    )}
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+                    `;
+
+                }
+            );
+
+
+            html += `
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            `;
+
+
+            container.innerHTML =
+                html;
+
+
+            const floatingScrollbar =
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                );
+
+
+            floatingScrollbar.style.display =
+                "block";
+
+
+            setupFloatingScrollbar();
+
+        }
+
+
+        /* ========================================
+           CLEAR FILTERS
+        ======================================== */
+
+        function clearFilters() {
+
+            document.getElementById(
+                "searchInput"
+            ).value = "";
+
+            document.getElementById(
+                "houseFilter"
+            ).value = "";
+
+            document.getElementById(
+                "characterFilter"
+            ).value = "";
+
+            document.getElementById(
+                "elementFilter"
+            ).value = "";
+
+            document.getElementById(
+                "atkTypeFilter"
+            ).value = "";
+
+            document.getElementById(
+                "tagsFilter"
+            ).value = "";
+
+            document.getElementById(
+                "passiveFilter"
+            ).value = "";
+
+            document.getElementById(
+                "skill1Filter"
+            ).value = "";
+
+            document.getElementById(
+                "skill2Filter"
+            ).value = "";
+
+            document.getElementById(
+                "omitSkillFilter"
+            ).value = "";
+
+            document.getElementById(
+                "minMr"
+            ).value = "";
+
+            document.getElementById(
+                "maxMr"
+            ).value = "";
+
+            document.getElementById(
+                "minSpeed"
+            ).value = "";
+
+            document.getElementById(
+                "maxSpeed"
+            ).value = "";
+
+            document.getElementById(
+                "sortFilter"
+            ).value = "default";
+
+
+            renderResults();
+
+        }
+
+
+        /* ========================================
+           LOAD DATABASE
+        ======================================== */
+
+        async function initializeDatabase() {
+
+            try {
+
+                const data =
+                    await window.loadDatabase({
+
+                        onUpdate:
+                            freshData => {
+
+                                database =
+                                    freshData;
+
+                                buildCharacterDropdown();
+
+                                buildStaticFilterDropdowns();
+
+                                buildFilterDropdowns();
+
+                                renderResults();
+
+                                console.log(
+                                    "Tokyo Debunker database refreshed."
+                                );
+
+                            },
+
+                        onError:
+                            error => {
+
+                                console.warn(
+                                    "Tokyo Debunker database background refresh failed:",
+                                    error
+                                );
+
+                            }
+
+                    });
+
+
+                database =
+                    data;
+
+                buildCharacterDropdown();
+
+                buildStaticFilterDropdowns();
+
+                buildFilterDropdowns();
+
+                renderResults();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Error loading database:",
+                    error
+                );
+
+
+                document.getElementById(
+                    "resultCount"
+                ).textContent =
+                    "Unable to load database.";
+
+
+                document.getElementById(
+                    "results"
+                ).innerHTML = `
+
+                    <div class="no-results">
+
+                        Unable to load the database.
+
+                        <br><br>
+
+                        Please refresh the page
+                        and try again.
+
+                    </div>
+
+                `;
+
+
+                document.getElementById(
+                    "floatingHorizontalScroll"
+                ).style.display =
+                    "none";
+
+            }
+
+        }
+
+
+        /* ========================================
+           EVENTS
+        ======================================== */
+
+        document.getElementById(
+            "searchButton"
+        ).addEventListener(
+            "click",
+            renderResults
+        );
+
+
+        document.getElementById(
+            "clearButton"
+        ).addEventListener(
+            "click",
+            clearFilters
+        );
+
+
+        document.getElementById(
+            "sortFilter"
+        ).addEventListener(
+            "change",
+            renderResults
+        );
+
+
+        document.getElementById(
+            "searchInput"
+        ).addEventListener(
+            "keydown",
+            event => {
+
+                if (
+                    event.key ===
+                    "Enter"
+                ) {
+
+                    renderResults();
+
+                }
+
+            }
+        );
+
+
+        /* ========================================
+           INITIAL LOAD
+        ======================================== */
+
         initializeDatabase();
-
-
 
     </script>
 
 
-
-
-
 </body>
-
-
 
 </html>
