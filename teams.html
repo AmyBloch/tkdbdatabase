@@ -1214,6 +1214,248 @@
     .support-table-cell strong { font-size: .58rem; }
 }
 
+
+/* Compact two-column ability layout: independent box heights, no grid-row whitespace. */
+.planner-kit .card-kit-abilities {
+    display: block !important;
+    column-count: 2 !important;
+    column-gap: 6px !important;
+    column-fill: balance !important;
+    padding: 0 7px 7px !important;
+}
+.planner-kit .card-kit-ability {
+    display: inline-block !important;
+    vertical-align: top !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    min-height: 0 !important;
+    height: auto !important;
+    margin: 0 0 6px !important;
+    padding: 6px 7px !important;
+    break-inside: avoid !important;
+    box-sizing: border-box !important;
+}
+.planner-kit .card-kit-ability-name {
+    margin: 0 0 4px !important;
+    line-height: 1.2 !important;
+}
+.planner-kit .card-kit-ability-description {
+    height: auto !important;
+    margin: 0 !important;
+    line-height: 1.3 !important;
+}
+
+/* Mobile-first Team Planner layout polish */
+.manual-team-planner,
+.manual-team-planner * { box-sizing: border-box; }
+
+@media (max-width: 700px) {
+    .planner-kit .card-kit-abilities {
+        display: block !important;
+        column-count: 2 !important;
+        column-gap: 5px !important;
+        padding: 0 4px 4px !important;
+    }
+    .planner-kit .card-kit-ability {
+        padding: 5px !important;
+        margin-bottom: 5px !important;
+    }
+    .planner-kit .card-kit-ability-name { font-size: .72rem !important; }
+    .planner-kit .card-kit-ability-description { font-size: .65rem !important; line-height: 1.25 !important; }
+    .manual-team-planner {
+        padding: 14px;
+        margin-bottom: 30px;
+        border-radius: 10px;
+    }
+    .planner-heading {
+        font-size: 1.35rem;
+        line-height: 1.25;
+        margin-bottom: 18px;
+    }
+    .planner-main-grid {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 14px;
+    }
+    .planner-slot { min-width: 0; }
+    .planner-slot-title {
+        font-size: .86rem;
+        padding: 11px 12px;
+        letter-spacing: .04em;
+    }
+    .planner-select-wrap { padding: 10px 12px 0; }
+    .planner-select {
+        height: 44px;
+        padding: 0 10px;
+        font-size: .9rem;
+    }
+    .planner-kit { padding: 10px; }
+    .planner-kit .card-kit-title { font-size: .82rem; padding: 9px; }
+    .planner-kit .card-kit-stats {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        padding: 8px;
+    }
+    .planner-kit .card-kit-stat { padding: 9px 6px; }
+    .planner-kit .card-kit-stat-label { font-size: .68rem; }
+    .planner-kit .card-kit-stat-value { font-size: .84rem; }
+    .planner-kit .card-kit-abilities {
+        grid-template-columns: minmax(0, 1fr) !important;
+        gap: 8px;
+        padding: 0 8px 8px;
+    }
+    .planner-kit .card-kit-ability { padding: 11px; }
+    .planner-kit .card-kit-ability-name { font-size: .84rem; }
+    .planner-kit .card-kit-ability-description {
+        font-size: .78rem;
+        line-height: 1.5;
+    }
+    .planner-empty { font-size: .84rem; padding: 16px 10px; }
+    .planner-supports { margin-top: 20px; }
+    .planner-supports-heading { font-size: .92rem; }
+    .planner-support-slot { padding: 10px 10px 12px; }
+    .planner-support-slot .planner-slot-title { font-size: .82rem; }
+    .planner-support-slot .planner-select-wrap { max-width: none; padding-bottom: 10px; }
+    .planner-support-summary { overflow-x: auto; }
+    .support-card-row {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+        min-width: 0;
+    }
+    .support-card-row > .support-table-cell { grid-row: auto; }
+    .support-name-cell { grid-column: 1 / -1; }
+    .support-table-cell {
+        padding: 8px;
+        font-size: .72rem;
+        overflow-wrap: anywhere;
+    }
+    .support-table-cell strong { font-size: .68rem; }
+    .planner-actions { margin-top: 14px; }
+    .planner-clear { min-height: 42px; }
+}
+
+
+        /* Keep planner ability panels only as tall as their own content. */
+        .planner-kit .card-kit-abilities {
+            align-items: start;
+            grid-auto-rows: max-content;
+        }
+        .planner-kit .card-kit-ability {
+            align-self: start;
+            min-height: 0 !important;
+            height: auto !important;
+            box-sizing: border-box;
+        }
+        .planner-kit .card-kit-ability-description {
+            height: auto !important;
+            min-height: 0 !important;
+        }
+        @media (max-width: 600px) {
+            .planner-kit .card-kit-abilities {
+                grid-template-columns: minmax(0, 1fr) !important;
+                align-items: start;
+                grid-auto-rows: max-content;
+                gap: 7px;
+            }
+            .planner-kit .card-kit-ability {
+                padding: 9px 10px;
+            }
+            .planner-kit .card-kit-ability-description {
+                font-size: .76rem;
+                line-height: 1.4;
+            }
+        }
+
+
+/* Compact two-column ability layout: use CSS columns so each ability
+   hugs its own text instead of inheriting the height of its row partner. */
+.manual-team-planner .planner-kit .card-kit-abilities {
+    display: block !important;
+    column-count: 2 !important;
+    column-gap: 7px !important;
+    column-fill: balance !important;
+    padding: 0 7px 7px !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability {
+    display: inline-block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 8px !important;
+    margin: 0 0 7px !important;
+    vertical-align: top !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability-name {
+    margin: 0 0 5px !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability-description {
+    margin: 0 !important;
+    line-height: 1.3 !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+@media (max-width: 600px) {
+    .manual-team-planner .planner-kit .card-kit-abilities {
+        column-count: 2 !important;
+        column-gap: 6px !important;
+    }
+    .manual-team-planner .planner-kit .card-kit-ability {
+        padding: 7px !important;
+        margin-bottom: 6px !important;
+    }
+}
+
+
+/* Final compact layout: true two-column masonry; each ability keeps its own height. */
+.manual-team-planner #plannerKit-main .card-kit-abilities,
+.manual-team-planner #plannerKit-sub1 .card-kit-abilities,
+.manual-team-planner #plannerKit-sub2 .card-kit-abilities {
+    display: block !important;
+    column-count: 2 !important;
+    column-gap: 6px !important;
+    column-fill: balance !important;
+    padding: 0 5px 5px !important;
+    max-height: none !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability {
+    display: inline-block !important;
+    vertical-align: top !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    break-inside: avoid !important;
+    -webkit-column-break-inside: avoid !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 0 5px !important;
+    padding: 5px 6px !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability-name {
+    margin: 0 0 3px !important;
+    line-height: 1.2 !important;
+}
+.manual-team-planner .planner-kit .card-kit-ability-description {
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    height: auto !important;
+    min-height: 0 !important;
+}
+@media (max-width: 700px) {
+    .manual-team-planner #plannerKit-main .card-kit-abilities,
+    .manual-team-planner #plannerKit-sub1 .card-kit-abilities,
+    .manual-team-planner #plannerKit-sub2 .card-kit-abilities {
+        display: block !important;
+        column-count: 2 !important;
+        column-gap: 5px !important;
+    }
+    .manual-team-planner .planner-kit .card-kit-ability {
+        padding: 4px 5px !important;
+        margin-bottom: 4px !important;
+    }
+    .manual-team-planner .planner-kit .card-kit-ability-name { font-size: .68rem !important; }
+    .manual-team-planner .planner-kit .card-kit-ability-description { font-size: .62rem !important; line-height: 1.2 !important; }
+}
+
 </style>
 
 
@@ -4530,7 +4772,7 @@
 
                                             ${escapeHTML(
 
-                                                ability.description
+                                                String(ability.description ?? '').trim()
 
                                             )}
 
