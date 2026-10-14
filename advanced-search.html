@@ -309,8 +309,8 @@
         ======================================== */
 
         .results-table {
-            width: 1350px;
-            min-width: 1350px;
+            width: 1410px;
+            min-width: 1410px;
             max-width: none;
 
             table-layout: fixed;
@@ -323,42 +323,47 @@
 
         .results-table th:nth-child(1),
         .results-table td:nth-child(1) {
-            width: 16%;
+            width: 3%;
         }
 
         .results-table th:nth-child(2),
         .results-table td:nth-child(2) {
-            width: 3%;
+            width: 15%;
         }
 
         .results-table th:nth-child(3),
         .results-table td:nth-child(3) {
-            width: 4%;
+            width: 3%;
         }
 
         .results-table th:nth-child(4),
         .results-table td:nth-child(4) {
-            width: 11%;
+            width: 4%;
         }
 
         .results-table th:nth-child(5),
-        .results-table td:nth-child(5),
+        .results-table td:nth-child(5) {
+            width: 11%;
+        }
+
         .results-table th:nth-child(6),
         .results-table td:nth-child(6),
         .results-table th:nth-child(7),
         .results-table td:nth-child(7),
         .results-table th:nth-child(8),
-        .results-table td:nth-child(8) {
-            width: 10.5%;
-        }
-
+        .results-table td:nth-child(8),
         .results-table th:nth-child(9),
         .results-table td:nth-child(9) {
-            width: 14%;
+            width: 10.5%;
         }
 
         .results-table th:nth-child(10),
         .results-table td:nth-child(10) {
+            width: 14%;
+        }
+
+        .results-table th:nth-child(11),
+        .results-table td:nth-child(11) {
             width: 6%;
         }
 
@@ -446,10 +451,28 @@
 
 
         /* ========================================
-           CARD NAME
+           MR RANKING
         ======================================== */
 
         .results-table tbody td:nth-child(1) {
+            text-align: center;
+            vertical-align: middle;
+            white-space: nowrap;
+            font-weight: 700;
+        }
+
+        .table-mr-ranking {
+            color: #000000;
+            font-weight: 700;
+            text-align: center;
+        }
+
+
+        /* ========================================
+           CARD NAME
+        ======================================== */
+
+        .results-table tbody td:nth-child(2) {
             text-align: center;
             vertical-align: middle;
         }
@@ -471,7 +494,7 @@
            AT
         ======================================== */
 
-        .results-table tbody td:nth-child(2) {
+        .results-table tbody td:nth-child(4) {
             text-align: center;
             vertical-align: middle;
 
@@ -515,7 +538,7 @@
            PASSIVE
         ======================================== */
 
-        .results-table tbody td:nth-child(4) {
+        .results-table tbody td:nth-child(5) {
             text-align: center;
             vertical-align: middle;
         }
@@ -564,7 +587,7 @@
            RERUN
         ======================================== */
 
-        .results-table tbody td:nth-child(10) {
+        .results-table tbody td:nth-child(11) {
             text-align: center;
             vertical-align: middle;
 
@@ -692,9 +715,9 @@
         .floating-horizontal-scroll-inner {
             height: 1px;
 
-            width: 1350px;
+            width: 1410px;
 
-            min-width: 1350px;
+            min-width: 1410px;
         }
 
         .floating-horizontal-scroll::-webkit-scrollbar {
@@ -792,8 +815,8 @@
             }
 
             .results-table {
-                width: 1350px;
-                min-width: 1350px;
+                width: 1410px;
+                min-width: 1410px;
             }
 
             .floating-horizontal-scroll {
@@ -2655,6 +2678,25 @@
             const description =
                 skill.description || "";
 
+            const formattedDescription = description
+                ? (() => {
+                    const parts = String(description)
+                        .split(/\s*-\s*/)
+                        .map(part => part.trim())
+                        .filter(Boolean);
+
+                    // Keep the MP cost on the same line as the TU cost.
+                    if (parts.length > 1 && /^\d+(?:\.\d+)?\s*MP\b/i.test(parts[1])) {
+                        parts[0] += ` - ${parts[1]}`;
+                        parts.splice(1, 1);
+                    }
+
+                    return parts
+                        .map(part => `- ${escapeHTML(part)}`)
+                        .join("<br>");
+                })()
+                : "";
+
 
             if (
                 !name &&
@@ -2688,9 +2730,7 @@
                             <span
                                 class="table-skill-description"
                             >
-                                ${escapeHTML(
-                                    description
-                                )}
+                                ${formattedDescription}
                             </span>
                           `
                         : ""
@@ -2718,6 +2758,25 @@
             const description =
                 unique.description || "";
 
+            const formattedDescription = description
+                ? (() => {
+                    const parts = String(description)
+                        .split(/\s*-\s*/)
+                        .map(part => part.trim())
+                        .filter(Boolean);
+
+                    // Keep the MP cost on the same line as the TU cost.
+                    if (parts.length > 1 && /^\d+(?:\.\d+)?\s*MP\b/i.test(parts[1])) {
+                        parts[0] += ` - ${parts[1]}`;
+                        parts.splice(1, 1);
+                    }
+
+                    return parts
+                        .map(part => `- ${escapeHTML(part)}`)
+                        .join("<br>");
+                })()
+                : "";
+
 
             if (
                 !name &&
@@ -2751,9 +2810,7 @@
                             <span
                                 class="table-skill-description"
                             >
-                                ${escapeHTML(
-                                    description
-                                )}
+                                ${formattedDescription}
                             </span>
                           `
                         : ""
@@ -2941,6 +2998,10 @@
                             <tr>
 
                                 <th>
+                                    MR
+                                </th>
+
+                                <th>
                                     Card Name
                                 </th>
 
@@ -3015,6 +3076,12 @@
                         <tr
                             class="${elementClass}"
                         >
+
+                            <td>
+                                <div class="table-mr-ranking">
+                                    ${escapeHTML(numberValue(card.mr) === null ? "—" : numberValue(card.mr))}
+                                </div>
+                            </td>
 
                             <td>
 
