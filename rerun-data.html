@@ -5304,7 +5304,10 @@ function loadJSONP(
 
                 encodeURIComponent(
                     callbackName
-                );
+                ) +
+
+                "&t=" +
+                Date.now();
 
 
             document.body.appendChild(
@@ -5369,21 +5372,10 @@ async function loadDatabase(){
 
 
     /*
-       Stop here when cache is fresh.
+       Always check the live database when this page opens.
+       Cached data is rendered above immediately so the page
+       remains usable while the live request is in progress.
     */
-
-    if(
-        cached &&
-        isCacheFresh()
-    ){
-
-        status.style.display =
-            "none";
-
-        return;
-
-    }
-
 
     try{
 
@@ -5428,6 +5420,8 @@ async function loadDatabase(){
         renderCharacterRanking();
 
         renderLongestWaitingRanking();
+
+        renderLongestWaitingNewRanking();
 
         renderCardTotals();
 
