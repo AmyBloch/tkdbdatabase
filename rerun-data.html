@@ -2099,7 +2099,7 @@ td{
 
     <p class="section-description">
 
-        The last 20 recorded cards for every character.
+        Every recorded card appearance for every character.
         Rotation counts are the number of banners strictly
         between qualifying appearances.
 
@@ -3355,9 +3355,9 @@ function buildCharacterHistories(){
             );
 
 
-            const latestTwenty =
+            const allHistoryNewestFirst =
                 appearances
-                .slice(-20)
+                .slice()
                 .reverse();
 
 
@@ -3368,7 +3368,7 @@ function buildCharacterHistories(){
                 allAppearances:
                     appearances,
 
-                latestTwenty
+                allHistoryNewestFirst
 
             };
 
@@ -3560,7 +3560,7 @@ function renderCharacterHistory(){
 
                 if(
                     !history ||
-                    history.latestTwenty.length === 0
+                    history.allHistoryNewestFirst.length === 0
                 ){
 
                     return `
@@ -3617,7 +3617,7 @@ function renderCharacterHistory(){
 
 
                 const appearances =
-                    history.latestTwenty;
+                    history.allHistoryNewestFirst;
 
 
                 const total =
