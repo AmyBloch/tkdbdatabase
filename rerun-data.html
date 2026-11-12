@@ -2136,27 +2136,9 @@ td{
 </div>
 
 
+<script src="database-loader.js"></script>
+
 <script>
-
-
-/* =========================================================
-   API / CACHE
-========================================================= */
-
-const SHEET_API =
-"https://script.google.com/macros/s/AKfycbymbEARugjpkjD-NMolneRJ4CkZjUlV8sIfE2K1YoyFTZ11JiK-CEpunHpOMzzJRhRm1nw/exec";
-
-
-const RERUN_CACHE_KEY =
-"tokyoDebunkerDatabase";
-
-
-const RERUN_CACHE_TIME_KEY =
-"tokyoDebunkerDatabaseTime";
-
-
-const RERUN_CACHE_DURATION =
-5 * 60 * 1000;
 
 
 /* =========================================================
@@ -5031,433 +5013,153 @@ function renderThemeTotals(){
 
 
 /* =========================================================
-   CACHE
+   SHARED DATABASE LOADER
 ========================================================= */
 
-function getCachedDatabase(){
+function renderRerunData(){
 
-    try{
-
-        const raw =
-            localStorage.getItem(
-                RERUN_CACHE_KEY
-            );
-
-
-        if(
-            !raw
-        ){
-            return null;
-        }
-
-
-        return JSON.parse(
-            raw
-        );
-
-    }
-    catch(
-        error
+    if(
+        !database ||
+        !database.characters ||
+        !database.cards
     ){
+        return;
+    }
 
-        return null;
+    bannerHistory =
+        buildBannerHistory();
 
+    characterHistories =
+        buildCharacterHistories();
+
+    renderCharacterHistory();
+
+    renderCharacterRanking();
+
+    renderLongestWaitingRanking();
+
+    renderLongestWaitingNewRanking();
+
+    renderCardTotals();
+
+    renderThemeTotals();
+
+    const status =
+        document.getElementById("status");
+
+    if(status){
+        status.style.display = "none";
     }
 
 }
 
 
-function saveCachedDatabase(
-    data
-){
+async function loadRerunDatabase(){
+
+    const status =
+        document.getElementById("status");
 
     try{
 
-        localStorage.setItem(
-            RERUN_CACHE_KEY,
-            JSON.stringify(
-                data
-            )
-        );
+        /*
+           Use the shared database loader exactly like
+           characters.html. Its onUpdate callback runs
+           whenever fresh database information arrives.
+        */
+        const data =
+            await loadDatabase({
+
+                onUpdate: freshData => {
+
+                    database = {
+                        characters:
+                            freshData.characters || {},
+
+                        cards:
+                            freshData.cards || {}
+                    };
+
+                    renderRerunData();
+
+                    console.log(
+                        "Tokyo Debunker rerun database refreshed."
+                    );
+
+                },
+
+                onError: error => {
+
+                    console.warn(
+                        "Tokyo Debunker database background refresh failed:",
+                        error
+                    );
+
+                }
+
+            });
 
 
-        localStorage.setItem(
-            RERUN_CACHE_TIME_KEY,
-            String(
-                Date.now()
-            )
-        );
+        /*
+           Render the initially returned database as well.
+           This mirrors characters.html and ensures the page
+           works whether or not onUpdate already fired.
+        */
+        database = {
+            characters:
+                data.characters || {},
+
+            cards:
+                data.cards || {}
+        };
+
+        renderRerunData();
 
     }
-    catch(
-        error
-    ){
+    catch(error){
 
-        console.warn(
-            "Unable to save database cache.",
+        console.error(
+            "Error loading rerun database:",
             error
         );
 
-    }
-
-}
-
-
-function isCacheFresh(){
-
-    try{
-
-        const timestamp =
-            Number(
-                localStorage.getItem(
-                    RERUN_CACHE_TIME_KEY
-                )
-            );
-
-
         if(
-            !timestamp
+            !database ||
+            !database.cards ||
+            Object.keys(database.cards).length === 0
         ){
-            return false;
-        }
 
+            if(status){
 
-        return (
+                status.textContent =
+                    "Unable to load rerun data.";
 
-            Date.now() -
-            timestamp
-
-        ) < RERUN_CACHE_DURATION;
-
-    }
-    catch(
-        error
-    ){
-
-        return false;
-
-    }
-
-}
-
-
-/* =========================================================
-   JSONP
-========================================================= */
-
-function loadJSONP(
-    url
-){
-
-    return new Promise(
-        (
-            resolve,
-            reject
-        ) => {
-
-
-            const callbackName =
-
-                "rerunDataCallback_" +
-
-                Date.now() +
-
-                "_" +
-
-                Math.random()
-                .toString(36)
-                .slice(2);
-
-
-            const script =
-                document.createElement(
-                    "script"
-                );
-
-
-            let finished =
-                false;
-
-
-            const timeout =
-                setTimeout(
-                    () => {
-
-                        if(
-                            finished
-                        ){
-                            return;
-                        }
-
-
-                        finished =
-                            true;
-
-
-                        cleanup();
-
-
-                        reject(
-                            new Error(
-                                "Request timed out."
-                            )
-                        );
-
-                    },
-                    15000
-                );
-
-
-            function cleanup(){
-
-                clearTimeout(
-                    timeout
-                );
-
-
-                script.remove();
-
-
-                try{
-
-                    delete window[
-                        callbackName
-                    ];
-
-                }
-                catch(
-                    error
-                ){
-
-                    window[
-                        callbackName
-                    ] =
-                        undefined;
-
-                }
+                status.classList.add("error");
 
             }
 
-
-            window[
-                callbackName
-            ] =
-                data => {
-
-                    if(
-                        finished
-                    ){
-                        return;
-                    }
-
-
-                    finished =
-                        true;
-
-
-                    cleanup();
-
-
-                    resolve(
-                        data
-                    );
-
-                };
-
-
-            script.onerror =
-                () => {
-
-                    if(
-                        finished
-                    ){
-                        return;
-                    }
-
-
-                    finished =
-                        true;
-
-
-                    cleanup();
-
-
-                    reject(
-                        new Error(
-                            "Unable to load database."
-                        )
-                    );
-
-                };
-
-
-            script.src =
-                url +
-
-                (
-                    url.includes("?")
-                        ? "&"
-                        : "?"
-                ) +
-
-                "callback=" +
-
-                encodeURIComponent(
-                    callbackName
-                ) +
-
-                "&t=" +
-                Date.now();
-
-
-            document.body.appendChild(
-                script
-            );
-
-        }
-    );
-
-}
-
-
-/* =========================================================
-   LOAD DATABASE
-========================================================= */
-
-async function loadDatabase(){
-
-    const status =
-        document.getElementById(
-            "status"
-        );
-
-
-    const cached =
-        getCachedDatabase();
-
-
-    /*
-       Render cached data immediately.
-    */
-
-    if(
-        cached
-    ){
-
-        database =
-            cached;
-
-
-        bannerHistory =
-            buildBannerHistory();
-
-
-        characterHistories =
-            buildCharacterHistories();
-
-
-        renderCharacterHistory();
-
-        renderCharacterRanking();
-
-        renderLongestWaitingRanking();
-
-        renderLongestWaitingNewRanking();
-
-        renderCardTotals();
-
-        renderThemeTotals();
-
-    }
-
-
-    /*
-       Always check the live database when this page opens.
-       Cached data is rendered above immediately so the page
-       remains usable while the live request is in progress.
-    */
-
-    try{
-
-        const data =
-            await loadJSONP(
-                SHEET_API
-            );
-
-
-        if(
-            !data ||
-            typeof data !==
-            "object"
-        ){
-
-            throw new Error(
-                "Invalid database response."
-            );
-
-        }
-
-
-        database =
-            data;
-
-
-        saveCachedDatabase(
-            data
-        );
-
-
-        bannerHistory =
-            buildBannerHistory();
-
-
-        characterHistories =
-            buildCharacterHistories();
-
-
-        renderCharacterHistory();
-
-        renderCharacterRanking();
-
-        renderLongestWaitingRanking();
-
-        renderLongestWaitingNewRanking();
-
-        renderCardTotals();
-
-        renderThemeTotals();
-
-
-        status.style.display =
-            "none";
-
-    }
-    catch(
-        error
-    ){
-
-        console.error(
-            error
-        );
-
-
-        if(
-            cached
-        ){
-
-            status.style.display =
-                "none";
-
-        }
-        else{
-
-            status.textContent =
-                "Unable to load rerun data.";
-
-
-            status.classList.add(
-                "error"
-            );
+            [
+                "characterHistory",
+                "characterRanking",
+                "longestWaitingRanking",
+                "longestWaitingNewRanking",
+                "cardTotals",
+                "themeTotals"
+            ].forEach(id => {
+
+                const container =
+                    document.getElementById(id);
+
+                if(container){
+
+                    container.innerHTML = `
+                        <div class="empty-panel">
+                            Unable to load data. Please refresh the page and try again.
+                        </div>
+                    `;
+
+                }
+
+            });
 
         }
 
@@ -5466,7 +5168,7 @@ async function loadDatabase(){
 }
 
 
-loadDatabase();
+loadRerunDatabase();
 
 </script>
 
