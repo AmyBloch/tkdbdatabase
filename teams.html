@@ -220,6 +220,60 @@
 
         }
 
+        .team-card-search { position: relative; }
+        .team-card-search-control { position: relative; }
+        #cardSelect {
+            box-sizing: border-box; display: block; width: 100%; height: 52px;
+            padding: 0 48px 0 16px; border: 1px solid rgba(180,120,255,.45);
+            border-radius: 8px; background: #171021; color: #fff;
+            font: inherit; font-size: 1rem;
+        }
+        #cardSelect::placeholder { color: rgba(255,255,255,.58); }
+        .team-card-search-toggle {
+            position: absolute; top: 1px; right: 1px; width: 44px; height: 50px;
+            border: 0; border-left: 1px solid rgba(180,120,255,.25); border-radius: 0 7px 7px 0;
+            background: transparent; color: #fff; font-size: 1.2rem; cursor: pointer;
+        }
+        .team-card-search-toggle:hover { background: rgba(180,120,255,.14); }
+        .team-card-search-results {
+            position: absolute; top: calc(100% + 5px); left: 0; right: 0;
+            z-index: 100; max-height: 320px; overflow-y: auto;
+            border: 1px solid rgba(180,120,255,.45); border-radius: 8px;
+            background: #171021; box-shadow: 0 10px 28px rgba(0,0,0,.4);
+        }
+        /* Purple scrollbar matching the site's dark violet theme */
+        .team-card-search-results {
+            scrollbar-width: thin;
+            scrollbar-color: #9460cf #21152e;
+        }
+        .team-card-search-results::-webkit-scrollbar { width: 9px; }
+        .team-card-search-results::-webkit-scrollbar-track {
+            background: #21152e;
+            border-radius: 8px;
+        }
+        .team-card-search-results::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #a773e2, #7040a7);
+            border: 2px solid #21152e;
+            border-radius: 12px;
+        }
+        .team-card-search-results::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(180deg, #c091f4, #9158d2);
+        }
+        .team-card-search-results[hidden] { display: none; }
+        .team-card-search-option {
+            display: flex; justify-content: space-between; align-items: center;
+            gap: 12px; width: 100%; padding: 11px 14px; border: 0;
+            border-bottom: 1px solid rgba(255,255,255,.07);
+            background: transparent; color: #fff; text-align: left;
+            font: inherit; cursor: pointer;
+        }
+        .team-card-search-option:hover, .team-card-search-option:focus {
+            background: rgba(140,90,200,.25); outline: none;
+        }
+        .team-card-search-character { opacity: .65; font-size: .78rem; text-align: right; }
+        .team-card-search-empty { padding: 14px; opacity: .65; text-align: center; }
+
+
 
 
 
@@ -1641,19 +1695,17 @@
 
 
 
-            <select id="cardSelect">
-
-
-
-                <option value="">
-
-                    Loading cards...
-
-                </option>
-
-
-
-            </select>
+            <div class="team-card-search">
+                <div class="team-card-search-control">
+                    <input id="cardSelect" type="search"
+                        placeholder="Select or type a card/character name..."
+                        autocomplete="off" aria-label="Select or search cards and characters"
+                        aria-controls="cardSearchResults" aria-expanded="false">
+                    <button type="button" id="cardSelectToggle" class="team-card-search-toggle"
+                        aria-label="Show all cards" aria-expanded="false">▾</button>
+                </div>
+                <div id="cardSearchResults" class="team-card-search-results" role="listbox" hidden></div>
+            </div>
 
 
 
@@ -5444,95 +5496,70 @@
 
 
 
-        function populateCardSelect() {
+        function getCardCharacterNames(card) {
+            const names = [];
+            if (card && card.character) names.push(String(card.character));
+            if (card && card.characterName) names.push(String(card.characterName));
 
-
-
-            const select =
-
-                document.getElementById(
-
-                    "cardSelect"
-
-                );
-
-
-
-
-
-            select.innerHTML = `
-
-
-
-                <option value="">
-
-                    Select a card...
-
-                </option>
-
-
-
-            `;
-
-
-
-
-
-            for (
-
-                const card
-
-                of cardList
-
-            ) {
-
-
-
-                const option =
-
-                    document.createElement(
-
-                        "option"
-
-                    );
-
-
-
-
-
-                option.value =
-
-                    card.name;
-
-
-
-
-
-                option.textContent =
-
-                    card.name;
-
-
-
-
-
-                select.appendChild(
-
-                    option
-
-                );
-
-
-
+            const characters = database && database.characters;
+            if (characters && typeof characters === "object") {
+                Object.entries(characters).forEach(([characterName, cardNames]) => {
+                    if (!Array.isArray(cardNames)) return;
+                    if (cardNames.some(name =>
+                        String(name).trim().toLowerCase() === String(card.name).trim().toLowerCase()
+                    )) names.push(characterName);
+                });
             }
-
-
-
+            return [...new Set(names)];
         }
 
+        function getCardSearchMatches(query) {
+            const term = String(query || "").trim().toLowerCase();
+            const cards = cardList.map(card => ({ card, characters: getCardCharacterNames(card) }));
+            if (!term) return cards;
+            return cards.filter(({ card, characters }) =>
+                String(card.name).toLowerCase().includes(term) ||
+                characters.some(name => name.toLowerCase().includes(term))
+            ).slice(0, 40);
+        }
 
+        function closeCardSearchResults() {
+            const results = document.getElementById("cardSearchResults");
+            const input = document.getElementById("cardSelect");
+            if (results) results.hidden = true;
+            if (input) input.setAttribute("aria-expanded", "false");
+        }
 
+        function renderCardSearchResults(query) {
+            const results = document.getElementById("cardSearchResults");
+            const input = document.getElementById("cardSelect");
+            if (!results || !input) return;
+            const matches = getCardSearchMatches(query);
+            results.innerHTML = matches.length ? matches.map(({ card, characters }) => `
+                <button type="button" class="team-card-search-option" role="option"
+                    data-card-name="${escapeHTML(card.name)}">
+                    <span>${escapeHTML(card.name)}</span>
+                    ${characters.length ? `<span class="team-card-search-character">${escapeHTML(characters.join(", "))}</span>` : ""}
+                </button>
+            `).join("") : '<div class="team-card-search-empty">No matching cards or characters.</div>';
+            results.hidden = false;
+            input.setAttribute("aria-expanded", "true");
+        }
 
+        function selectTeamCard(card) {
+            if (!card) return;
+            document.getElementById("cardSelect").value = card.name;
+            closeCardSearchResults();
+            renderSelectedCardInfo(card);
+            renderAllRecommendations(card);
+        }
+
+        function populateCardSelect() {
+            const input = document.getElementById("cardSelect");
+            if (!input) return;
+            if (cardList.some(card => card.name === input.value)) return;
+            if (cardList.length) input.value = cardList[0].name;
+        }
 
         /* =========================================================
 
@@ -5681,37 +5708,11 @@
 
 
             if (cardList.length) {
-
-
-
-                select.value =
-
-                    cardList[0].name;
-
-
-
-
-
-                renderSelectedCardInfo(
-
-                    cardList[0]
-
-                );
-
-
-
-
-
-                renderAllRecommendations(
-
-                    cardList[0]
-
-                );
-
-
-
+                const selected = cardList.find(card => card.name === select.value) || cardList[0];
+                select.value = selected.name;
+                renderSelectedCardInfo(selected);
+                renderAllRecommendations(selected);
             }
-
 
 
         }
@@ -5728,79 +5729,55 @@
 
 
 
-        document
+        const teamCardSearch = document.getElementById("cardSelect");
+        const teamCardResults = document.getElementById("cardSearchResults");
+        const teamCardToggle = document.getElementById("cardSelectToggle");
 
-            .getElementById("cardSelect")
+        // Focusing the field opens the full dropdown; typing filters it.
+        teamCardSearch.addEventListener("focus", () => renderCardSearchResults(""));
+        teamCardSearch.addEventListener("click", () => {
+            if (teamCardResults.hidden) renderCardSearchResults("");
+        });
+        teamCardSearch.addEventListener("input", event => {
+            renderCardSearchResults(event.target.value);
+        });
+        teamCardToggle.addEventListener("click", () => {
+            if (teamCardResults.hidden) {
+                renderCardSearchResults("");
+                teamCardSearch.focus();
+            } else {
+                closeCardSearchResults();
+            }
+        });
 
-            .addEventListener(
-
-                "change",
-
-                event => {
-
-
-
-                    const selectedName =
-
-                        event.target.value;
-
-
-
-
-
-                    const selected =
-
-                        cardList.find(
-
-                            card =>
-
-                                card.name ===
-
-                                selectedName
-
-                        );
-
-
-
-
-
-                    if (!selected) {
-
-                        return;
-
-                    }
-
-
-
-
-
-                    renderSelectedCardInfo(
-
-                        selected
-
-                    );
-
-
-
-
-
-                    renderAllRecommendations(
-
-                        selected
-
-                    );
-
-
-
+        teamCardSearch.addEventListener("keydown", event => {
+            if (event.key === "Escape") {
+                closeCardSearchResults();
+                return;
+            }
+            if (event.key === "Enter") {
+                const first = teamCardResults.querySelector("[data-card-name]");
+                if (first) {
+                    event.preventDefault();
+                    selectTeamCard(cardList.find(card => card.name === first.dataset.cardName));
+                } else {
+                    const exact = cardList.find(card => card.name.toLowerCase() === teamCardSearch.value.trim().toLowerCase());
+                    if (exact) selectTeamCard(exact);
                 }
+            }
+        });
 
-            );
+        teamCardResults.addEventListener("click", event => {
+            const option = event.target.closest("[data-card-name]");
+            if (!option) return;
+            selectTeamCard(cardList.find(card => card.name === option.dataset.cardName));
+        });
 
+        document.addEventListener("click", event => {
+            if (!event.target.closest(".team-card-search")) closeCardSearchResults();
+        });
 
-
-
-
-        /* =========================================================
+                /* =========================================================
 
            LOAD DATABASE
 
